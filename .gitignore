@@ -4,3 +4,10 @@
 *.jar
 *.war
 *.ear
+
+# IDE specific files #
+.idea/
+*.iml
+
+# Project Files #
+target/
