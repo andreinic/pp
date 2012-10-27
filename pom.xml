@@ -32,12 +32,6 @@
     </build>
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>price-page</groupId>
-                <artifactId>price-page-admin-skin</artifactId>
-                <version>1.0</version>
-            </dependency>
-
             <!-- JEE stack -->
             <dependency>
                 <groupId>javax</groupId>
