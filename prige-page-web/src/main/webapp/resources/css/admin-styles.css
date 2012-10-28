@@ -34,15 +34,18 @@ body {
     height : 400px;
 }
 .pp-admin-col-mask{
-    position : relative; /* fix IE7 overflow hidden bug */
+    position : relative; fix IE7 overflow hidden bug
+    /*position : absolute;*/
     clear : both;
     float : left;
     width : 100%;
+    /*height : 100%;*/
     overflow : hidden; /* chops off any overhanging divs */
 }
 .pp-admin-wrapper{
     float : left;
     width : 100%;
+    /*height : inherit;*/
     position : relative;
 }
 .pp-admin-col-left, .pp-admin-col-right{
@@ -50,16 +53,27 @@ body {
     position : relative;
     padding : 0 0 1em 0;
     overflow : hidden;
+    /*height : inherit;*/
 }
 
 .pp-admin-col-mask .pp-admin-wrapper{
-    right : 75%; /* right column width */
+    right : 79%; /* right column width */
 }
 .pp-admin-col-mask .pp-admin-col-right{
-    width : 71%;  /* right column content width */
+    width : 79%;  /* right column content width */
     left : 102%;  /* 100% plus left column left padding */
 }
 .pp-admin-col-mask .pp-admin-col-left{
-    width:21%;    /* left column content width (column width minus left and right padding) */
-    left:6%;	  /* (right column left and right padding) plus (left column left padding) */
+    width:13%;    /* left column content width (column width minus left and right padding) */
+    /*left:6%;*/	  /* (right column left and right padding) plus (left column left padding) */
+}
+
+.pp-admin-menu-background{
+    background-color:rgba(47,45,48,.7);
+}
+
+.pp-admin-footer{
+    clear: both;
+    float : left;
+    width :100%;
 }
