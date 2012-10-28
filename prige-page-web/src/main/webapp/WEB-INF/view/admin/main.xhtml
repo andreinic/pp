@@ -8,29 +8,27 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xml:lang="en" lang="en">
     <h:head>
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+        <meta charset="utf-8"/>
         <title>Admin page for project</title>
         <h:outputStylesheet library="css" name="admin-styles.css"/>
     </h:head>
     <h:body>
-        <div class="pp-admin-top">
-            <h1 class="pp-admin-top-title">Price Page Admin</h1>
-            <h2 class="pp-admin-top-subtitle">Work in progress</h2>
-        </div>
-        <div class="pp-admin-content">
-            <div class="pp-admin-col-mask">
-                <div class="pp-admin-wrapper">
-                    <div class="pp-admin-col-right">
-                        Col right
-                    </div>
-                    <div class="pp-admin-col-left pp-admin-menu-background">
-                        Col left
-                    </div>
+        <header class="pp-admin-header">
+            <hgroup>
+                <h1 class="pp-admin-header-title">
+                    <h:outputLink>
+                        <h:outputText value="Price Page Admin"/>
+                    </h:outputLink>
+                </h1>
+                <h2 class="pp-admin-section-title">
+                    <h:outputText value="Dashboard"/>
+                </h2>
+                <div class="pp-admin-btn-view-site">
+                    <h:outputLink>
+                        <h:outputText value="View Site"/>
+                    </h:outputLink>
                 </div>
-            </div>
-        </div>
-        <div class="pp-admin-footer">
-            Footer area
-        </div>
+            </hgroup>
+        </header>
     </h:body>
 </html>
