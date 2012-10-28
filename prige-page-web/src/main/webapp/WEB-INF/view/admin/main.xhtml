@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html
-        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
@@ -13,22 +11,68 @@
         <h:outputStylesheet library="css" name="admin-styles.css"/>
     </h:head>
     <h:body>
-        <header class="pp-admin-header">
+        <header class="admin-header">
             <hgroup>
-                <h1 class="pp-admin-header-title">
+                <h1 class="admin-header-title">
                     <h:outputLink>
                         <h:outputText value="Price Page Admin"/>
                     </h:outputLink>
                 </h1>
-                <h2 class="pp-admin-section-title">
+                <h2 class="admin-section-title">
                     <h:outputText value="Dashboard"/>
                 </h2>
-                <div class="pp-admin-btn-view-site">
+                <div class="admin-btn-view-site">
                     <h:outputLink>
                         <h:outputText value="View Site"/>
                     </h:outputLink>
                 </div>
             </hgroup>
         </header>
+
+        <section class="admin-secondary-bar">
+            <div class="admin-user">
+                <p>
+                    <h:outputText value="User Name("/>
+                    <h:outputLink value="#">
+                        <h:outputText value="n messages"/>
+                    </h:outputLink>
+                    <h:outputText value=")"/>
+                </p>
+            </div>
+            <div class="admin-breadcrumb-container">
+                <article class="admin-breadcrumb">
+                    <h:outputLink value="#">
+                        <h:outputText value="Website Admin"/>
+                    </h:outputLink>
+                    <div class="admin-breadcrumb-divider"/>
+                    <h:outputLink class="admin-breadcrumb-current">
+                        <h:outputText value="Dashboard"/>
+                    </h:outputLink>
+                </article>
+            </div>
+        </section>
+
+        <aside class="admin-sidebar admin-column">
+            <h:form class="admin-quick-search">
+                <h:inputText value="Quick Search" onfocus="if(!this._haschanged){this.value=''};this._haschanged=true;""/>
+            </h:form>
+            <h3><h:outputText value="Content"/></h3>
+            <ul>
+                <li class="admin-icn-products"><h:outputLink value="#"><h:outputText value="Products"/></h:outputLink></li>
+                <li class="admin-icn-categories"><h:outputLink value="#"><h:outputText value="Categories"/></h:outputLink></li>
+            </ul>
+            <h3><h:outputText value="Admin"/></h3>
+            <ul>
+                <li class="admin-icn-logout"><h:outputLink value="#"><h:outputText value="Logout"/></h:outputLink></li>
+            </ul>
+            <footer>
+                <hr class="admin-sidebar-divider"/>
+                <p><strong><h:outputText value="Copyright &#169; 2012 Price Page"/></strong></p>
+            </footer>
+        </aside>
+
+        <section class="admin-content admin-column">
+
+        </section>
     </h:body>
 </html>
