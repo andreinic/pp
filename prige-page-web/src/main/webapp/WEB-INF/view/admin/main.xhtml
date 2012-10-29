@@ -4,11 +4,21 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
       xml:lang="en" lang="en">
     <h:head>
         <meta charset="utf-8"/>
         <title>Admin page for project</title>
         <h:outputStylesheet library="css" name="admin-styles.css"/>
+        <h:outputScript library="js" name="equalHeight.js"/>
+        <script type="text/javascript" >
+            $(document).ready(function(){
+                $('.admin-column').equalHeight();
+            });
+            <!--$(function(){-->
+                <!--$('.admin-column').equalHeight();-->
+            <!--});-->
+        </script>
     </h:head>
     <h:body>
         <header class="admin-header">
@@ -54,7 +64,7 @@
 
         <aside class="admin-sidebar admin-column">
             <h:form class="admin-quick-search">
-                <h:inputText value="Quick Search" onfocus="if(!this._haschanged){this.value=''};this._haschanged=true;""/>
+                <h:inputText value="Quick Search" onfocus="if(!this._haschanged){this.value=''};this._haschanged=true;"/>
             </h:form>
             <h3><h:outputText value="Content"/></h3>
             <ul>
@@ -72,7 +82,40 @@
         </aside>
 
         <section class="admin-content admin-column">
+            <h:form class="admin-data-table">
+                <p:dataTable >
+                    <p:column headerText="Col1"/>
+                    <p:column headerText="Col2"/>
+                    <p:column headerText="Col3"/>
+                    <p:column headerText="Col4"/>
+                </p:dataTable>
+            </h:form>
 
+            <h:form class="admin-item-details">
+                <p:panel header="Product Information">
+                    <h:panelGrid columns="2" columnClasses="label, value" styleClass="grid">
+                        <h:outputText value="Name: *"/>
+                        <p:inputText label="Name" value=""/>
+
+                        <h:outputText value="Category: *"/>
+                        <p:selectOneMenu label="Category">
+                            <f:selectItem itemLabel="Cat1" itemValue=""/>
+                            <f:selectItem itemLabel="Cat2" itemValue=""/>
+                            <f:selectItem itemLabel="Cat3" itemValue=""/>
+                        </p:selectOneMenu>
+
+                        <h:outputText value="Short Description"/>
+                        <p:inputTextarea rows="10" cols="33"/>
+
+                        <h:outputText value="Description"/>
+                        <p:editor width="600"/>
+                    </h:panelGrid>
+
+                    <h:panelGrid>
+                        <p:commandButton value="Save" icon="ui-icon-disk"/>
+                    </h:panelGrid>
+                </p:panel>
+            </h:form>
         </section>
     </h:body>
 </html>
