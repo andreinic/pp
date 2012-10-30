@@ -8,7 +8,7 @@
         <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>prige-page-web</artifactId>
+    <artifactId>price-page-web</artifactId>
     <packaging>war</packaging>
     <build>
         <finalName>price-page</finalName>
