@@ -9,9 +9,9 @@ import javax.inject.Named;
  * Date: 27.10.2012
  * Time: 16:22
  */
-@Named(value = "adminView")
-@URLMapping(id = "adminView", pattern = "/admin", viewId = "/WEB-INF/view/admin/main.jsf")
-public class AdminView
+@Named(value = "productsView")
+@URLMapping(id = "productsView", pattern = "/admin/produse", viewId = "/WEB-INF/view/admin/products.jsf")
+public class ProductsView
 {
 
 }

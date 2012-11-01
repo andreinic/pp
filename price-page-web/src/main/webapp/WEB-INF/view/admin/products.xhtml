@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xml:lang="en" lang="en"
+                template="/WEB-INF/view/admin/templates/adminPage.xhtml">
+    <ui:define name="title">Price Page Admin - Produse</ui:define>
+    <ui:define name="content">
+        <section class="admin-content admin-column">
+            <h:form class="admin-item-details">
+                <p:panel header="Product Information">
+                    <h:panelGrid columns="4" columnClasses="admin-grid-col1,admin-grid-col2,admin-grid-col3,admin-grid-col14" styleClass="grid">
+                        <h:outputText value="Name: *"/>
+                        <p:inputText label="Name" value=""/>
+                        <h:outputText value="Category: *"/>
+                        <p:selectOneMenu label="Category">
+                            <f:selectItem itemLabel="Cat1" itemValue=""/>
+                            <f:selectItem itemLabel="Cat2" itemValue=""/>
+                            <f:selectItem itemLabel="Cat3" itemValue=""/>
+                        </p:selectOneMenu>
+
+                        <h:outputText value="Short Description"/>
+                        <p:inputTextarea rows="10" cols="33"/>
+                        <h:outputText value="Description"/>
+                        <p:editor width="600"/>
+                    </h:panelGrid>
+
+                    <h:panelGrid>
+                        <p:commandButton value="Save" icon="ui-icon-disk"/>
+                    </h:panelGrid>
+                </p:panel>
+            </h:form>
+            <h:form class="admin-data-table">
+                <p:dataTable >
+                    <p:column headerText="Col1"/>
+                    <p:column headerText="Col2"/>
+                    <p:column headerText="Col3"/>
+                    <p:column headerText="Col4"/>
+                </p:dataTable>
+            </h:form>
+        </section>
+    </ui:define>
+</ui:composition>
