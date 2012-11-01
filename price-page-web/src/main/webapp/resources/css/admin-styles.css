@@ -273,3 +273,13 @@ a:hover{
 .admin-item-details{
     margin : 0 10px 0 10px;
 }
+
+.admin-grid-col1{
+}
+.admin-grid-col2{
+}
+.admin-grid-col3{
+    padding-left : 50px;
+}
+.admin-grid-col4{
+}
