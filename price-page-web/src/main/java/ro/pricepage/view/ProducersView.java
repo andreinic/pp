@@ -3,6 +3,7 @@ package ro.pricepage.view;
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
 
 import javax.inject.Named;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,5 +16,28 @@ import javax.inject.Named;
 @URLMapping(id = "producersView", pattern = "/admin/producatori", viewId = "/WEB-INF/view/admin/producers.jsf")
 public class ProducersView
 {
+    private List<Producer> producers;
 
+    public ProducersView()
+    {
+
+    }
+
+    public List<Producer> getProducers(){ return producers; }
+
+    public class Producer{
+        private Integer id;
+        private String name;
+
+        public Producer(Integer id, String name){
+            this.id = id;
+            this.name = name;
+        }
+
+        public Integer getId(){ return id; }
+        public void setId(Integer id){ this.id = id; }
+
+        public String getName(){ return name; }
+        public void setName(String name){ this.name = name; }
+    }
 }

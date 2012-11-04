@@ -253,6 +253,12 @@ a:hover{
 .admin-icn-categories a{
    background:  url(#{resource['images/icn_categories.png']}) no-repeat center left;
 }
+.admin-icn-shops a{
+   background:  url(#{resource['images/icn_shop.png']}) no-repeat center left;
+}
+.admin-icn-producers a{
+   background:  url(#{resource['images/icn_prod.png']}) no-repeat center left;
+}
 .admin-icn-logout a{
   background:  url(#{resource['images/icn_jump_back.png']}) no-repeat center left;
 }

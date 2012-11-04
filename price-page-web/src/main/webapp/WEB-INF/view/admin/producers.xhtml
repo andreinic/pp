@@ -8,6 +8,16 @@
                 template="/WEB-INF/view/admin/templates/adminPage.xhtml">
     <ui:define name="title">Price Page Admin - Categorii</ui:define>
     <ui:define name="content">
-        Producatori
+        <div>
+            <div>
+                <!-- Add ajax list here-->
+                <p:dataList type="ordered" value="#{producersView.producers}" var="producer">
+                    <h:outputText value="#{producer.name}"/>
+                </p:dataList>
+            </div>
+            <div>
+
+            </div>
+        </div>
     </ui:define>
 </ui:composition>
