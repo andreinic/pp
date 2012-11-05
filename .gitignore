@@ -8,6 +8,9 @@
 # IDE specific files #
 .idea/
 *.iml
+.project
+.classpath
+.settings/
 
 # Project Files #
 target/
