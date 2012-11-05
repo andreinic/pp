@@ -289,3 +289,18 @@ a:hover{
 }
 .admin-grid-col4{
 }
+
+.admin-content-left-col{
+    float : left;
+    padding : 20px;
+    width : 20%;
+    min-width : 220px;
+}
+.admin-content-right-col{
+    float : left;
+    padding-left : 20px;
+}
+
+.admin-content-inner{
+    padding : 20px;
+}

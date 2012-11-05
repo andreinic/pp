@@ -6,8 +6,54 @@
                 xmlns:p="http://primefaces.org/ui"
                 xml:lang="en" lang="en"
                 template="/WEB-INF/view/admin/templates/adminPage.xhtml">
-    <ui:define name="title">Price Page Admin - Categorii</ui:define>
+    <ui:define name="title"><h:outputText value="Price Page Admin - Categorii"/></ui:define>
     <ui:define name="content">
-        Magazine
+        <h:form class="admin-content-inner">
+            <p:panel header="Detalii magazin">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputText value="Magazin: *"/>
+                    <p:autoComplete maxResults="5"/>
+
+                    <h:outputText value="Tip Magazin: *"/>
+                    <p:selectOneMenu>
+                        <f:selectItem itemLabel="Supermarket"/>
+                        <f:selectItem itemLabel="HiperMarket"/>
+                        <f:selectItem itemLabel="etc"/>
+                    </p:selectOneMenu>
+
+                    <h:outputText value="Judet: *"/>
+                    <p:selectOneMenu>
+                        <f:selectItem itemLabel="Brasov"/>
+                        <f:selectItem itemLabel="Cluj"/>
+                    </p:selectOneMenu>
+
+                    <h:outputText value="Localitate: *"/>
+                    <p:selectOneMenu>
+                        <f:selectItem itemLabel="Brasov"/>
+                        <f:selectItem itemLabel="Cluj"/>
+                    </p:selectOneMenu>
+
+
+                    <h:outputText value="Adresa: *"/>
+                    <p:inputText />
+
+                    <h:outputText value="Cod postal: *"/>
+                    <p:inputText />
+                </h:panelGrid>
+
+                <h:panelGrid>
+                    <p:commandButton value="Save"/>
+                </h:panelGrid>
+            </p:panel>
+
+            <br/><br/>
+
+            <p:dataTable >
+                <p:column headerText="Col1"/>
+                <p:column headerText="Col2"/>
+                <p:column headerText="Col3"/>
+                <p:column headerText="Col4"/>
+            </p:dataTable>
+        </h:form>
     </ui:define>
 </ui:composition>

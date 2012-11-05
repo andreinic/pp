@@ -8,9 +8,9 @@
                 template="/WEB-INF/view/admin/templates/adminPage.xhtml">
     <ui:define name="title">Price Page Admin - Produse</ui:define>
     <ui:define name="content">
-        <section class="admin-content admin-column">
-            <h:form class="admin-item-details">
-                <p:panel header="Product Information">
+        <h:form class="admin-item-details">
+            <p:tabView>
+                <p:tab title="Detalii">
                     <h:panelGrid columns="4" columnClasses="admin-grid-col1,admin-grid-col2,admin-grid-col3,admin-grid-col14" styleClass="grid">
                         <h:outputText value="Name: *"/>
                         <p:inputText label="Name" value=""/>
@@ -26,20 +26,26 @@
                         <h:outputText value="Description"/>
                         <p:editor width="600"/>
                     </h:panelGrid>
+                </p:tab>
 
-                    <h:panelGrid>
-                        <p:commandButton value="Save" icon="ui-icon-disk"/>
-                    </h:panelGrid>
-                </p:panel>
-            </h:form>
-            <h:form class="admin-data-table">
-                <p:dataTable >
-                    <p:column headerText="Col1"/>
-                    <p:column headerText="Col2"/>
-                    <p:column headerText="Col3"/>
-                    <p:column headerText="Col4"/>
-                </p:dataTable>
-            </h:form>
-        </section>
+                <p:tab title="Preturi">
+
+                </p:tab>
+            </p:tabView>
+
+
+                <h:panelGrid>
+                    <p:commandButton value="Save" icon="ui-icon-disk"/>
+                </h:panelGrid>
+
+            <br/><br />
+
+            <p:dataTable >
+                <p:column headerText="Col1"/>
+                <p:column headerText="Col2"/>
+                <p:column headerText="Col3"/>
+                <p:column headerText="Col4"/>
+            </p:dataTable>
+        </h:form>
     </ui:define>
 </ui:composition>

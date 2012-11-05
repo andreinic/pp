@@ -6,8 +6,40 @@
                 xmlns:p="http://primefaces.org/ui"
                 xml:lang="en" lang="en"
                 template="/WEB-INF/view/admin/templates/adminPage.xhtml">
-    <ui:define name="title">Price Page Admin - Categorii</ui:define>
+    <ui:define name="title"><h:outputText value="Price Page Admin - Categorii"/></ui:define>
     <ui:define name="content">
-        Categorii
+        <h:form>
+            <p:contextMenu></p:contextMenu>
+            <div class="admin-content-left-col">
+                <p:tree id="categoriesTree" value="#{categoriesView.root}" var="doc" animate="true"
+                        selectionMode="single" dynamic="true">
+                    <p:treeNode expandedIcon="ui-icon-folder-open" collapsedIcon="ui-icon-folder-collapsed">
+                        <h:outputText value="#{doc.name}"/>
+                    </p:treeNode>
+                    <p:treeNode type="document" icon="ui-icon-document">
+                        <h:outputText value="#{doc.name}"/>
+                    </p:treeNode>
+                </p:tree>
+            </div>
+
+            <div class="admin-content-right-col">
+                <h3>Categorie Noua</h3>
+                <h:panelGrid columns="2">
+                    <h:outputText value="Nume*: "/>
+                    <p:inputText />
+
+                    <h:outputText value="Parinte: "/>
+                    <p:autoComplete forceSelection="true" maxResults="5"
+                                    value="#{categoriesView.dummyTxt}" completeMethod="#{categoriesView.dummyComplete}"/>
+                </h:panelGrid>
+                <h:panelGrid>
+                    <p:commandButton value="Save"/>
+                </h:panelGrid>
+            </div>
+
+            <p:contextMenu for="categoriesTree">
+                <p:menuitem value="Delete" icon="ui-icon-close"/>
+            </p:contextMenu>
+        </h:form>
     </ui:define>
 </ui:composition>

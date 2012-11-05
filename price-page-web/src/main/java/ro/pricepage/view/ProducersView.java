@@ -2,7 +2,10 @@ package ro.pricepage.view;
 
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
 
-import javax.inject.Named;
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,15 +15,20 @@ import java.util.List;
  * Time: 10:48 PM
  * To change this template use File | Settings | File Templates.
  */
-@Named(value = "producersView")
+@ManagedBean(name = "producersView")
 @URLMapping(id = "producersView", pattern = "/admin/producatori", viewId = "/WEB-INF/view/admin/producers.jsf")
-public class ProducersView
+public class ProducersView implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     private List<Producer> producers;
 
-    public ProducersView()
-    {
-
+    @PostConstruct
+    public void init(){
+        producers = new ArrayList<>();
+        for(int i = 0 ; i < 100 ; ++i){
+            producers.add(new Producer(i, "prod"+i));
+        }
     }
 
     public List<Producer> getProducers(){ return producers; }

@@ -6,7 +6,7 @@
       xml:lang="en" lang="en">
     <h:head>
         <meta charset="utf-8"/>
-        <title><ui:insert name="title"/>Price Page Admin</title>
+        <title><ui:insert name="title"/></title>
         <h:outputStylesheet name="css/admin-styles.css"/>
         <h:outputScript name="js/equalHeight.js"/>
         <script type="text/javascript" >
@@ -78,6 +78,8 @@
             </footer>
         </aside>
 
-        <ui:insert name="content"/>
+        <div class="admin-content admin-column">
+            <ui:insert name="content"/>
+        </div>
     </h:body>
 </html>
