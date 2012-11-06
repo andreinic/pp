@@ -304,3 +304,7 @@ a:hover{
 .admin-content-inner{
     padding : 20px;
 }
+
+.hidden-form-item{
+    /* dummy class used for jquery selection for hide/show functionality of shop form items. */
+}

@@ -10,16 +10,19 @@
     <ui:define name="content">
         <h:form class="admin-content-inner">
             <p:panel header="Detalii magazin">
-                <h:panelGrid columns="2" cellpadding="5">
+                <h:panelGrid id="formPanel" columns="2" cellpadding="5">
                     <h:outputText value="Magazin: *"/>
                     <p:autoComplete maxResults="5"/>
 
-                    <h:outputText value="Tip Magazin: *"/>
-                    <p:selectOneMenu>
+                    <h:outputText styleClass="hidden-form-item" value="Tip Magazin: *"/>
+                    <p:selectOneMenu styleClass="hidden-form-item">
                         <f:selectItem itemLabel="Supermarket"/>
                         <f:selectItem itemLabel="HiperMarket"/>
                         <f:selectItem itemLabel="etc"/>
                     </p:selectOneMenu>
+
+                    <h:outputText styleClass="hidden-form-item" value="Url: *"/>
+                    <p:inputText styleClass="hidden-form-item"/>
 
                     <h:outputText value="Judet: *"/>
                     <p:selectOneMenu>
@@ -41,19 +44,26 @@
                     <p:inputText />
                 </h:panelGrid>
 
-                <h:panelGrid>
-                    <p:commandButton value="Save"/>
+                <h:panelGrid columns="2">
+                    <p:commandButton value="Save" actionListener="#{shopsView.dummy}" oncomplete="$('.hidden-form-item').hideFormItems()" update="formPanel"/>
+                    <p:commandButton value="test" actionListener="#{shopsView.dummy}" oncomplete="$('.hidden-form-item').showFormItems()" update="formPanel"/>
                 </h:panelGrid>
             </p:panel>
 
             <br/><br/>
 
-            <p:dataTable >
-                <p:column headerText="Col1"/>
-                <p:column headerText="Col2"/>
-                <p:column headerText="Col3"/>
-                <p:column headerText="Col4"/>
-            </p:dataTable>
+            <p:treeTable value="#{shopsView.root}" var="treeTableNode">
+                <p:column style="width:250px">
+                    <f:facet name="header"><h:outputText value="Magazin"/></f:facet>
+                    <h:outputText value="#{treeTableNode.name}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header"><h:outputText value="Col1"/></f:facet>
+                </p:column>
+                <p:column>
+                    <f:facet name="header"><h:outputText value="Col2"/></f:facet>
+                </p:column>
+            </p:treeTable>
         </h:form>
     </ui:define>
 </ui:composition>
