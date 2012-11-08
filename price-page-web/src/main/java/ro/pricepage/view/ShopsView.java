@@ -4,9 +4,14 @@ import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
+import ro.pricepage.persistence.StoreChain;
+import ro.pricepage.service.StoresService;
+
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,12 +25,21 @@ import java.io.Serializable;
 public class ShopsView implements Serializable
 {
     private static final long serialVersionUID = 1L;
+    
+    @EJB
+    private StoresService storesService;
 
     private TreeNode root;
+    
+    private String selectedChain;
+    
+    private List<String> allChainNames;
 
     @PostConstruct
     public void init()
     {
+    	findAllChainNames();
+    	
         root = new DefaultTreeNode("root", null);
 
         TreeNode cat1 = new DefaultTreeNode(new ShopDoc("Brasov"), root);
@@ -38,13 +52,37 @@ public class ShopsView implements Serializable
 
         TreeNode cat1111 = new DefaultTreeNode("document", new ShopDoc("Calea Bucuresti nr.107"), cat111);
     }
+    
+    public void onSave(){
+    	StoreChain chain = storesService.findSingleStoreChainByName(selectedChain);
+    	if(chain == null){
+    		chain = storesService.saveChainWithName(selectedChain);
+    	}
+    	
+    }
 
     public void dummy(){
+    }
+    
+    private void findAllChainNames(){
+    	allChainNames = storesService.findAllStoreChainNames();
     }
 
     public TreeNode getRoot(){return root;}
 
-    public class ShopDoc
+    public List<String> getAllChainNames() {
+		return allChainNames;
+	}
+
+	public String getSelectedChain() {
+		return selectedChain;
+	}
+
+	public void setSelectedChain(String selectedChain) {
+		this.selectedChain = selectedChain;
+	}
+
+	public class ShopDoc
     {
         private String name;
 

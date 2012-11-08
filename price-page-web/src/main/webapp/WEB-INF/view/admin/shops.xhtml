@@ -13,6 +13,11 @@
                 <h:panelGrid id="formPanel" columns="2" cellpadding="5">
                     <h:outputText value="Magazin: *"/>
                     <p:autoComplete maxResults="5"/>
+                    
+                    <h:outputText value="Lant: *"/>
+                     <p:selectOneMenu editable="true" value="#{shopsView.selectedChain}">
+                     	<f:selectItems value="#{shopsView.allChainNames}"/>
+                     </p:selectOneMenu>
 
                     <h:outputText styleClass="hidden-form-item" value="Tip Magazin: *"/>
                     <p:selectOneMenu styleClass="hidden-form-item">
@@ -45,7 +50,7 @@
                 </h:panelGrid>
 
                 <h:panelGrid columns="2">
-                    <p:commandButton value="Save" actionListener="#{shopsView.dummy}" oncomplete="$('.hidden-form-item').hideFormItems()" update="formPanel"/>
+                    <p:commandButton value="Save" actionListener="#{shopsView.onSave}" update="formPanel"/>
                     <p:commandButton value="test" actionListener="#{shopsView.dummy}" oncomplete="$('.hidden-form-item').showFormItems()" update="formPanel"/>
                 </h:panelGrid>
             </p:panel>

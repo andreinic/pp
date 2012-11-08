@@ -14,10 +14,6 @@ import javax.persistence.Table;
 public class Store extends BaseEntity {
 	private static final long serialVersionUID = -316251772567024056L;
 	private Integer id;
-	private String country;
-	private String street;
-	private String city;
-	private String building;
 	private String zip;
 	private String details;
 	private Double longitude;
@@ -25,6 +21,9 @@ public class Store extends BaseEntity {
 	private StoreType storeType;
 	private String contact;
 	private StoreChain chain;
+	private String address;
+	private String url;
+	private Locality locality;
 	
 	@Id
 	@Column(name="id", nullable=false, unique=true)
@@ -34,38 +33,6 @@ public class Store extends BaseEntity {
 	}
 	public void setId(Integer id) {
 		this.id = id;
-	}
-	
-	@Column(name="country", length=50)
-	public String getCountry() {
-		return country;
-	}
-	public void setCountry(String country) {
-		this.country = country;
-	}
-	
-	@Column(name="street", length=50)
-	public String getStreet() {
-		return street;
-	}
-	public void setStreet(String street) {
-		this.street = street;
-	}
-	
-	@Column(name="city", length=50)
-	public String getCity() {
-		return city;
-	}
-	public void setCity(String city) {
-		this.city = city;
-	}
-	
-	@Column(name="building", length=20)
-	public String getBuilding() {
-		return building;
-	}
-	public void setBuilding(String building) {
-		this.building = building;
 	}
 	
 	@Column(name="zip", length=20)
@@ -124,5 +91,30 @@ public class Store extends BaseEntity {
 	}
 	public void setChain(StoreChain chain) {
 		this.chain = chain;
+	}
+	
+	@Column(name="addresses", columnDefinition="text")
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
+	@Column(name="url", columnDefinition="text")
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	
+	@ManyToOne
+	@JoinColumn(name="fk_locality")
+	public Locality getLocality() {
+		return locality;
+	}
+	public void setLocality(Locality locality) {
+		this.locality = locality;
 	}
 }

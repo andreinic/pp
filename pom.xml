@@ -9,6 +9,7 @@
     <version>1.0</version>
     <modules>
         <module>price-page-persistence</module>
+        <module>price-page-service</module>
         <module>price-page-web</module>
     </modules>
     <properties>

@@ -7,5 +7,8 @@
    <persistence-unit name="ppUnit">
    		<provider>org.hibernate.ejb.HibernatePersistence</provider>
    		<jta-data-source>java:jboss/datasources/pp</jta-data-source>
+   		<properties>
+   			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+   		</properties>
    </persistence-unit>
 </persistence>
