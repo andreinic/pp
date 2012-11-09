@@ -27,7 +27,7 @@ public class Store extends BaseEntity {
 	
 	@Id
 	@Column(name="id", nullable=false, unique=true)
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Integer getId() {
 		return id;
 	}

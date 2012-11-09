@@ -23,7 +23,7 @@ public class Locality extends BaseEntity {
 	
 	@Id
 	@Column(name="id", unique=true, nullable=false)
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Integer getId() {
 		return id;
 	}

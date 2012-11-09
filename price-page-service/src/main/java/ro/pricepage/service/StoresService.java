@@ -45,7 +45,6 @@ public class StoresService extends BaseService {
 	public StoreChain saveChainWithName(String name){
 		StoreChain chain = new StoreChain();
 		chain.setName(name);
-		em. persist(chain);
-		return chain;
+		return em.merge(chain);
 	}
 }
