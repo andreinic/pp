@@ -24,6 +24,18 @@ public class Store extends BaseEntity {
 	private String address;
 	private String url;
 	private Location locality;
+	private String name;
+	
+	public Store(){}
+	
+	public Store(String name, StoreChain chain, StoreType type, Location locality, String address, String zip){
+		this.name = name;
+		this.chain = chain;
+		this.storeType = type;
+		this.locality = locality;
+		this.address = address;
+		this.zip = zip;
+	}
 	
 	@Id
 	@Column(name="id", nullable=false, unique=true)
@@ -110,11 +122,19 @@ public class Store extends BaseEntity {
 	}
 	
 	@ManyToOne
-	@JoinColumn(name="fk_locality")
+	@JoinColumn(name="fk_location")
 	public Location getLocality() {
 		return locality;
 	}
 	public void setLocality(Location locality) {
 		this.locality = locality;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

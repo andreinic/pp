@@ -5,12 +5,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="locations")
+@NamedQueries(value={
+		@NamedQuery(name=Location.Q_FIND_ALL_CITIES_BY_COUNTY, query="SELECT DISTINCT(city) FROM Location WHERE county = :county"),
+		@NamedQuery(name=Location.Q_FIND_ALL_COUNTIES, query="SELECT DISTINCT(county) FROM Location")
+})
 public class Location extends BaseEntity {
 	private static final long serialVersionUID = -2535910147758488039L;
+	public static final String Q_FIND_ALL_CITIES_BY_COUNTY = "Location.findAllCitiesByCounty";
+	public static final String Q_FIND_ALL_COUNTIES = "Location.findAllCounties";
 
 	private Integer id;
     private String city;

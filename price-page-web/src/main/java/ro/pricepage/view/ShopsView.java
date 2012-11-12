@@ -1,17 +1,23 @@
 package ro.pricepage.view;
 
-import com.ocpsoft.pretty.faces.annotation.URLMapping;
-import org.primefaces.model.DefaultTreeNode;
-import org.primefaces.model.TreeNode;
-
-import ro.pricepage.persistence.entities.StoreChain;
-import ro.pricepage.service.StoresService;
+import java.io.Serializable;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
-import java.util.List;
+import javax.faces.bean.SessionScoped;
+import javax.faces.event.AjaxBehaviorEvent;
+
+import org.primefaces.model.DefaultTreeNode;
+import org.primefaces.model.TreeNode;
+
+import ro.pricepage.persistence.entities.StoreChain;
+import ro.pricepage.persistence.entities.StoreType;
+import ro.pricepage.service.LocalitiesService;
+import ro.pricepage.service.StoresService;
+
+import com.ocpsoft.pretty.faces.annotation.URLMapping;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,23 +28,36 @@ import java.util.List;
  */
 @ManagedBean(name = "shopsView")
 @URLMapping(id = "shopsView", pattern = "/admin/magazine", viewId = "/WEB-INF/view/admin/shops.jsf")
+@SessionScoped
 public class ShopsView implements Serializable
 {
     private static final long serialVersionUID = 1L;
     
     @EJB
     private StoresService storesService;
+    
+    @EJB
+    private LocalitiesService localitiesService;
 
     private TreeNode root;
     
     private String selectedChain;
+    private String selectedType;
+    private String storeName;
+    private String selectedCounty;
+    private String selectedLocality;
     
     private List<String> allChainNames;
+    private List<String> allTypeNames;
+    private List<String> allCounties;
+    private List<String> localities;
 
     @PostConstruct
     public void init()
     {
     	findAllChainNames();
+    	findAllTypeNames();
+    	findAllCounties();
     	
         root = new DefaultTreeNode("root", null);
 
@@ -59,6 +78,12 @@ public class ShopsView implements Serializable
     		chain = storesService.saveChainWithName(selectedChain);
     	}
     	
+    	StoreType type = storesService.findSingleStoreTypeByName(selectedType);
+    	if(type == null){
+    		type = storesService.saveTypeWithName(selectedType);
+    	}
+    	
+//    	Store store = new Store(storeName, chain, type); 
     }
 
     public void dummy(){
@@ -66,6 +91,18 @@ public class ShopsView implements Serializable
     
     private void findAllChainNames(){
     	allChainNames = storesService.findAllStoreChainNames();
+    }
+    
+    private void findAllTypeNames(){
+    	allTypeNames = storesService.findAllStoreTypeNames();
+    }
+    
+    private void findAllCounties(){
+    	allCounties = localitiesService.findAllCounties();
+    }
+    
+    public void populateLocalities(AjaxBehaviorEvent event){
+    	localities = localitiesService.findAllCitiesForCounty(selectedCounty);
     }
 
     public TreeNode getRoot(){return root;}
@@ -80,6 +117,62 @@ public class ShopsView implements Serializable
 
 	public void setSelectedChain(String selectedChain) {
 		this.selectedChain = selectedChain;
+	}
+
+	public String getStoreName() {
+		return storeName;
+	}
+
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
+	}
+
+	public List<String> getAllTypeNames() {
+		return allTypeNames;
+	}
+
+	public void setAllTypeNames(List<String> allTypeNames) {
+		this.allTypeNames = allTypeNames;
+	}
+
+	public String getSelectedType() {
+		return selectedType;
+	}
+
+	public void setSelectedType(String selectedType) {
+		this.selectedType = selectedType;
+	}
+
+	public List<String> getAllCounties() {
+		return allCounties;
+	}
+
+	public void setAllCounties(List<String> allCounties) {
+		this.allCounties = allCounties;
+	}
+
+	public List<String> getLocalities() {
+		return localities;
+	}
+
+	public void setLocalities(List<String> localities) {
+		this.localities = localities;
+	}
+
+	public String getSelectedCounty() {
+		return selectedCounty;
+	}
+
+	public void setSelectedCounty(String selectedCounty) {
+		this.selectedCounty = selectedCounty;
+	}
+
+	public String getSelectedLocality() {
+		return selectedLocality;
+	}
+
+	public void setSelectedLocality(String selectedLocality) {
+		this.selectedLocality = selectedLocality;
 	}
 
 	public class ShopDoc
