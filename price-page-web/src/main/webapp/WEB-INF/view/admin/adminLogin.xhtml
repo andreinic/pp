@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      lang="en">
+    <h:head>
+        <meta charset="utf-8"/>
+        <title>Price Page Admin</title>
+    </h:head>
+    <h:body>
+        <div>
+            <h:form>
+                <div>
+                    <h1>PRICE PAGE ADMIN</h1>
+                    <div>
+                        <p:inputText type="text" value="username" id="username" name="username"/>
+                        <h:outputLabel for="username" value="numele administratorului"/>
+
+                        <p:inputText type="password" value="password" id="password" name="password"/>
+                        <h:outputLabel for="password" value="parola"/>
+                    </div>
+                    <div class="admin-clear"/>
+                    <p:commandButton value="Login"/>
+                    <div class="admin-clear"/>
+                </div>
+            </h:form>
+        </div>
+    </h:body>
+</html>

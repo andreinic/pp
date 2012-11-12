@@ -1,4 +1,4 @@
-package ro.pricepage.persistence;
+package ro.pricepage.persistence.entities;
 
 import java.io.Serializable;
 

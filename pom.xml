@@ -78,6 +78,12 @@
                 <artifactId>logback-classic</artifactId>
                 <version>1.0.7</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.tzotopia.db</groupId>
+                <artifactId>db-utils</artifactId>
+                <version>1.0</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <repositories>

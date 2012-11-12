@@ -11,7 +11,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import ro.pricepage.persistence.StoreChain;
+import ro.pricepage.persistence.entities.StoreChain;
 
 @Named("storesService")
 @Stateless

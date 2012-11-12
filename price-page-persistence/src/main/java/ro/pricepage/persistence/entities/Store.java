@@ -1,4 +1,4 @@
-package ro.pricepage.persistence;
+package ro.pricepage.persistence.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +23,7 @@ public class Store extends BaseEntity {
 	private StoreChain chain;
 	private String address;
 	private String url;
-	private Locality locality;
+	private Location locality;
 	
 	@Id
 	@Column(name="id", nullable=false, unique=true)
@@ -111,10 +111,10 @@ public class Store extends BaseEntity {
 	
 	@ManyToOne
 	@JoinColumn(name="fk_locality")
-	public Locality getLocality() {
+	public Location getLocality() {
 		return locality;
 	}
-	public void setLocality(Locality locality) {
+	public void setLocality(Location locality) {
 		this.locality = locality;
 	}
 }

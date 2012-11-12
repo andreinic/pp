@@ -34,5 +34,9 @@
 			<groupId>price-page</groupId>
 			<version>${current.version}</version>
 		</dependency>
+        <dependency>
+            <groupId>org.tzotopia.db</groupId>
+            <artifactId>db-utils</artifactId>
+        </dependency>
 	</dependencies>
 </project>

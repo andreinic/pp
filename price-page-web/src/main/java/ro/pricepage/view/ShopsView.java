@@ -4,7 +4,7 @@ import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
-import ro.pricepage.persistence.StoreChain;
+import ro.pricepage.persistence.entities.StoreChain;
 import ro.pricepage.service.StoresService;
 
 import javax.annotation.PostConstruct;

@@ -1,4 +1,4 @@
-package ro.pricepage.persistence;
+package ro.pricepage.persistence.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,12 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="counties")
-public class County extends BaseEntity {
-	private static final long serialVersionUID = 8963504961089939796L;
-	
+@Table(name="store_types")
+public class StoreType extends BaseEntity {
+	private static final long serialVersionUID = -8987519479616465542L;
 	private Integer id;
-	private String code;
+	private String name;
 	
 	@Id
 	@Column(name="id", nullable=false, unique=true)
@@ -25,12 +24,11 @@ public class County extends BaseEntity {
 		this.id = id;
 	}
 	
-	@Column(name="code", length=5, nullable=false)
-	public String getCode() {
-		return code;
+	@Column(name="name", length=50)
+	public String getName() {
+		return name;
 	}
-	public void setCode(String code) {
-		this.code = code;
+	public void setName(String name) {
+		this.name = name;
 	}
-
 }
