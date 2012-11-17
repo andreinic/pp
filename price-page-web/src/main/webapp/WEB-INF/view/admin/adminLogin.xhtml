@@ -10,21 +10,21 @@
     </h:head>
     <h:body>
         <div>
-            <h:form>
+            <form method="post" action="j_security_check">
                 <div>
                     <h1>PRICE PAGE ADMIN</h1>
                     <div>
-                        <p:inputText type="text" value="username" id="username" name="username"/>
-                        <h:outputLabel for="username" value="numele administratorului"/>
+                        <p:inputText type="text" name="j_username"/>
+                        <h:outputLabel value="numele administratorului"/>
 
-                        <p:inputText type="password" value="password" id="password" name="password"/>
-                        <h:outputLabel for="password" value="parola"/>
+                        <p:inputText type="password" name="j_password"/>
+                        <h:outputLabel value="parola"/>
                     </div>
                     <div class="admin-clear"/>
-                    <p:commandButton value="Login"/>
+                    <p:commandButton value="Login" type="submit"/>
                     <div class="admin-clear"/>
                 </div>
-            </h:form>
+            </form>
         </div>
     </h:body>
 </html>

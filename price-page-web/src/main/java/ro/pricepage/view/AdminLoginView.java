@@ -13,10 +13,8 @@ import java.io.Serializable;
  */
 @Named(value = "adminLoginView")
 @Stateless
-@URLMapping(id = "adminLoginView", pattern = "/admin", viewId = "/WEB-INF/view/admin/adminLogin.jsf")
+@URLMapping(id = "adminLoginView", pattern = "/admin/login", viewId = "/WEB-INF/view/admin/adminLogin.jsf")
 public class AdminLoginView implements Serializable
 {
     private static final long serialVersionUID = 1L;
-
-
 }

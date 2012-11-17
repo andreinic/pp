@@ -80,7 +80,7 @@
             </dependency>
 
             <dependency>
-                <groupId>org.tzotopia.db</groupId>
+                <groupId>org.hephaestus.db</groupId>
                 <artifactId>db-utils</artifactId>
                 <version>1.0</version>
             </dependency>
