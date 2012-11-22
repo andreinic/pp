@@ -2,8 +2,10 @@ package ro.pricepage.view;
 
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
 
-import javax.ejb.Stateless;
-import javax.inject.Named;
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 
 /**
@@ -11,10 +13,16 @@ import java.io.Serializable;
  * Date: 11.11.2012
  * Time: 19:30
  */
-@Named(value = "adminLoginView")
-@Stateless
+@ManagedBean(name = "adminLoginView")
+@RequestScoped
 @URLMapping(id = "adminLoginView", pattern = "/admin/login", viewId = "/WEB-INF/view/admin/adminLogin.jsf")
 public class AdminLoginView implements Serializable
 {
     private static final long serialVersionUID = 1L;
+
+    public void login(){
+//        if(ctx == null) System.out.println("Context is null");
+//        else if(ctx.getCallerPrincipal() == null) System.out.println("caller principal is null");
+//        else System.out.println(ctx.getCallerPrincipal().getName());
+    }
 }

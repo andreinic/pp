@@ -45,6 +45,13 @@
                 <scope>provided</scope>
             </dependency>
 
+            <dependency>
+                <groupId>javax.enterprise</groupId>
+                <artifactId>cdi-api</artifactId>
+                <version>1.1-20121030</version>
+                <scope>provided</scope>
+            </dependency>
+
             <!-- JSF related-->
             <dependency>
                 <groupId>javax.faces</groupId>
