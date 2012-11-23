@@ -1,4 +1,4 @@
-package ro.pricepage;
+package ro.pricepage.qualifiers;
 
 import javax.inject.Qualifier;
 import java.lang.annotation.ElementType;

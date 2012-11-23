@@ -3,11 +3,12 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>price-page</groupId>
-    <artifactId>price-page</artifactId>
+    <groupId>ro.pricepage</groupId>
+    <artifactId>price-page-parent</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
     <modules>
+        <module>price-page-common</module>
         <module>price-page-persistence</module>
         <module>price-page-service</module>
         <module>price-page-web</module>
@@ -48,7 +49,7 @@
             <dependency>
                 <groupId>javax.enterprise</groupId>
                 <artifactId>cdi-api</artifactId>
-                <version>1.1-20121030</version>
+                <version>1.0-SP4</version>
                 <scope>provided</scope>
             </dependency>
 

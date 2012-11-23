@@ -31,28 +31,28 @@
         <role-name>user</role-name>
     </security-role>
 
-    <!-- activate security -->
-    <!--<security-constraint>-->
-        <!--<web-resource-collection>-->
-            <!--<web-resource-name>price-page</web-resource-name>-->
-            <!--<url-pattern>/admin/*</url-pattern>-->
-            <!--<http-method>GET</http-method>-->
-            <!--<http-method>POST</http-method>-->
-            <!--<http-method>PUT</http-method>-->
-            <!--<http-method>DELETE</http-method>-->
-        <!--</web-resource-collection>-->
-        <!--<auth-constraint>-->
-            <!--<role-name>admin</role-name>-->
-        <!--</auth-constraint>-->
-    <!--</security-constraint>-->
-    <!--<login-config>-->
-        <!--<auth-method>FORM</auth-method>-->
-        <!--<form-login-config>-->
-            <!--<form-login-page>/admin/login</form-login-page>-->
-            <!--<form-error-page>/admin/login</form-error-page>-->
-        <!--</form-login-config>-->
-        <!--<realm-name>price-page</realm-name>-->
-    <!--</login-config>-->
+     <!--activate security -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>price-page</web-resource-name>
+            <url-pattern>/admin/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+            <http-method>PUT</http-method>
+            <http-method>DELETE</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>admin</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-login-page>/admin/login</form-login-page>
+            <form-error-page>/admin/login</form-error-page>
+        </form-login-config>
+        <realm-name>price-page</realm-name>
+    </login-config>
 
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
