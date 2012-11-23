@@ -25,13 +25,8 @@ public class AdminLoginView implements Serializable
     @Inject @PricePageDefault
     private SessionContext sessionContext;
 
-    public void login(){
-        if(sessionContext == null) System.out.println("Context is null");
-        else if(sessionContext.getCallerPrincipal() == null) System.out.println("caller principal is null");
-        else System.out.println(sessionContext.getCallerPrincipal().getName());
-
-        FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
-
-        //login?faces-redirect=true
+    public String login(){
+        System.out.println(sessionContext.getCallerPrincipal().getName());
+        return "pretty:categoriesView";
     }
 }
