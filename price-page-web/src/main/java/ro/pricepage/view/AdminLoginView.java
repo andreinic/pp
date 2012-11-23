@@ -5,6 +5,7 @@ import ro.pricepage.qualifiers.PricePageDefault;
 
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -28,5 +29,9 @@ public class AdminLoginView implements Serializable
         if(sessionContext == null) System.out.println("Context is null");
         else if(sessionContext.getCallerPrincipal() == null) System.out.println("caller principal is null");
         else System.out.println(sessionContext.getCallerPrincipal().getName());
+
+        FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
+
+        //login?faces-redirect=true
     }
 }
