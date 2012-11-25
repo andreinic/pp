@@ -30,10 +30,12 @@
     </filter>
     <filter-mapping>
         <filter-name>authenticationFilter</filter-name>
-        <url-pattern>/admin/*</url-pattern>
+        <url-pattern>/admin/categorii</url-pattern>
+        <url-pattern>/admin/produse</url-pattern>
+        <url-pattern>/admin/producatori</url-pattern>
+        <url-pattern>/admin/magazine</url-pattern>
+        <url-pattern>/admin</url-pattern>
         <dispatcher>REQUEST</dispatcher>
-        <dispatcher>FORWARD</dispatcher>
-        <dispatcher>ERROR</dispatcher>
     </filter-mapping>
 
     <!-- define security roles -->

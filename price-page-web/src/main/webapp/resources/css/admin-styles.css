@@ -1,6 +1,6 @@
 html, div, map, dt, isindex, form, header, aside, section, section, article, footer {  
     display: block;  
-} 
+}
 
 html, body {
     height: 100%;
@@ -25,6 +25,79 @@ a:link, a:visited{
 }
 a:hover{
     text-decoration: underline;
+}
+
+/* Login form */
+.admin-login-container{
+    background : url(#{resource['images/container.png']}) no-repeat;
+    width : 745px;
+    height : 370px;
+    margin : 20px auto;
+    padding : 50px 0;
+    overflow : hidden;
+    position : relative;
+}
+
+.admin-login-form{
+    margin : 66px 72px 0 72px;
+}
+
+.admin-login-container h1{
+    text-align : center;
+    font-size : 24px;
+    text-shadow : 1px 1px 2px #222;
+}
+
+.admin-login-container input {
+    background: url(#{resource['images/input.png']}) no-repeat;
+    color: #888;
+    border: 1px solid #ccc;
+    font-weight: bold;
+    font-size: 15px;
+    width: 300px;
+    height: 35px;
+    padding: 0 25px;
+    margin: 20px 0;
+    float: left;
+
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+}
+
+.submit{
+    border: none;
+    cursor: pointer;
+    width: 85px;
+    position: relative;
+    bottom: 2px;
+    left: 640px;
+    background-color : #a90329;
+    color : #fff;
+}
+
+.admin-login-container input.submit:focus { border: none; }
+
+.admin-login-container input.error { border: 1px solid red; }
+.admin-login-container input.valid { border: 1px solid #1FFF00; }
+
+.admin-login-container input:focus{
+    border: 1px solid #a90329;
+    color: #a90329;
+}
+
+.admin-login-container label {
+    color: #666;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 14px;
+    float: right;
+    margin: 23px -25px;
+    width: 270px;
+}
+
+.admin-login-container h1 span{
+    color : #a90329;
 }
 
 /* Header */

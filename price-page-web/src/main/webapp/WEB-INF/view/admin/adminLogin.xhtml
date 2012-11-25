@@ -7,13 +7,14 @@
     <h:head>
         <meta charset="utf-8"/>
         <title>Price Page Admin</title>
+        <h:outputStylesheet name="css/admin-styles.css"/>
     </h:head>
     <h:body>
-        <div>
+        <div class="admin-login-container">
             <form method="post" action="j_security_check">
                 <div>
-                    <h1>PRICE PAGE ADMIN</h1>
-                    <div>
+                    <h1>Login to you <span>Price Page</span> admin account</h1>
+                    <div class="admin-login-form">
                         <p:inputText type="text" name="j_username"/>
                         <h:outputLabel value="numele administratorului"/>
 
@@ -21,9 +22,9 @@
                         <h:outputLabel value="parola"/>
                     </div>
                     <div class="admin-clear"/>
-                    <p:commandButton value="Login" type="submit" action="#{adminLoginView.login}"/>
-                    <div class="admin-clear"/>
+                    <p:commandButton value="Login" type="submit" action="#{adminLoginView.login}" styleClass="submit"/>
                 </div>
+                <div class="admin-clear"/>
             </form>
         </div>
     </h:body>

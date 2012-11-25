@@ -26,6 +26,7 @@ public class AuthenticationFilter implements Filter
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         String uri = request.getRequestURI();
+        System.out.println(uri);
         boolean authenticated = true;
 
         if(authenticated){
