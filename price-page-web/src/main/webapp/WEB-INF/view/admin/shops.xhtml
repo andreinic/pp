@@ -31,12 +31,14 @@
 					<h:outputText value="Judet: *" />
 					<p:selectOneMenu value="#{shopsView.selectedCounty}">
 						<f:selectItems value="#{shopsView.allCounties}" />
-						<p:ajax event="change" process="@this" update="localityInput messages"
-							listener="#{shopsView.populateLocalities}"/>
+						<p:ajax event="change" process="@this"
+							update="localityInput messages"
+							listener="#{shopsView.populateLocalities}" />
 					</p:selectOneMenu>
 
 					<h:outputText value="Localitate: *" />
-					<p:selectOneMenu id="localityInput" value="#{shopsView.selectedLocality}">
+					<p:selectOneMenu id="localityInput"
+						value="#{shopsView.selectedLocality}">
 						<f:selectItems value="#{shopsView.localities}" />
 					</p:selectOneMenu>
 
@@ -45,6 +47,28 @@
 
 					<h:outputText value="Cod postal: *" />
 					<p:inputText />
+
+					<h:outputText value="Latitudine: *" />
+					<p:inputText id="latitudeInput" value="#{shopsView.latitude}">
+						<f:validateDoubleRange minimum="-90" maximum="90" />
+					</p:inputText>
+
+					<h:outputText value="Longitudine: *" />
+					<p:inputText id="longitudeInput" value="#{shopsView.longitude}">
+						<f:validateDoubleRange minimum="-180" maximum="180" />
+					</p:inputText>
+
+					<p:commandLink value="Arata pe harta:"
+						process="@this latitudeInput longitudeInput" 
+						update="gmap messages"
+						actionListener="#{shopsView.showOnMap}" />
+					<p:gmap id="gmap" center="45.653648, 25.601864" zoom="12"
+						type="roadmap" style="width:300px;height:300px"
+						model="#{shopsView.map}" fitBounds="true">
+						<p:ajax event="pointSelect" listener="#{shopsView.onPointSelect}"
+							update="@this latitudeInput longitudeInput messages" />
+					</p:gmap>
+
 					<p:messages id="messages" />
 				</h:panelGrid>
 

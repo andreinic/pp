@@ -13,22 +13,18 @@ import javax.persistence.Table;
 @Table(name="locations")
 @NamedQueries(value={
 		@NamedQuery(name=Location.Q_FIND_ALL_CITIES_BY_COUNTY, query="SELECT DISTINCT(city) FROM Location WHERE county = :county"),
-		@NamedQuery(name=Location.Q_FIND_ALL_COUNTIES, query="SELECT DISTINCT(county) FROM Location")
+		@NamedQuery(name=Location.Q_FIND_ALL_COUNTIES, query="SELECT DISTINCT(county) FROM Location"),
+		@NamedQuery(name=Location.Q_FIND_ALL_LOCATIONS_BY_COUNTY, query="FROM Location WHERE county = :county")
 })
 public class Location extends BaseEntity {
 	private static final long serialVersionUID = -2535910147758488039L;
 	public static final String Q_FIND_ALL_CITIES_BY_COUNTY = "Location.findAllCitiesByCounty";
+	public static final String Q_FIND_ALL_LOCATIONS_BY_COUNTY = "Location.findAllLocationsByCounty";
 	public static final String Q_FIND_ALL_COUNTIES = "Location.findAllCounties";
 
 	private Integer id;
     private String city;
     private String county;
-
-//	private Integer siruta;
-//	private String name;
-//	private String environment;
-//	private String superior;
-//	private County county;
 
 	@Id
 	@Column(name="id", unique=true, nullable=false, length = 11)
@@ -55,47 +51,4 @@ public class Location extends BaseEntity {
     public void setCounty(String county){
         this.county = county;
     }
-
-
-
-//	@Column(name="siruta")
-//	public Integer getSiruta() {
-//		return siruta;
-//	}
-//	public void setSiruta(Integer siruta) {
-//		this.siruta = siruta;
-//	}
-//
-//	@Column(name="name", length=50)
-//	public String getName() {
-//		return name;
-//	}
-//	public void setName(String name) {
-//		this.name = name;
-//	}
-//
-//	@Column(name="environment", length=20)
-//	public String getEnvironment() {
-//		return environment;
-//	}
-//	public void setEnvironment(String environment) {
-//		this.environment = environment;
-//	}
-//
-//	@Column(name="superior", length=50)
-//	public String getSuperior() {
-//		return superior;
-//	}
-//	public void setSuperior(String superior) {
-//		this.superior = superior;
-//	}
-//
-//	@ManyToOne
-//	@JoinColumn(name="fk_county")
-//	public County getCounty() {
-//		return county;
-//	}
-//	public void setCounty(County county) {
-//		this.county = county;
-//	}
 }
