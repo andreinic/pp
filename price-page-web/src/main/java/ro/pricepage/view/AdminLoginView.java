@@ -33,19 +33,23 @@ public class AdminLoginView implements Serializable
     private String url;
 
     public String login(){
-        System.out.println(sessionContext.getCallerPrincipal().getName());
-        if(url != null && !url.equals("")){
-            FacesContext fc = FacesContext.getCurrentInstance();
-            HttpServletResponse response = (HttpServletResponse) fc.getExternalContext().getResponse();
-            try{
-                response.sendRedirect(url);
-            } catch (IOException e){
-                throw new IllegalStateException(e);
-            }
-            fc.responseComplete();
-            return null;
-        } else {
-            return "pretty:categoriesView"; //TODO should be home page of admin view.
-        }
+        System.out.println(url);
+        return "";
+//        if(url != null && !url.equals("")){
+//            FacesContext fc = FacesContext.getCurrentInstance();
+//            HttpServletResponse response = (HttpServletResponse) fc.getExternalContext().getResponse();
+//            try{
+//                response.sendRedirect(url);
+//            } catch (IOException e){
+//                throw new IllegalStateException(e);
+//            }
+//            fc.responseComplete();
+//            return null;
+//        } else {
+//            return "pretty:categoriesView"; //TODO should be home page of admin view.
+//        }
     }
+
+    public String getUrl(){ return url; }
+    public void setUrl(String value){ url = value; }
 }

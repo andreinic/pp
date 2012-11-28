@@ -8,24 +8,24 @@
         <meta charset="utf-8"/>
         <title>Price Page Admin</title>
         <h:outputStylesheet name="css/admin-styles.css"/>
+        <h:outputScript name="js/adminLoginFormProcess.js"/>
     </h:head>
     <h:body>
         <div class="admin-login-container">
-            <form method="post" action="j_security_check">
-                <div>
-                    <h1>Login to you <span>Price Page</span> admin account</h1>
+            <h:form>
+                <div id="loginStep">
+                    <h1>Login to your <span>Price Page</span> admin account</h1>
                     <div class="admin-login-form">
-                        <p:inputText type="text" name="j_username"/>
-                        <h:outputLabel value="numele administratorului"/>
-
-                        <p:inputText type="password" name="j_password"/>
-                        <h:outputLabel value="parola"/>
+                        <p:inputText id="username" type="text"/>
+                        <p:inputText type="password" id="password"/>
                     </div>
                     <div class="admin-clear"/>
-                    <p:commandButton value="Login" type="submit" action="#{adminLoginView.login}" styleClass="submit"/>
+                    <p:commandButton id="loginBtn" value="Login"
+                                     type="submit" styleClass="submit"
+                                     onclick="if($('#loginBtn').validateForm()) #{adminLoginView.login()}"/>
                 </div>
                 <div class="admin-clear"/>
-            </form>
+            </h:form>
         </div>
     </h:body>
 </html>
