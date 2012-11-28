@@ -12,9 +12,6 @@
         <module>price-page-service</module>
         <module>price-page-web</module>
     </modules>
-    <properties>
-    	<current.version>1.0</current.version>
-    </properties>
     <build>
         <pluginManagement>
             <plugins>
@@ -83,12 +80,24 @@
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
-                <version>1.0.7</version>
+                <version>1.0.6</version>
             </dependency>
 
             <dependency>
-                <groupId>org.hephaestus.db</groupId>
-                <artifactId>db-utils</artifactId>
+                <groupId>org.hephaestus</groupId>
+                <artifactId>hash-utils</artifactId>
+                <version>1.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ro.pricepage</groupId>
+                <artifactId>price-page-persistence</artifactId>
+                <version>1.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ro.pricepage</groupId>
+                <artifactId>price-page-service</artifactId>
                 <version>1.0</version>
             </dependency>
         </dependencies>

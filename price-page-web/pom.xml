@@ -36,13 +36,12 @@
 			<artifactId>prettyfaces-jsf2</artifactId>
 		</dependency>
 		<dependency>
+            <groupId>ro.pricepage</groupId>
 			<artifactId>price-page-service</artifactId>
-			<groupId>price-page</groupId>
-			<version>${current.version}</version>
 		</dependency>
         <dependency>
-            <groupId>org.hephaestus.db</groupId>
-            <artifactId>db-utils</artifactId>
+            <groupId>org.hephaestus</groupId>
+            <artifactId>hash-utils</artifactId>
         </dependency>
 	</dependencies>
 </project>

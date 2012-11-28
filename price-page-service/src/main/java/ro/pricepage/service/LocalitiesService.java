@@ -31,11 +31,11 @@ public class LocalitiesService extends BaseService {
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<Location> findAllLocationsForCounty(String county){
-		TypedQuery<Location> q = em.createNamedQuery(Location.Q_FIND_ALL_LOCATIONS_BY_COUNTY, Location.class)
+		TypedQuery<Location> q = em.createNamedQuery(Location.Q_FIND_ALL_CITIES_BY_COUNTY, Location.class)
 				.setParameter("county", county);
 		return q.getResultList();
 	}
-	
+
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<String> findAllCounties(){
 		TypedQuery<String> q = em.createNamedQuery(Location.Q_FIND_ALL_COUNTIES, String.class);
