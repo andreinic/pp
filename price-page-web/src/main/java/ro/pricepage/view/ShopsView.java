@@ -1,16 +1,16 @@
 package ro.pricepage.view;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
 
 import org.primefaces.event.map.PointSelectEvent;
 import org.primefaces.model.DefaultTreeNode;
@@ -21,6 +21,7 @@ import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 
 import ro.pricepage.persistence.entities.Location;
+import ro.pricepage.persistence.entities.Store;
 import ro.pricepage.persistence.entities.StoreChain;
 import ro.pricepage.persistence.entities.StoreType;
 import ro.pricepage.service.LocalitiesService;
@@ -37,7 +38,7 @@ import com.ocpsoft.pretty.faces.annotation.URLMapping;
  */
 @ManagedBean(name = "shopsView")
 @URLMapping(id = "shopsView", pattern = "/admin/magazine", viewId = "/WEB-INF/view/admin/shops.jsf")
-@SessionScoped
+@ViewScoped
 public class ShopsView implements Serializable
 {
     private static final String DEFAULT_COUNTY = "Brasov";
@@ -56,15 +57,19 @@ public class ShopsView implements Serializable
     private String selectedType;
     private String storeName;
     private String selectedCounty;
-    private String selectedLocality;
+    private Integer selectedLocalityId;
     private Double latitude;
     private Double longitude;
+    private String address;
+    private String zip;
     private MapModel map;
+    private String url;
     
     private List<String> allChainNames;
     private List<String> allTypeNames;
     private List<String> allCounties;
-    private DataModel<Location> localities;
+    private List<Location> localities;
+    private Map<Integer, Location> localitiesMap; 
 
     @PostConstruct
     public void init()
@@ -72,8 +77,8 @@ public class ShopsView implements Serializable
     	findAllChainNames();
     	findAllTypeNames();
     	findAllCounties();
-    	this.selectedCounty = DEFAULT_COUNTY;
-    	this.localities = new ListDataModel<Location>(localitiesService.findAllLocationsForCounty(DEFAULT_COUNTY));
+    	selectedCounty = DEFAULT_COUNTY;
+    	populateLocalities(DEFAULT_COUNTY);
     	
     	map = new DefaultMapModel();
     	
@@ -101,20 +106,23 @@ public class ShopsView implements Serializable
     		type = storesService.saveTypeWithName(selectedType);
     	}
     	
-//    	Store store = new Store(storeName, chain, type); 
+    	Location locality = findLocality(selectedLocalityId);
+    	
+    	Store store = new Store(storeName, chain, type, locality, address, zip, longitude, latitude, url);
+    	storesService.saveStore(store);
     }
     
     public void showOnMap(ActionEvent event){
-    	this.map.getMarkers().clear();
-    	this.map.addOverlay(new Marker(new LatLng(this.latitude.doubleValue(), this.longitude.doubleValue())));
+    	map.getMarkers().clear();
+    	map.addOverlay(new Marker(new LatLng(latitude.doubleValue(), longitude.doubleValue())));
     }
     
     public void onPointSelect(PointSelectEvent event){
-    	this.map.getMarkers().clear();
+    	map.getMarkers().clear();
     	LatLng latlng = event.getLatLng();
-    	this.map.addOverlay(new Marker(latlng));
-    	this.latitude = Double.valueOf(latlng.getLat());
-    	this.longitude = Double.valueOf(latlng.getLng());
+    	map.addOverlay(new Marker(latlng));
+    	latitude = Double.valueOf(latlng.getLat());
+    	longitude = Double.valueOf(latlng.getLng());
     }
 
     public void dummy(){
@@ -132,8 +140,20 @@ public class ShopsView implements Serializable
     	allCounties = localitiesService.findAllCounties();
     }
     
+    private void populateLocalities(String countyName){
+    	localities = localitiesService.findAllLocationsForCounty(countyName);
+    	localitiesMap = new HashMap<Integer, Location>();
+    	for(Location locality : localities){
+    		localitiesMap.put(locality.getId(), locality);
+    	}
+    }
+    
+    private Location findLocality(Integer id){
+    	return localitiesMap.get(id);
+    }
+    
     public void populateLocalities(AjaxBehaviorEvent event){
-    	localities = new ListDataModel<Location>(localitiesService.findAllLocationsForCounty(selectedCounty));
+    	populateLocalities(selectedCounty);
     }
 
     public TreeNode getRoot(){return root;}
@@ -190,12 +210,12 @@ public class ShopsView implements Serializable
 		this.selectedCounty = selectedCounty;
 	}
 
-	public String getSelectedLocality() {
-		return selectedLocality;
+	public Integer getSelectedLocalityId() {
+		return selectedLocalityId;
 	}
 
-	public void setSelectedLocality(String selectedLocality) {
-		this.selectedLocality = selectedLocality;
+	public void setSelectedLocalityId(Integer selectedLocalityId) {
+		this.selectedLocalityId = selectedLocalityId;
 	}
 
 	public Double getLatitude() {
@@ -222,12 +242,36 @@ public class ShopsView implements Serializable
 		this.map = map;
 	}
 
-	public DataModel<Location> getLocalities() {
+	public List<Location> getLocalities() {
 		return localities;
 	}
 
-	public void setLocalities(DataModel<Location> localities) {
+	public void setLocalities(List<Location> localities) {
 		this.localities = localities;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getZip() {
+		return zip;
+	}
+
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setURL(String url) {
+		url = url;
 	}
 
 	public class ShopDoc

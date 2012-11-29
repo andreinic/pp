@@ -28,13 +28,16 @@ public class Store extends BaseEntity {
 	
 	public Store(){}
 	
-	public Store(String name, StoreChain chain, StoreType type, Location locality, String address, String zip){
+	public Store(String name, StoreChain chain, StoreType type, Location locality, String address, String zip, Double longitude, Double latitude, String url){
 		this.name = name;
 		this.chain = chain;
 		this.storeType = type;
 		this.locality = locality;
 		this.address = address;
 		this.zip = zip;
+		this.url = url;
+		this.longitude = longitude;
+		this.latitude = latitude;
 	}
 	
 	@Id
@@ -105,7 +108,7 @@ public class Store extends BaseEntity {
 		this.chain = chain;
 	}
 	
-	@Column(name="addresses", columnDefinition="text")
+	@Column(name="address", columnDefinition="text")
 	public String getAddress() {
 		return address;
 	}
@@ -130,6 +133,7 @@ public class Store extends BaseEntity {
 		this.locality = locality;
 	}
 
+	@Column(name="name", length=100)
 	public String getName() {
 		return name;
 	}

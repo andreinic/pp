@@ -13,7 +13,7 @@
 			<p:panel header="Detalii magazin">
 				<h:panelGrid id="formPanel" columns="2" cellpadding="5">
 					<h:outputText value="Magazin: *" />
-					<p:autoComplete maxResults="5" />
+					<p:inputText value="#{shopsView.storeName}"/>
 
 					<h:outputText value="Lant: *" />
 					<p:selectOneMenu editable="true" value="#{shopsView.selectedChain}">
@@ -38,15 +38,15 @@
 
 					<h:outputText value="Localitate: *" />
 					<p:selectOneMenu id="localityInput"
-						value="#{shopsView.selectedLocality}">
-						<f:selectItems value="#{shopsView.localities}" />
+						value="#{shopsView.selectedLocalityId}">
+						<f:selectItems value="#{shopsView.localities}" var="locality" itemValue="#{locality.id}" itemLabel="#{locality.city}"/>
 					</p:selectOneMenu>
 
 					<h:outputText value="Adresa: *" />
-					<p:inputText />
+					<p:inputText value="#{shopsView.address}"/>
 
 					<h:outputText value="Cod postal: *" />
-					<p:inputText />
+					<p:inputText value="#{shopsView.zip}"/>
 
 					<h:outputText value="Latitudine: *" />
 					<p:inputText id="latitudeInput" value="#{shopsView.latitude}">
@@ -63,7 +63,7 @@
 						update="gmap messages"
 						actionListener="#{shopsView.showOnMap}" />
 					<p:gmap id="gmap" center="45.653648, 25.601864" zoom="12"
-						type="roadmap" style="width:300px;height:300px"
+						type="roadmap" style="width:500px;height:300px"
 						model="#{shopsView.map}" fitBounds="true">
 						<p:ajax event="pointSelect" listener="#{shopsView.onPointSelect}"
 							update="@this latitudeInput longitudeInput messages" />
@@ -74,9 +74,6 @@
 
 				<h:panelGrid columns="2">
 					<p:commandButton value="Save" actionListener="#{shopsView.onSave}"
-						update="formPanel" />
-					<p:commandButton value="test" actionListener="#{shopsView.dummy}"
-						oncomplete="$('.hidden-form-item').showFormItems()"
 						update="formPanel" />
 				</h:panelGrid>
 			</p:panel>
