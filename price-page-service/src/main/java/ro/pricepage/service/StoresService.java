@@ -11,6 +11,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import ro.pricepage.persistence.entities.Store;
 import ro.pricepage.persistence.entities.StoreChain;
 import ro.pricepage.persistence.entities.StoreType;
 
@@ -21,6 +22,11 @@ public class StoresService extends BaseService {
 
 	@PersistenceContext
 	private EntityManager em;
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	public Store saveStore(Store store){
+		return em.merge(store);
+	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<String> findAllStoreChainNames() {
