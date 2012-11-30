@@ -23,7 +23,10 @@ public class UserService extends BaseService
     
     public User getUser(String username, String password){
         try{
-            return em.createNamedQuery(User.GET_USER_BY_NAME_AND_PASSWORD, User.class).getSingleResult();
+            return em.createNamedQuery(User.GET_USER_BY_NAME_AND_PASSWORD, User.class)
+                     .setParameter("username", username)
+                     .setParameter("password", password)
+                     .getSingleResult();
         } catch (Exception e){
             return null;
         }

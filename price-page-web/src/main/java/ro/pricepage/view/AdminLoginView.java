@@ -9,7 +9,7 @@ import ro.pricepage.utils.SessionObject;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +31,6 @@ import static ro.pricepage.utils.CookieUtils.removeCookie;
  */
 @Named(value = "adminLoginView")
 @Stateless
-@RequestScoped
 @URLMapping(id = "adminLoginView", pattern = "/admin/login", viewId = "/WEB-INF/view/admin/adminLogin.jsf")
 public class AdminLoginView implements Serializable
 {
@@ -48,7 +47,6 @@ public class AdminLoginView implements Serializable
     private boolean remember;
 
     public String login() throws NoSuchAlgorithmException, UnsupportedEncodingException{
-        System.out.println(url);
         String hashedPass = SHA256.hash(password);
         User user = userService.getUser(username, hashedPass);
         FacesContext fc = FacesContext.getCurrentInstance();
@@ -58,12 +56,14 @@ public class AdminLoginView implements Serializable
             SessionObject so = new SessionObject();
             so.setName(user.getUsername());
             request.getSession().setAttribute("user", so);
-            final String cookieName = SHA256.hash(so.toString()) + request.getRemoteAddr();
-            if(remember){
-                addCookie(response, cookieName, UUID.randomUUID().toString(), COOKIE_AGE);
-            } else {
-                removeCookie(response, cookieName);
-            }
+            //"remember me" functionality
+//            final String cookieName = SHA256.hash(so.toString()) + request.getRemoteAddr();
+//            if(remember){
+//                addCookie(response, cookieName, UUID.randomUUID().toString(), COOKIE_AGE);
+//            } else {
+//                removeCookie(response, cookieName);
+//            }
+            fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Login successful", ""));
             if(url != null && !url.equals("")){
                 try{
                     response.sendRedirect(url);
@@ -75,7 +75,7 @@ public class AdminLoginView implements Serializable
                 return "pretty:categoriesView"; //TODO should be home page of admin view.
             }
         } else {
-            //TODO Display wrong user/pass.
+            fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login failed", "Wrong username or password"));
         }
         return null;
     }

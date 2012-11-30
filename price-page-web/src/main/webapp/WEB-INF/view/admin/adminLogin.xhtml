@@ -20,9 +20,16 @@
                         <p:inputText type="password" id="password" value="#{adminLoginView.password}"/>
                     </div>
                     <div class="admin-clear"/>
+                    <p:messages id="statusMsg" showDetail="true" autoUpdate="true"/>
+                    <div class="admin-clear"/>
+                    <!--
+                        onclick is a javascript listener that gets called before form submission.
+                        based on the return value of the onclick handler the action method is called or not.
+                    -->
                     <p:commandButton id="loginBtn" value="Login"
                                      type="submit" styleClass="submit"
-                                     onclick="if($('#loginBtn').validateForm()) #{adminLoginView.login()}"/>
+                                     onclick="return $('#loginBtn').validateForm()"
+                                     action="#{adminLoginView.login()}"/>
                 </div>
                 <div class="admin-clear"/>
             </h:form>

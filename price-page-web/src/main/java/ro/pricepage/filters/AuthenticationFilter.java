@@ -28,19 +28,22 @@ public class AuthenticationFilter implements Filter
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         SessionObject so = (SessionObject) request.getSession().getAttribute("user");
-        String cookieName = null;
-        try{
-            cookieName = SHA256.hash(so.toString()) + request.getRemoteAddr();
-        } catch (Exception e){ throw new ServletException("Exception hashing string"); }
-        if(so != null){
-            String uuid = getCookieValue(request, cookieName);
-            if(uuid != null){
-                addCookie(response, cookieName, uuid, COOKIE_AGE); //extend the cookie age
-            } else {
-                so = null;
-                removeCookie(response, cookieName);
-            }
-        }
+        //commented part is the base for "remember me" functionality
+//        if(so == null){
+//            String cookieName = null;
+//            try{
+//                cookieName = SHA256.hash(so.toString()) + request.getRemoteAddr();
+//            } catch (Exception e){
+//                throw new ServletException("Exception hashing string");
+//            }
+//            String uuid = getCookieValue(request, cookieName);
+//            if(uuid != null){
+//                addCookie(response, cookieName, uuid, COOKIE_AGE); //extend the cookie age
+//            } else {
+//                so = null;
+//                removeCookie(response, cookieName);
+//            }
+//        }
         String uri = request.getRequestURI();
         if(so == null){
             response.sendRedirect(request.getContextPath()+"/admin/login?url="+uri);

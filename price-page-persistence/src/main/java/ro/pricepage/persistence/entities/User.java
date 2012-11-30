@@ -8,9 +8,9 @@ import javax.persistence.*;
  * Time: 18:42
  */
 @Entity
-@Table(name = "admins")
+@Table(name = "users")
 @NamedQueries(value = {
-    @NamedQuery(name = User.GET_USER_BY_NAME_AND_PASSWORD, query = "from users where username=:username and password=:password")
+    @NamedQuery(name = User.GET_USER_BY_NAME_AND_PASSWORD, query = "FROM User WHERE username = :username AND password = :password")
 })
 public class User extends BaseEntity
 {
