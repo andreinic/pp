@@ -9,8 +9,15 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "admins")
-public class User
+@NamedQueries(value = {
+    @NamedQuery(name = User.GET_USER_BY_NAME_AND_PASSWORD, query = "from users where username=:username and password=:password")
+})
+public class User extends BaseEntity
 {
+    private static final long serialVersionUID = 1L;
+
+    public static final String GET_USER_BY_NAME_AND_PASSWORD = "User.getUserByNameAndPassword";
+
     private Integer id;
     private String username;
     private String email;

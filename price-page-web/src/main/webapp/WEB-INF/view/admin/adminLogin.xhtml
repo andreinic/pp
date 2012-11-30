@@ -16,8 +16,8 @@
                 <div id="loginStep">
                     <h1>Login to your <span>Price Page</span> admin account</h1>
                     <div class="admin-login-form">
-                        <p:inputText id="username" type="text"/>
-                        <p:inputText type="password" id="password"/>
+                        <p:inputText id="username" type="text" value="#{adminLoginView.username}"/>
+                        <p:inputText type="password" id="password" value="#{adminLoginView.password}"/>
                     </div>
                     <div class="admin-clear"/>
                     <p:commandButton id="loginBtn" value="Login"
