@@ -25,10 +25,12 @@
                 <h3>Producator Nou</h3>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="Nume: *"/>
-                    <p:inputText />
+                    <p:inputText id="producerName" required="true"/>
+                    <p:messages for="producerName"/>
                 </h:panelGrid>
                 <h:panelGrid>
-                    <p:commandButton value="Save" icon="ui-icon-disk"/>
+                    <p:commandButton value="Save" icon="ui-icon-disk"
+                                     actionListener="#{producerView.addProducer}"/>
                 </h:panelGrid>
             </div>
 

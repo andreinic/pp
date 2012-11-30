@@ -1,18 +1,17 @@
 package ro.pricepage.persistence.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="product_categories")
+@NamedQueries(value = {
+    @NamedQuery(name = ProductCategory.GET_CATEGORIES, query = "FROM ProductCategory")
+})
 public class ProductCategory extends BaseEntity {
 	private static final long serialVersionUID = -3557158368102788220L;
+
+    public static final String GET_CATEGORIES = "ProductCategory.getCategories";
+
 	private Integer id;
 	private ProductCategory parent;
 	private String name;

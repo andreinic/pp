@@ -3,6 +3,7 @@ package ro.pricepage.view;
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
+import ro.pricepage.persistence.entities.ProductCategory;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
