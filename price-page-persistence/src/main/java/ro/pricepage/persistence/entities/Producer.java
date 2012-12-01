@@ -10,20 +10,22 @@ import javax.persistence.*;
 @Entity
 @Table(name = "producers")
 @NamedQueries(value = {
-    @NamedQuery(name = Producer.GET_PRODUCERS, query = "FROM Producer")
+    @NamedQuery(name = Producer.GET_PRODUCERS, query = "FROM Producer"),
+    @NamedQuery(name = Producer.GET_PRODUCER_BY_NAME, query = "FROM Producer WHERE name = :name")
 })
 public class Producer extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
     public static final String GET_PRODUCERS = "Producer.getProducers";
+    public static final String GET_PRODUCER_BY_NAME = "Producer.getProducerByName";
 
     private Integer id;
     private String name;
 
     @Id
     @Column(name = "id", unique = true, nullable = false, length = 11)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }

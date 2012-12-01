@@ -9,34 +9,53 @@
     <ui:define name="title"><h:outputText value="Price Page Admin - Producatori"/></ui:define>
     <ui:define name="content">
         <h:form>
-            <div class="admin-content-left-col">
-                <p:dataList id="producersList"
-                            type="ordered" value="#{producersView.producers}" var="producer"
+            <p:contextMenu for="producersList">
+                <p:menuitem value="Delete" icon="ui-icon-close" update="producersList" actionListener="#{producersView.onDelete}"/>
+            </p:contextMenu>
+
+            <div id="listContainer" class="admin-content-left-col">
+                <p:dataTable id="producersList"
+                            type="ordered" value="#{producersView.dataModel}" var="producer"
+                            rowKey="#{producer.id}"
                             paginator="true" rows="25" effectSpeed="fast"
                             paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}"
-                            paginatorPosition="bottom">
-                    <p:inplace editor="true">
-                        <p:inputText value="#{producer.name}" required="true" label="text"/>
-                    </p:inplace>
-                </p:dataList>
+                            paginatorPosition="bottom"
+                            editable="true"
+                            selectionMode="single" selection="#{producersView.selectedItem}">
+                    <p:ajax event="rowEdit" listener="#{producersView.onEdit}"/>
+                    <p:column headerText="Producer">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{producer.name}"/>
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:inputText value="#{producer.name}" required="true" label="text"/>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Options">
+                        <p:rowEditor />
+                    </p:column>
+                </p:dataTable>
             </div>
 
-            <div class="admin-content-right-col">
+            <div id="detailsContainer" class="admin-content-right-col">
                 <h3>Producator Nou</h3>
-                <h:panelGrid columns="2">
+                <h:panelGrid columns="3">
                     <h:outputLabel value="Nume: *"/>
-                    <p:inputText id="producerName" required="true"/>
-                    <p:messages for="producerName"/>
+                    <p:inputText id="producerName" required="true"
+                                 requiredMessage="Producer name is required."
+                                 value="#{producersView.name}">
+                        <f:validator validatorId="requiredValidator"/>
+                    </p:inputText>
+                    <p:message for="producerName"/>
                 </h:panelGrid>
                 <h:panelGrid>
                     <p:commandButton value="Save" icon="ui-icon-disk"
-                                     actionListener="#{producerView.addProducer}"/>
+                                     actionListener="#{producersView.doSave}"
+                                     update="@form"/>
                 </h:panelGrid>
             </div>
-
-            <p:contextMenu for="producersList">
-                <p:menuitem value="Delete" icon="ui-icon-close"/>
-            </p:contextMenu>
         </h:form>
     </ui:define>
 </ui:composition>
