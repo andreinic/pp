@@ -2,7 +2,7 @@ package ro.pricepage.view;
 
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
 import com.ocpsoft.pretty.faces.annotation.URLQueryParameter;
-import org.hephaestus.db.encryption.SHA256;
+import org.hephaestus.hash.SHA256;
 import ro.pricepage.persistence.entities.User;
 import ro.pricepage.service.UserService;
 import ro.pricepage.utils.SessionObject;

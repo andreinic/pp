@@ -22,14 +22,14 @@ public class ProducersService extends BaseService
     @PersistenceContext
     private EntityManager em;
 
-    public Producer addProducer(String name){
+    public Producer add(String name){
         Producer producer = new Producer();
         producer.setName(name);
         em.persist(producer);
         return producer;
     }
 
-    public Producer updateProducer(Integer id, String name) throws Exception{
+    public Producer update(Integer id, String name) throws Exception{
         Producer producer = em.find(Producer.class, id);
         if(producer == null) throw new Exception("Unable to find entity to update");
         if(!producer.getName().equalsIgnoreCase(name.trim())){
@@ -38,17 +38,17 @@ public class ProducersService extends BaseService
         return producer;
     }
 
-    public void deleteProducer(Integer id) throws Exception{
+    public void delete(Integer id) throws Exception{
         Producer producer = em.find(Producer.class, id);
         if(producer == null) throw new Exception("Unable to find entity to delete");
         em.remove(producer);
     }
 
-    public Producer getProducer(String name){
+    public Producer get(String name){
         return (Producer) em.createNamedQuery(Producer.GET_PRODUCER_BY_NAME).setParameter("name", name).getSingleResult();
     }
 
-    public List<Producer> listProducers(){
+    public List<Producer> list(){
         return em.createNamedQuery(Producer.GET_PRODUCERS).getResultList();
     }
 }

@@ -41,7 +41,7 @@
 		</dependency>
         <dependency>
             <groupId>org.hephaestus</groupId>
-            <artifactId>hash-utils</artifactId>
+            <artifactId>hephaestus-commons</artifactId>
         </dependency>
 	</dependencies>
 </project>

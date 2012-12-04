@@ -1,6 +1,5 @@
 package ro.pricepage.filters;
 
-import org.hephaestus.db.encryption.SHA256;
 import ro.pricepage.utils.SessionObject;
 
 import javax.servlet.*;

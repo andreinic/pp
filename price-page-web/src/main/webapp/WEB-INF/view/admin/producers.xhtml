@@ -9,20 +9,14 @@
     <ui:define name="title"><h:outputText value="Price Page Admin - Producatori"/></ui:define>
     <ui:define name="content">
         <h:form>
-            <p:contextMenu for="producersList">
-                <p:menuitem value="Delete" icon="ui-icon-close" update="producersList" actionListener="#{producersView.onDelete}"/>
-            </p:contextMenu>
-
             <div id="listContainer" class="admin-content-left-col">
-                <p:dataTable id="producersList"
-                            type="ordered" value="#{producersView.dataModel}" var="producer"
-                            rowKey="#{producer.id}"
-                            paginator="true" rows="25" effectSpeed="fast"
-                            paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}"
-                            paginatorPosition="bottom"
-                            editable="true"
-                            selectionMode="single" selection="#{producersView.selectedItem}">
-                    <p:ajax event="rowEdit" listener="#{producersView.onEdit}"/>
+                <p:dataTable id="producersList" type="ordered"
+                             value="#{producersView.dataModel}" var="producer" rowKey="#{producer.id}"
+                             editable="true"
+                             paginator="true" rows="25" effectSpeed="fast"
+                             paginatorTemplate="{PreviousPageLink} {CurrentPageReport} {NextPageLink}"
+                             paginatorPosition="bottom">
+                    <p:ajax event="rowEdit" listener="#{producersView.onSave()}"/>
                     <p:column headerText="Producer">
                         <p:cellEditor>
                             <f:facet name="output">
@@ -35,26 +29,12 @@
                     </p:column>
                     <p:column headerText="Options">
                         <p:rowEditor />
+                        <p:commandLink value="Delete" update="producersList" actionListener="#{producersView.onDelete()}"/>
                     </p:column>
+                    <f:facet name="footer">
+                        <p:commandButton value="New" update="producersList" actionListener="#{producersView.makeProducer()}"/>
+                    </f:facet>
                 </p:dataTable>
-            </div>
-
-            <div id="detailsContainer" class="admin-content-right-col">
-                <h3>Producator Nou</h3>
-                <h:panelGrid columns="3">
-                    <h:outputLabel value="Nume: *"/>
-                    <p:inputText id="producerName" required="true"
-                                 requiredMessage="Producer name is required."
-                                 value="#{producersView.name}">
-                        <f:validator validatorId="requiredValidator"/>
-                    </p:inputText>
-                    <p:message for="producerName"/>
-                </h:panelGrid>
-                <h:panelGrid>
-                    <p:commandButton value="Save" icon="ui-icon-disk"
-                                     actionListener="#{producersView.doSave}"
-                                     update="@form"/>
-                </h:panelGrid>
             </div>
         </h:form>
     </ui:define>

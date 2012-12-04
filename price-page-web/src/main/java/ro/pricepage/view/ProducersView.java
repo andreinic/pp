@@ -10,7 +10,9 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 
@@ -20,6 +22,7 @@ import java.util.List;
  * Time: 10:48 PM
  */
 @ManagedBean(name = "producersView")
+@ViewScoped
 @URLMapping(id = "producersView", pattern = "/admin/producatori", viewId = "/WEB-INF/view/admin/producers.jsf")
 public class ProducersView implements Serializable
 {
@@ -28,55 +31,54 @@ public class ProducersView implements Serializable
     @EJB
     private ProducersService producersService;
 
-    private ProducerDataModel dataModel;
+    private transient ProducerDataModel dataModel;
 
     private List<Producer> producers;
-    private Producer selectedItem;
-
-    private String name;
 
     @PostConstruct
     public void init(){
-        producers = producersService.listProducers();
-        dataModel = new ProducerDataModel(producers);
+        System.out.println("init");
+        producers = producersService.list();
     }
 
-    public void doSave(){
-        if(isUnique(name)){
-            Producer prod = producersService.addProducer(name);
-            name = "";
-            producers.add(prod);
+    // Actions ---------------------------------------------------------------------------------------------
+    public void onSave(){
+        Producer producer = dataModel.getRowData();
+        if(producer.getId() == null){
+            producer.setId(producersService.add(producer.getName()).getId());
         } else {
-            FacesContext fc = FacesContext.getCurrentInstance();
-            fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, name + " already exists", ""));
-            fc.responseComplete();
+            try{
+                producersService.update(producer.getId(), producer.getName());
+            } catch (Exception e){
+                System.out.println("error updating producer");
+            }
         }
     }
 
-    //TODO Need unqiue validation here
-    public void onEdit(RowEditEvent event) throws Exception{
-        Producer prod = ((Producer) event.getObject());
-        Integer id = prod.getId();
-        String name = prod.getName();
-        producersService.updateProducer(id, name);
+    public void onDelete(){
+        Producer producer = dataModel.getRowData();
+        assert producer.getId() != null;
+        try{
+            producersService.delete(producer.getId());
+            producers.remove(producers.indexOf(producer));
+        } catch (Exception e){
+            System.out.println("error deleting producer");
+        }
     }
 
-    public void onDelete() throws Exception{
-        producersService.deleteProducer(selectedItem.getId());
-        selectedItem = null;
+    // Methods ----------------------------------------------------------------------------------------------
+    public void makeProducer(){
+        producers.add(0, new Producer());
     }
 
     private boolean isUnique(String name){
-        return producersService.getProducer(name) == null;
+        return producersService.get(name) == null;
     }
 
-    public List<Producer> getProducers(){ return producers; }
-
-    public String getName(){ return name; }
-    public void setName(String value) { name = value; }
-
-    public Producer getSelectedItem(){ return selectedItem; }
-    public void setSelectedItem(Producer value){ selectedItem = value; }
-
-    public ProducerDataModel getDataModel(){ return dataModel; }
+    // Getters and Setters -----------------------------------------------------------------------------------
+    public ProducerDataModel getDataModel(){
+        if(dataModel == null)
+            dataModel = new ProducerDataModel(producers);
+        return dataModel;
+    }
 }
