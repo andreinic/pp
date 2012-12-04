@@ -41,4 +41,10 @@ public class LocalitiesService extends BaseService {
 		TypedQuery<String> q = em.createNamedQuery(Location.Q_FIND_ALL_COUNTIES, String.class);
 		return q.getResultList();
 	}
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<String> findAllCitiesWithStores(){
+		TypedQuery<String> q = em.createNamedQuery(Location.Q_FIND_ALL_CITIES_WITH_STORES, String.class);
+		return q.getResultList();
+	}
 }

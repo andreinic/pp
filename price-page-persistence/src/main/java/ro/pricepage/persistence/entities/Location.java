@@ -14,13 +14,15 @@ import javax.persistence.Table;
 @NamedQueries(value={
 		@NamedQuery(name=Location.Q_FIND_ALL_CITIES_BY_COUNTY, query="SELECT DISTINCT(city) FROM Location WHERE county = :county"),
 		@NamedQuery(name=Location.Q_FIND_ALL_COUNTIES, query="SELECT DISTINCT(county) FROM Location"),
-		@NamedQuery(name=Location.Q_FIND_ALL_LOCATIONS_BY_COUNTY, query="FROM Location WHERE county = :county")
+		@NamedQuery(name=Location.Q_FIND_ALL_LOCATIONS_BY_COUNTY, query="FROM Location WHERE county = :county"),
+		@NamedQuery(name=Location.Q_FIND_ALL_CITIES_WITH_STORES, query="SELECT DISTINCT(city) FROM Location l WHERE EXISTS(SELECT s FROM Store s WHERE s.locality = l)")
 })
 public class Location extends BaseEntity {
 	private static final long serialVersionUID = -2535910147758488039L;
 	public static final String Q_FIND_ALL_CITIES_BY_COUNTY = "Location.findAllCitiesByCounty";
 	public static final String Q_FIND_ALL_LOCATIONS_BY_COUNTY = "Location.findAllLocationsByCounty";
 	public static final String Q_FIND_ALL_COUNTIES = "Location.findAllCounties";
+	public static final String Q_FIND_ALL_CITIES_WITH_STORES = "Location.findAllCitiesWithStores";
 
 	private Integer id;
     private String city;

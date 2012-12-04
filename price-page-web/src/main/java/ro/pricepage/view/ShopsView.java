@@ -12,6 +12,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
 
+import org.primefaces.event.NodeExpandEvent;
 import org.primefaces.event.map.PointSelectEvent;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
@@ -41,124 +42,133 @@ import com.ocpsoft.pretty.faces.annotation.URLMapping;
 @ViewScoped
 public class ShopsView implements Serializable
 {
-    private static final String DEFAULT_COUNTY = "Brasov";
+	private static final String DEFAULT_COUNTY = "Brasov";
 
 	private static final long serialVersionUID = 1L;
-    
-    @EJB
-    private StoresService storesService;
-    
-    @EJB
-    private LocalitiesService localitiesService;
 
-    private TreeNode root;
-    
-    private String selectedChain;
-    private String selectedType;
-    private String storeName;
-    private String selectedCounty;
-    private Integer selectedLocalityId;
-    private Double latitude;
-    private Double longitude;
-    private String address;
-    private String zip;
-    private MapModel map;
-    private String url;
-    
-    private List<String> allChainNames;
-    private List<String> allTypeNames;
-    private List<String> allCounties;
-    private List<Location> localities;
-    private Map<Integer, Location> localitiesMap; 
+	@EJB
+	private StoresService storesService;
 
-    @PostConstruct
-    public void init()
-    {
-    	findAllChainNames();
-    	findAllTypeNames();
-    	findAllCounties();
-    	selectedCounty = DEFAULT_COUNTY;
-    	populateLocalities(DEFAULT_COUNTY);
-    	
-    	map = new DefaultMapModel();
-    	
-        root = new DefaultTreeNode("root", null);
+	@EJB
+	private LocalitiesService localitiesService;
 
-        TreeNode cat1 = new DefaultTreeNode(new ShopDoc(DEFAULT_COUNTY), root);
+	private TreeNode treeRoot;
 
-        TreeNode cat11 = new DefaultTreeNode(new ShopDoc("Hipermaket"), cat1);
-        TreeNode cat12 = new DefaultTreeNode(new ShopDoc("Minimarket"), cat1);
+	private String selectedChain;
+	private String selectedType;
+	private String storeName;
+	private String selectedCounty;
+	private Integer selectedLocalityId;
+	private Double latitude;
+	private Double longitude;
+	private String address;
+	private String zip;
+	private MapModel map;
+	private String url;
 
-        TreeNode cat111 = new DefaultTreeNode(new ShopDoc("Carefour"), cat11);
-        TreeNode cat112 = new DefaultTreeNode(new ShopDoc("Real"), cat11);
+	private List<String> allChainNames;
+	private List<String> allTypeNames;
+	private List<String> allCounties;
+	private List<Location> localities;
+	private Map<Integer, Location> localitiesMap; 
 
-        TreeNode cat1111 = new DefaultTreeNode("document", new ShopDoc("Calea Bucuresti nr.107"), cat111);
-    }
-    
-    public void onSave(){
-    	StoreChain chain = storesService.findSingleStoreChainByName(selectedChain);
-    	if(chain == null){
-    		chain = storesService.saveChainWithName(selectedChain);
-    	}
-    	
-    	StoreType type = storesService.findSingleStoreTypeByName(selectedType);
-    	if(type == null){
-    		type = storesService.saveTypeWithName(selectedType);
-    	}
-    	
-    	Location locality = findLocality(selectedLocalityId);
-    	
-    	Store store = new Store(storeName, chain, type, locality, address, zip, longitude, latitude, url);
-    	storesService.saveStore(store);
-    }
-    
-    public void showOnMap(ActionEvent event){
-    	map.getMarkers().clear();
-    	map.addOverlay(new Marker(new LatLng(latitude.doubleValue(), longitude.doubleValue())));
-    }
-    
-    public void onPointSelect(PointSelectEvent event){
-    	map.getMarkers().clear();
-    	LatLng latlng = event.getLatLng();
-    	map.addOverlay(new Marker(latlng));
-    	latitude = Double.valueOf(latlng.getLat());
-    	longitude = Double.valueOf(latlng.getLng());
-    }
+	@PostConstruct
+	public void init()
+	{
+		findAllChainNames();
+		findAllTypeNames();
+		findAllCounties();
+		selectedCounty = DEFAULT_COUNTY;
+		populateLocalities(DEFAULT_COUNTY);
 
-    public void dummy(){
-    }
-    
-    private void findAllChainNames(){
-    	allChainNames = storesService.findAllStoreChainNames();
-    }
-    
-    private void findAllTypeNames(){
-    	allTypeNames = storesService.findAllStoreTypeNames();
-    }
-    
-    private void findAllCounties(){
-    	allCounties = localitiesService.findAllCounties();
-    }
-    
-    private void populateLocalities(String countyName){
-    	localities = localitiesService.findAllLocationsForCounty(countyName);
-    	localitiesMap = new HashMap<Integer, Location>();
-    	for(Location locality : localities){
-    		localitiesMap.put(locality.getId(), locality);
-    	}
-    }
-    
-    private Location findLocality(Integer id){
-    	return localitiesMap.get(id);
-    }
-    
-    public void populateLocalities(AjaxBehaviorEvent event){
-    	populateLocalities(selectedCounty);
-    }
+		map = new DefaultMapModel();
+		
+		initTree();
+	}
 
-    public TreeNode getRoot(){return root;}
+	public void onSave(){
+		StoreChain chain = storesService.findSingleStoreChainByName(selectedChain);
+		if(chain == null){
+			chain = storesService.saveChainWithName(selectedChain);
+		}
 
-    public List<String> getAllChainNames() {
+		StoreType type = storesService.findSingleStoreTypeByName(selectedType);
+		if(type == null){
+			type = storesService.saveTypeWithName(selectedType);
+		}
+
+		Location locality = findLocality(selectedLocalityId);
+
+		Store store = new Store(storeName, chain, type, locality, address, zip, longitude, latitude, url);
+		storesService.saveStore(store);
+	}
+
+	public void showOnMap(ActionEvent event){
+		map.getMarkers().clear();
+		map.addOverlay(new Marker(new LatLng(latitude.doubleValue(), longitude.doubleValue())));
+	}
+
+	public void onPointSelect(PointSelectEvent event){
+		map.getMarkers().clear();
+		LatLng latlng = event.getLatLng();
+		map.addOverlay(new Marker(latlng));
+		latitude = Double.valueOf(latlng.getLat());
+		longitude = Double.valueOf(latlng.getLng());
+	}
+
+	public void dummy(){
+	}
+
+	private void findAllChainNames(){
+		allChainNames = storesService.findAllStoreChainNames();
+	}
+
+	private void findAllTypeNames(){
+		allTypeNames = storesService.findAllStoreTypeNames();
+	}
+
+	private void findAllCounties(){
+		allCounties = localitiesService.findAllCounties();
+	}
+
+	private void populateLocalities(String countyName){
+		localities = localitiesService.findAllLocationsForCounty(countyName);
+		localitiesMap = new HashMap<Integer, Location>();
+		for(Location locality : localities){
+			localitiesMap.put(locality.getId(), locality);
+		}
+	}
+
+	private Location findLocality(Integer id){
+		return localitiesMap.get(id);
+	}
+
+	public void populateLocalities(AjaxBehaviorEvent event){
+		populateLocalities(selectedCounty);
+	}
+	
+	private void initTree(){
+		treeRoot = new DefaultTreeNode("root", null);
+		List<String> allCities = localitiesService.findAllCitiesWithStores();
+		for(String city : allCities){
+			new DefaultTreeNode(ShopDoc.Type.city.name(), new ShopDoc(city), treeRoot);
+		}
+	}
+	
+	public void onTreeNodeExpand(NodeExpandEvent e){
+		TreeNode treeNode = e.getTreeNode();
+		switch(ShopDoc.Type.valueOf(treeNode.getType())){
+		case city:
+			
+			break;
+		}
+	}
+
+	public TreeNode getTreeRoot(){
+		return treeRoot;
+	}
+
+	public List<String> getAllChainNames() {
 		return allChainNames;
 	}
 
@@ -271,19 +281,51 @@ public class ShopsView implements Serializable
 	}
 
 	public void setURL(String url) {
-		url = url;
+		this.url = url;
 	}
 
-	public class ShopDoc
-    {
-        private String name;
+	public static class ShopDoc
+	{
+		public enum Type{
+			city,chain,store;
+		}
+		private String name;
+		private String address;
+		private String type;
 
-        public ShopDoc(String name)
-        {
-            this.name = name;
-        }
+		public ShopDoc(String name)
+		{
+			this.name = name;
+		}
 
-        public String getName(){return name;}
-        public void setName(String name){this.name = name;}
-    }
+		public ShopDoc(String name, String address, String type)
+		{
+			this.name = name;
+			this.address = address;
+			this.type = type;
+		}
+
+		public String getName(){
+			return name;
+		}
+		public void setName(String name){
+			this.name = name;
+		}
+
+		public String getAddress() {
+			return address;
+		}
+
+		public void setAddress(String address) {
+			this.address = address;
+		}
+
+		public String getType() {
+			return type;
+		}
+
+		public void setType(String type) {
+			this.type = type;
+		}
+	}
 }
