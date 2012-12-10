@@ -23,16 +23,21 @@
 
             <div class="admin-content-right-col">
                 <h3>Categorie Noua</h3>
-                <h:panelGrid columns="2">
+                <h:panelGrid id="categoriesForm" columns="3">
                     <h:outputText value="Nume*: "/>
-                    <p:inputText />
+                    <p:inputText id="catName" value="#{categoriesView.prodCatName}" required="true"
+                                 requiredMessage="Name of category is mandatory">
+                        <f:validator validatorId="requiredValidator"/>
+                    </p:inputText>
+                    <p:message for="catName"/>
 
                     <h:outputText value="Parinte: "/>
                     <p:autoComplete forceSelection="true" maxResults="5"
-                                    value="#{categoriesView.dummyTxt}" completeMethod="#{categoriesView.dummyComplete}"/>
+                                    value=""/>
                 </h:panelGrid>
                 <h:panelGrid>
-                    <p:commandButton value="Save"/>
+                    <p:commandButton value="Save" actionListener="#{categoriesView.onSave()}"
+                                     update="categoriesTree,categoriesForm" process="@this"/>
                 </h:panelGrid>
             </div>
 
