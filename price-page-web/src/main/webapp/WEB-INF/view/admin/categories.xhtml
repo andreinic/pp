@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='ISO-8859-1' ?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
@@ -11,12 +11,16 @@
         <h:form>
             <div class="admin-content-left-col">
                 <p:tree id="categoriesTree" value="#{categoriesView.root}" var="doc" animate="true"
-                        selectionMode="single" dynamic="true">
+                        selectionMode="single" selecttion="#{categoriesView.selectedNode}" dynamic="true">
+                    <p:ajax event="select" listener="#{categoriesView.onSelect}"/>
                     <p:treeNode expandedIcon="ui-icon-folder-open" collapsedIcon="ui-icon-folder-collapsed">
                         <h:outputText value="#{doc.name}"/>
                     </p:treeNode>
                     <p:treeNode type="document" icon="ui-icon-document">
-                        <h:outputText value="#{doc.name}"/>
+                        <p:inplace editor="true">
+                            <p:ajax event="save" listener="#{categoriesView.onEdit}" update="categoriesTree"/>
+                            <p:inputText value="#{doc.name}" required="true"/>
+                        </p:inplace>
                     </p:treeNode>
                 </p:tree>
             </div>
@@ -32,17 +36,20 @@
                     <p:message for="catName"/>
 
                     <h:outputText value="Parinte: "/>
-                    <p:autoComplete forceSelection="true" maxResults="5"
-                                    value=""/>
+                    <p:selectOneMenu id="catParent"
+                                     value="#{categoriesView.parent}" converter="productCategoryConverter">
+                        <f:selectItems value="#{categoriesView.parents}" var="parent" itemLabel="#{parent.name}" itemValue="#{parent}"/>
+                    </p:selectOneMenu>
+                    <p:message for="catParent"/>
                 </h:panelGrid>
                 <h:panelGrid>
                     <p:commandButton value="Save" actionListener="#{categoriesView.onSave()}"
-                                     update="categoriesTree,categoriesForm" process="@this"/>
+                                     update="categoriesTree,categoriesForm" process="@this,catName,catParent"/>
                 </h:panelGrid>
             </div>
 
             <p:contextMenu for="categoriesTree">
-                <p:menuitem value="Delete" icon="ui-icon-close"/>
+                <p:menuitem value="Delete" icon="ui-icon-close" actionListener="#{categoriesView.onDelete}" update="categoriesTree" process="@this,categoriesTree"/>
             </p:contextMenu>
         </h:form>
     </ui:define>
