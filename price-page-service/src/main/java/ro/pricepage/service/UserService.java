@@ -1,8 +1,10 @@
 package ro.pricepage.service;
 
 import ro.pricepage.persistence.entities.User;
+import ro.pricepage.qualifiers.MySQLDatabase;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,7 +20,8 @@ public class UserService extends BaseService
 {
     private static final long serialVersionUID = 1L;
 
-    @PersistenceContext
+    @Inject
+    @MySQLDatabase
     private EntityManager em;
     
     public User getUser(String username, String password){

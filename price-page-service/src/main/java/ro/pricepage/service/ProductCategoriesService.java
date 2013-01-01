@@ -1,10 +1,12 @@
 package ro.pricepage.service;
 
 import ro.pricepage.persistence.entities.ProductCategory;
+import ro.pricepage.qualifiers.MySQLDatabase;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -23,11 +25,12 @@ public class ProductCategoriesService extends BaseService
 {
     private static final long serialVersionUID = 1L;
 
-    @PersistenceContext
+    @Inject
+    @MySQLDatabase
     private EntityManager em;
 
-    public Set<ProductCategory> list(){
-        List<ProductCategory> results = em.createNamedQuery(GET_CATEGORIES).getResultList();
+    public Set<ProductCategory> hierarchy(){
+        List<ProductCategory> results = em.createNamedQuery(GET_CATEGORY_HIERARCHY).getResultList();
         Set<ProductCategory> ret = new HashSet<>();
         Iterator<ProductCategory> it = results.iterator();
         while(it.hasNext()){
@@ -38,8 +41,8 @@ public class ProductCategoriesService extends BaseService
         return ret;
     }
 
-    public List<ProductCategory> listParents(){
-        return (List<ProductCategory>) em.createNamedQuery(GET_PARENT_CATEGORIES).getResultList();
+    public List<ProductCategory> list(){
+        return (List<ProductCategory>) em.createNamedQuery(GET_CATEGORIES).getResultList();
     }
 
     public ProductCategory getById(Integer id){

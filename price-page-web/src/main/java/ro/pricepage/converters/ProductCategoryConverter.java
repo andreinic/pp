@@ -3,6 +3,7 @@ package ro.pricepage.converters;
 import ro.pricepage.persistence.entities.ProductCategory;
 import ro.pricepage.service.ProductCategoriesService;
 
+import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -12,6 +13,7 @@ import javax.naming.InitialContext;
 import java.io.Serializable;
 
 @FacesConverter(forClass = ProductCategory.class, value = "productCategoryConverter")
+@RequestScoped
 public class ProductCategoryConverter implements Converter, Serializable
 {
     private static final long serialVersionUID = 1L;
@@ -38,6 +40,12 @@ public class ProductCategoryConverter implements Converter, Serializable
      */
     @Override
     public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object o) {
-        return ((ProductCategory) o).getId().toString();
+        String id = "";
+        try{
+            id = ((ProductCategory) o).getId().toString();
+        } catch (Exception e){
+
+        }
+        return id;
     }
 }

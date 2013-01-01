@@ -11,7 +11,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.inject.Inject;
+import javax.inject.Named;
 
+import org.jboss.seam.faces.context.RenderScoped;
 import org.primefaces.event.NodeExpandEvent;
 import org.primefaces.event.map.PointSelectEvent;
 import org.primefaces.model.DefaultTreeNode;
@@ -30,26 +33,19 @@ import ro.pricepage.service.StoresService;
 
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
 
-/**
- * Created with IntelliJ IDEA.
- * User: toev
- * Date: 11/1/12
- * Time: 10:49 PM
- * To change this template use File | Settings | File Templates.
- */
-@ManagedBean(name = "shopsView")
+@Named(value = "shopsView")
+@RenderScoped
 @URLMapping(id = "shopsView", pattern = "/admin/magazine", viewId = "/WEB-INF/view/admin/shops.jsf")
-@ViewScoped
 public class ShopsView implements Serializable
 {
 	private static final String DEFAULT_COUNTY = "Brasov";
 
 	private static final long serialVersionUID = 1L;
 
-	@EJB
+    @Inject
 	private StoresService storesService;
 
-	@EJB
+    @Inject
 	private LocalitiesService localitiesService;
 
 	private TreeNode treeRoot;

@@ -3,20 +3,19 @@ package ro.pricepage.persistence.entities;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 @Entity
 @Table(name="product_categories")
 @NamedQueries(value = {
-    @NamedQuery(name = ProductCategory.GET_PARENT_CATEGORIES, query = "FROM ProductCategory AS pc WHERE pc.parent IS NULL"),
     @NamedQuery(name = ProductCategory.GET_CATEGORY_BY_ID, query="FROM ProductCategory AS pc WHERE pc.id = :id"),
-    @NamedQuery(name = ProductCategory.GET_CATEGORIES, query = "FROM ProductCategory AS pc LEFT JOIN FETCH pc.children WHERE pc.parent IS NULL ORDER BY pc.parent, pc.id")
+    @NamedQuery(name = ProductCategory.GET_CATEGORY_HIERARCHY, query = "FROM ProductCategory AS pc LEFT JOIN FETCH pc.children WHERE pc.parent IS NULL ORDER BY pc.parent, pc.id"),
+    @NamedQuery(name = ProductCategory.GET_CATEGORIES, query = "FROM ProductCategory AS pc WHERE pc.parent IS NOT NULL")
 })
 public class ProductCategory extends BaseEntity {
 	private static final long serialVersionUID = -3557158368102788220L;
 
-    public static final String GET_PARENT_CATEGORIES = "ProductCategory.getParentCategories";
     public static final String GET_CATEGORY_BY_ID = "ProductCategory.getCategoryById";
+    public static final String GET_CATEGORY_HIERARCHY = "ProductCategory.getCategoryHierarchy";
     public static final String GET_CATEGORIES = "ProductCategory.getCategories";
 
 	private Integer id;

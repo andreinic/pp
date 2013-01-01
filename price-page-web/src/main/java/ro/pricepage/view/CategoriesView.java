@@ -1,6 +1,7 @@
 package ro.pricepage.view;
 
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
+import org.jboss.seam.faces.context.RenderScoped;
 import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
@@ -11,21 +12,22 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 
 /**
  * @author radutoev
  */
-@ManagedBean(name = "categoriesView")
-@ViewScoped
+@Named(value = "categoriesView")
+@RenderScoped
 @URLMapping(id = "categoriesView", pattern = "/admin/categorii", viewId = "/WEB-INF/view/admin/categories.jsf")
 public class CategoriesView implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    @EJB
+    @Inject
     private ProductCategoriesService categoriesService;
 
     private TreeNode root;
@@ -40,7 +42,7 @@ public class CategoriesView implements Serializable
 
     @PostConstruct
     public void init(){
-        parents = categoriesService.list();
+        parents = categoriesService.hierarchy();
         buildTree();
     }
 

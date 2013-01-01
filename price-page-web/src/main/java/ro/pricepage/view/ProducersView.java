@@ -1,17 +1,16 @@
 package ro.pricepage.view;
 
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
-import org.primefaces.event.RowEditEvent;
+import org.jboss.seam.faces.context.RenderScoped;
 import ro.pricepage.model.ProducerDataModel;
 import ro.pricepage.persistence.entities.Producer;
 import ro.pricepage.service.ProducersService;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
@@ -21,14 +20,14 @@ import java.util.List;
  * Date: 11/1/12
  * Time: 10:48 PM
  */
-@ManagedBean(name = "producersView")
-@ViewScoped
+@Named(value = "producersView")
+@RenderScoped
 @URLMapping(id = "producersView", pattern = "/admin/producatori", viewId = "/WEB-INF/view/admin/producers.jsf")
 public class ProducersView implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    @EJB
+    @Inject
     private ProducersService producersService;
 
     private transient ProducerDataModel dataModel;
@@ -81,4 +80,6 @@ public class ProducersView implements Serializable
             dataModel = new ProducerDataModel(producers);
         return dataModel;
     }
+
+    public List<Producer> getProducers() { return producers; }
 }

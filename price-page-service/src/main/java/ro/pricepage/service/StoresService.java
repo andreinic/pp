@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -14,13 +15,15 @@ import javax.persistence.TypedQuery;
 import ro.pricepage.persistence.entities.Store;
 import ro.pricepage.persistence.entities.StoreChain;
 import ro.pricepage.persistence.entities.StoreType;
+import ro.pricepage.qualifiers.MySQLDatabase;
 
 @Named("storesService")
 @Stateless
 public class StoresService extends BaseService {
 	private static final long serialVersionUID = -2191833772375756341L;
 
-	@PersistenceContext
+    @Inject
+    @MySQLDatabase
 	private EntityManager em;
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
