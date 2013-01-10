@@ -1,45 +1,126 @@
 package ro.pricepage.view;
 
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
+import org.jboss.seam.faces.context.RenderScoped;
+import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
+import ro.pricepage.persistence.entities.ProductCategory;
 import ro.pricepage.service.ProductCategoriesService;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * @author radutoev
  */
-@ManagedBean(name = "categoriesView")
-@ViewScoped
+@Named(value = "categoriesView")
+@RenderScoped
 @URLMapping(id = "categoriesView", pattern = "/admin/categorii", viewId = "/WEB-INF/view/admin/categories.jsf")
 public class CategoriesView implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
-    @EJB
+    @Inject
     private ProductCategoriesService categoriesService;
 
     private TreeNode root;
 
+    private Set<ProductCategory> parents;
+
+    private ProductCategory parent;
+
     private String prodCatName;
+
+    private TreeNode selectedNode;
 
     @PostConstruct
     public void init(){
-        System.out.println("init categoriesView");
-        root = new DefaultTreeNode("root", null);
+        parents = categoriesService.hierarchy();
+        buildTree();
     }
 
     // Actions ---------------------------------------------------------------------------------------------
     public void onSave(){
-        System.out.println(prodCatName);
-//        new DefaultTreeNode(categoriesService.add(prodCatName), root);
+        TreeNode treeParent = null;
+        for(TreeNode node : root.getChildren()){
+            if(((ProductCategory) node.getData()).getName().equals(parent.getName())) {
+                treeParent = node;
+                break;
+            }
+        }
+        parent = getParent(parent);
+        assert treeParent != null : "unable to find parent node in tree structure";
+        new DefaultTreeNode("document", categoriesService.add(prodCatName, parent), treeParent);
+        prodCatName = "";
     }
 
+    public void onEdit(){
+        if(selectedNode != null){
+            ProductCategory pc = (ProductCategory) selectedNode.getData();
+            try{
+                pc = categoriesService.update(pc.getId(), pc.getName());
+                mainLoop:
+                for(TreeNode parent : root.getChildren()){
+                    for(TreeNode node : parent.getChildren()){
+                        ProductCategory categ = (ProductCategory) node.getData();
+                        if(categ.getId().equals(pc.getId())) categ.setName(pc.getName());
+                        break mainLoop;
+                    }
+                }
+            } catch (Exception e){
+                System.out.println("exception during update process");
+            }
+        }
+    }
+
+    public void onDelete(){
+        ProductCategory pc = (ProductCategory) selectedNode.getData();
+        categoriesService.delete(pc);
+        mainLoop:
+        for(TreeNode parent : root.getChildren()){
+            for(int i = 0 ; i < parent.getChildren().size() ; ++i){
+                if(parent.getChildren().get(i).getData().equals(pc)) {
+                    parent.getChildren().remove(i);
+                    break mainLoop;
+                }
+            }
+        }
+    }
+
+    public void onSelect(NodeSelectEvent event){
+        if(event.getTreeNode().getType().equals("document")){
+            selectedNode = event.getTreeNode();
+        } else {
+            selectedNode = null;
+        }
+    }
+
+    // Methods ---------------------------------------------------------------------------------------------
+    private void buildTree(){
+        root = new DefaultTreeNode("root", null);
+        for(ProductCategory parent : parents){
+            TreeNode p = new DefaultTreeNode(parent, root);
+            if(!parent.getChildren().isEmpty()){
+                for(ProductCategory child : parent.getChildren()){
+                    new DefaultTreeNode("document", child, p);
+                }
+            }
+        }
+    }
+
+    private ProductCategory getParent(ProductCategory parent){
+        for(ProductCategory p : parents){
+            if(p.equals(parent)) return p;
+        }
+        return null;
+    }
 
     // Getters and setters ---------------------------------------------------------------------------------
     public TreeNode getRoot(){return root;}
@@ -47,45 +128,9 @@ public class CategoriesView implements Serializable
     public String getProdCatName() { return prodCatName; }
     public void setProdCatName(String value) { prodCatName = value; }
 
+    public Set<ProductCategory> getParents() { return parents; }
+    public void setParents(Set<ProductCategory> parents) { this.parents = parents; }
 
-//    private String dummyTxt;
-//    private TreeNode root;
-//
-//    @PostConstruct
-//    public void init(){
-//        root = new DefaultTreeNode("root", null);
-//
-//        TreeNode cat1 = new DefaultTreeNode(new CategoryDoc("Cat1"), root);
-//        TreeNode cat2 = new DefaultTreeNode(new CategoryDoc("Cat2"), root);
-//
-//        TreeNode cat11 = new DefaultTreeNode("document", new CategoryDoc("Cat11"), cat1);
-//        TreeNode cat12 = new DefaultTreeNode("document", new CategoryDoc("Cat12"), cat1);
-//        TreeNode cat13 = new DefaultTreeNode("document", new CategoryDoc("Cat12"), cat1);
-//    }
-//
-//    public List<String> dummyComplete(String query){
-//        List<String> res = new ArrayList<>();
-//        for(int i = 0 ; i < 10 ; ++i){
-//            res.add(query+i);
-//        }
-//        return res;
-//    }
-//
-//    public String getDummyTxt(){ return dummyTxt; }
-//    public void setDummyTxt(String val){ dummyTxt = val; }
-//
-//    public TreeNode getRoot(){return root;}
-//
-//    public class CategoryDoc
-//    {
-//        private String name;
-//
-//        public CategoryDoc(String name)
-//        {
-//            this.name = name;
-//        }
-//
-//        public String getName(){return name;}
-//        public void setName(String name){this.name = name;}
-//    }
+    public ProductCategory getParent() { return parent; }
+    public void setParent(ProductCategory parent) { this.parent = parent; }
 }

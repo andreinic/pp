@@ -49,13 +49,51 @@
                 <scope>provided</scope>
             </dependency>
 
-            <!-- JSF related-->
             <dependency>
-                <groupId>javax.faces</groupId>
-                <artifactId>jsf-api</artifactId>
-                <version>2.0</version>
-                <scope>provided</scope>
+                <groupId>org.jboss.seam.faces</groupId>
+                <artifactId>seam-faces-api</artifactId>
+                <version>3.1.0.Final</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.jboss.seam.faces</groupId>
+                <artifactId>seam-faces</artifactId>
+                <version>3.1.0.Final</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.seam.international</groupId>
+                <artifactId>seam-international-api</artifactId>
+                <version>3.1.0.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.seam.international</groupId>
+                <artifactId>seam-international</artifactId>
+                <version>3.1.0.Final</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.seam.security</groupId>
+                <artifactId>seam-security-api</artifactId>
+                <version>3.1.0.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.seam.security</groupId>
+                <artifactId>seam-security</artifactId>
+                <version>3.1.0.Final</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>2.1</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>org.primefaces</groupId>

@@ -5,12 +5,14 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import ro.pricepage.persistence.entities.Location;
+import ro.pricepage.qualifiers.MySQLDatabase;
 
 
 @Named("localitiesService")
@@ -18,7 +20,8 @@ import ro.pricepage.persistence.entities.Location;
 public class LocalitiesService extends BaseService {
 	private static final long serialVersionUID = -7309042858715539496L;
 
-	@PersistenceContext
+	@Inject
+    @MySQLDatabase
 	private EntityManager em;
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)

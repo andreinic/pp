@@ -1,11 +1,12 @@
 package ro.pricepage.service;
 
 import ro.pricepage.persistence.entities.Producer;
+import ro.pricepage.qualifiers.MySQLDatabase;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
@@ -19,7 +20,8 @@ public class ProducersService extends BaseService
 {
     private static final long serialVersionUID = 1L;
 
-    @PersistenceContext
+    @Inject
+    @MySQLDatabase
     private EntityManager em;
 
     public Producer add(String name){
@@ -46,6 +48,10 @@ public class ProducersService extends BaseService
 
     public Producer get(String name){
         return (Producer) em.createNamedQuery(Producer.GET_PRODUCER_BY_NAME).setParameter("name", name).getSingleResult();
+    }
+
+    public Producer get(Integer id){
+        return (Producer) em.createNamedQuery(Producer.GET_PRODUCER_BY_ID).setParameter("id", id).getSingleResult();
     }
 
     public List<Producer> list(){
