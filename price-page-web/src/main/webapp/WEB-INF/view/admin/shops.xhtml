@@ -13,7 +13,7 @@
 			<p:panel header="Detalii magazin">
 				<h:panelGrid id="formPanel" columns="2" cellpadding="5">
 					<h:outputText value="Magazin: *" />
-					<p:inputText value="#{shopsView.storeName}"/>
+					<p:inputText value="#{shopsView.storeName}" />
 
 					<h:outputText value="Lant: *" />
 					<p:selectOneMenu editable="true" value="#{shopsView.selectedChain}">
@@ -39,14 +39,15 @@
 					<h:outputText value="Localitate: *" />
 					<p:selectOneMenu id="localityInput"
 						value="#{shopsView.selectedLocalityId}">
-						<f:selectItems value="#{shopsView.localities}" var="locality" itemValue="#{locality.id}" itemLabel="#{locality.city}"/>
+						<f:selectItems value="#{shopsView.localities}" var="locality"
+							itemValue="#{locality.id}" itemLabel="#{locality.city}" />
 					</p:selectOneMenu>
 
 					<h:outputText value="Adresa: *" />
-					<p:inputText value="#{shopsView.address}"/>
+					<p:inputText value="#{shopsView.address}" />
 
 					<h:outputText value="Cod postal: *" />
-					<p:inputText value="#{shopsView.zip}"/>
+					<p:inputText value="#{shopsView.zip}" />
 
 					<h:outputText value="Latitudine: *" />
 					<p:inputText id="latitudeInput" value="#{shopsView.latitude}">
@@ -59,9 +60,8 @@
 					</p:inputText>
 
 					<p:commandLink value="Arata pe harta:"
-						process="@this latitudeInput longitudeInput" 
-						update="gmap messages"
-						actionListener="#{shopsView.showOnMap}" />
+						process="@this latitudeInput longitudeInput"
+						update="gmap messages" actionListener="#{shopsView.showOnMap}" />
 					<p:gmap id="gmap" center="45.653648, 25.601864" zoom="12"
 						type="roadmap" style="width:500px;height:300px"
 						model="#{shopsView.map}" fitBounds="true">
@@ -72,16 +72,23 @@
 					<p:messages id="messages" />
 				</h:panelGrid>
 
-				<h:panelGrid columns="2">
-					<p:commandButton value="Save" actionListener="#{shopsView.onSave}"
-						update="formPanel" />
+				<h:panelGrid id="buttonsPanel" columns="2">
+					<p:commandButton value="Salveaza"
+						actionListener="#{shopsView.onSave}" update="formPanel"
+						rendered="#{empty shopsView.selectedStore}" />
+					<p:commandButton value="Actualizeaza"
+						actionListener="#{shopsView.onUpdate}" update="formPanel"
+						rendered="#{not empty shopsView.selectedStore}" />
+					<p:commandButton value="Inapoi la magazin nou"
+						actionListener="#{shopsView.onCancelEdit}" update="formPanel"
+						rendered="#{not empty shopsView.selectedStore}" />
 				</h:panelGrid>
 			</p:panel>
 
 			<br />
 			<br />
 
-			<p:treeTable value="#{shopsView.treeRoot}" var="treeTableNode">
+			<p:treeTable id="treeTable" value="#{shopsView.treeRoot}" var="treeTableNode">
 				<p:ajax event="expand" listener="#{shopsView.onTreeNodeExpand}" />
 				<p:column style="width:250px">
 					<f:facet name="header">
@@ -93,17 +100,23 @@
 					<f:facet name="header">
 						<h:outputText value="Adresa" />
 					</f:facet>
-					<h:outputText value="#{treeTableNode.store.address}" rendered="#{not empty treeTableNode.store}"/>
+					<h:outputText value="#{treeTableNode.store.address}"
+						rendered="#{not empty treeTableNode.store}" />
 				</p:column>
 				<p:column>
 					<f:facet name="header">
 						<h:outputText value="Tip" />
 					</f:facet>
-					<h:outputText value="#{treeTableNode.store.storeType.name}" rendered="#{not empty treeTableNode.store}"/>
+					<h:outputText value="#{treeTableNode.store.storeType.name}"
+						rendered="#{not empty treeTableNode.store}" />
 				</p:column>
 				<p:column>
-					<p:commandButton value="Vezi/editeaza" rendered="#{not empty treeTableNode.store}">
-						<f:setPropertyActionListener value="#{treeTableNode.store}" target="#{shopsView.selectedStore}" />
+					<p:commandButton value="Vezi/editeaza"
+						rendered="#{not empty treeTableNode.store}"
+						action="#{shopsView.onTreePick}"
+						process="@this treeTable" update="@form">
+						<f:setPropertyActionListener value="#{treeTableNode.store}"
+							target="#{shopsView.selectedStore}" />
 					</p:commandButton>
 				</p:column>
 			</p:treeTable>
