@@ -53,6 +53,7 @@ public class ShopsView implements Serializable
 	private LocalitiesService localitiesService;
 
 	private TreeNode treeRoot;
+	private Store selectedStore;
 
 	private String selectedChain;
 	private String selectedType;
@@ -70,7 +71,7 @@ public class ShopsView implements Serializable
 	private List<String> allTypeNames;
 	private List<String> allCounties;
 	private List<Location> localities;
-	private Map<Integer, Location> localitiesMap; 
+	private Map<Integer, Location> localitiesMap;
 
 	@PostConstruct
 	public void init()
@@ -82,7 +83,7 @@ public class ShopsView implements Serializable
 		populateLocalities(DEFAULT_COUNTY);
 
 		map = new DefaultMapModel();
-		
+
 		initTree();
 	}
 
@@ -146,20 +147,32 @@ public class ShopsView implements Serializable
 	public void populateLocalities(AjaxBehaviorEvent event){
 		populateLocalities(selectedCounty);
 	}
-	
+
 	private void initTree(){
 		treeRoot = new DefaultTreeNode("root", null);
 		List<String> allCities = localitiesService.findAllCitiesWithStores();
 		for(String city : allCities){
-			new DefaultTreeNode(ShopDoc.Type.city.name(), new ShopDoc(city), treeRoot);
+			new DefaultTreeNode("dummy", new Object(), new DefaultTreeNode(ShopDoc.Type.city.name(), new ShopDoc(city), treeRoot));
 		}
 	}
-	
+
 	public void onTreeNodeExpand(NodeExpandEvent e){
 		TreeNode treeNode = e.getTreeNode();
+		treeNode.getChildren().clear();
 		switch(ShopDoc.Type.valueOf(treeNode.getType())){
 		case city:
-			
+			List<String> allChains = storesService.findAllChainNamesInCity(((ShopDoc) treeNode.getData()).getName());
+			for(String chain : allChains){
+				new DefaultTreeNode("dummy", new Object(), new DefaultTreeNode(ShopDoc.Type.chain.name(), new ShopDoc(chain), treeNode));
+			}
+			break;
+		case chain:
+			List<Store> allStores = storesService.findAllStoresByChainAndCity(((ShopDoc) treeNode.getData()).getName(), ((ShopDoc) treeNode.getParent().getData()).getName());
+			for(Store store : allStores){
+				new DefaultTreeNode(ShopDoc.Type.store.name(), new ShopDoc(store.getName(), store), treeNode);
+			}
+			break;
+		default:
 			break;
 		}
 	}
@@ -284,25 +297,31 @@ public class ShopsView implements Serializable
 		this.url = url;
 	}
 
+	public Store getSelectedStore() {
+		return selectedStore;
+	}
+
+	public void setSelectedStore(Store selectedStore) {
+		this.selectedStore = selectedStore;
+	}
+
 	public static class ShopDoc
 	{
 		public enum Type{
 			city,chain,store;
 		}
 		private String name;
-		private String address;
-		private String type;
+		private Store store;
 
 		public ShopDoc(String name)
 		{
 			this.name = name;
 		}
 
-		public ShopDoc(String name, String address, String type)
+		public ShopDoc(String name, Store store)
 		{
 			this.name = name;
-			this.address = address;
-			this.type = type;
+			this.store = store;
 		}
 
 		public String getName(){
@@ -312,20 +331,12 @@ public class ShopsView implements Serializable
 			this.name = name;
 		}
 
-		public String getAddress() {
-			return address;
+		public Store getStore() {
+			return store;
 		}
 
-		public void setAddress(String address) {
-			this.address = address;
-		}
-
-		public String getType() {
-			return type;
-		}
-
-		public void setType(String type) {
-			this.type = type;
+		public void setStore(Store store) {
+			this.store = store;
 		}
 	}
 }

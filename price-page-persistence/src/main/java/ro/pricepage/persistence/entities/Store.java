@@ -7,11 +7,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="stores")
+@NamedQueries(value={
+		@NamedQuery(name=Store.Q_FIND_ALL_BY_CHAIN_AND_CITY, query="FROM Store WHERE chain.name = :chain AND locality.city = :city")
+})
 public class Store extends BaseEntity {
+	public static final String Q_FIND_ALL_BY_CHAIN_AND_CITY = "Store.findAllByChainAndCity";
 	private static final long serialVersionUID = -316251772567024056L;
 	private Integer id;
 	private String zip;
@@ -25,9 +31,9 @@ public class Store extends BaseEntity {
 	private String url;
 	private Location locality;
 	private String name;
-	
+
 	public Store(){}
-	
+
 	public Store(String name, StoreChain chain, StoreType type, Location locality, String address, String zip, Double longitude, Double latitude, String url){
 		this.name = name;
 		this.chain = chain;
@@ -39,7 +45,7 @@ public class Store extends BaseEntity {
 		this.longitude = longitude;
 		this.latitude = latitude;
 	}
-	
+
 	@Id
 	@Column(name="id", nullable=false, unique=true)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -49,7 +55,7 @@ public class Store extends BaseEntity {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	@Column(name="zip", length=20)
 	public String getZip() {
 		return zip;
@@ -57,7 +63,7 @@ public class Store extends BaseEntity {
 	public void setZip(String zip) {
 		this.zip = zip;
 	}
-	
+
 	@Column(name="details", columnDefinition="text")
 	public String getDetails() {
 		return details;
@@ -65,7 +71,7 @@ public class Store extends BaseEntity {
 	public void setDetails(String details) {
 		this.details = details;
 	}
-	
+
 	@Column(name="longitude", length=14, precision=2)
 	public Double getLongitude() {
 		return longitude;
@@ -73,7 +79,7 @@ public class Store extends BaseEntity {
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
-	
+
 	@Column(name="latitude", length=14, precision=2)
 	public Double getLatitude() {
 		return latitude;
@@ -81,7 +87,7 @@ public class Store extends BaseEntity {
 	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
 	}
-	
+
 	@ManyToOne
 	@JoinColumn(name="fk_storeType")
 	public StoreType getStoreType() {
@@ -90,7 +96,7 @@ public class Store extends BaseEntity {
 	public void setStoreType(StoreType storeType) {
 		this.storeType = storeType;
 	}
-	
+
 	@Column(name="contact", columnDefinition="text")
 	public String getContact() {
 		return contact;
@@ -98,7 +104,7 @@ public class Store extends BaseEntity {
 	public void setContact(String contact) {
 		this.contact = contact;
 	}
-	
+
 	@ManyToOne
 	@JoinColumn(name="fk_chain")
 	public StoreChain getChain() {
@@ -107,7 +113,7 @@ public class Store extends BaseEntity {
 	public void setChain(StoreChain chain) {
 		this.chain = chain;
 	}
-	
+
 	@Column(name="address", columnDefinition="text")
 	public String getAddress() {
 		return address;
@@ -115,7 +121,7 @@ public class Store extends BaseEntity {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
+
 	@Column(name="url", columnDefinition="text")
 	public String getUrl() {
 		return url;
@@ -123,7 +129,7 @@ public class Store extends BaseEntity {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
+
 	@ManyToOne
 	@JoinColumn(name="fk_location")
 	public Location getLocality() {

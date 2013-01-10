@@ -22,7 +22,7 @@ public class StoresService extends BaseService {
 
 	@PersistenceContext
 	private EntityManager em;
-	
+
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public Store saveStore(Store store){
 		return em.merge(store);
@@ -34,7 +34,7 @@ public class StoresService extends BaseService {
 				String.class);
 		return q.getResultList();
 	}
-	
+
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<String> findAllStoreTypeNames() {
 		TypedQuery<String> q = em.createNamedQuery(StoreType.Q_FIND_ALL_NAMES,
@@ -67,18 +67,33 @@ public class StoresService extends BaseService {
 			return null;
 		}
 	}
-	
+
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public StoreChain saveChainWithName(String name){
 		StoreChain chain = new StoreChain();
 		chain.setName(name);
 		return em.merge(chain);
 	}
-	
+
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public StoreType saveTypeWithName(String name){
 		StoreType type = new StoreType();
 		type.setName(name);
 		return em.merge(type);
+	}
+
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<String> findAllChainNamesInCity(String city){
+		TypedQuery<String> q = em.createNamedQuery(StoreChain.Q_FIND_ALL_NAMES_IN_CITY, String.class)
+				.setParameter("city", city);
+		return q.getResultList();
+	}
+
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<Store> findAllStoresByChainAndCity(String chain, String city){
+		TypedQuery<Store> q = em.createNamedQuery(Store.Q_FIND_ALL_BY_CHAIN_AND_CITY, Store.class)
+				.setParameter("chain", chain)
+				.setParameter("city", city);
+		return q.getResultList();
 	}
 }

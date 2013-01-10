@@ -93,13 +93,18 @@
 					<f:facet name="header">
 						<h:outputText value="Adresa" />
 					</f:facet>
-					<h:outputText value="#{treeTableNode.address}" />
+					<h:outputText value="#{treeTableNode.store.address}" rendered="#{not empty treeTableNode.store}"/>
 				</p:column>
 				<p:column>
 					<f:facet name="header">
 						<h:outputText value="Tip" />
 					</f:facet>
-					<h:outputText value="#{treeTableNode.type}" />
+					<h:outputText value="#{treeTableNode.store.storeType.name}" rendered="#{not empty treeTableNode.store}"/>
+				</p:column>
+				<p:column>
+					<p:commandButton value="Vezi/editeaza" rendered="#{not empty treeTableNode.store}">
+						<f:setPropertyActionListener value="#{treeTableNode.store}" target="#{shopsView.selectedStore}" />
+					</p:commandButton>
 				</p:column>
 			</p:treeTable>
 		</h:form>
