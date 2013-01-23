@@ -1,6 +1,21 @@
 package ro.pricepage.persistence.entities;
 
-import javax.persistence.*;
+import java.util.Collection;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
 
 /**
  * User: radutoev
@@ -24,6 +39,7 @@ public class Producer extends BaseEntity
 
     private Integer id;
     private String name;
+    private Collection<Product> products;
 
     @Id
     @Column(name = "id", unique = true, nullable = false, length = 11)
@@ -36,6 +52,7 @@ public class Producer extends BaseEntity
     }
 
     @Column(name = "name", nullable = false, length = 50)
+    @Field(name="name", store=org.hibernate.search.annotations.Store.YES, analyze=Analyze.YES, index=Index.YES)
     public String getName() {
         return name;
     }
@@ -43,7 +60,15 @@ public class Producer extends BaseEntity
         this.name = name;
     }
 
-    @Override
+    @OneToMany(mappedBy="producer")
+    @ContainedIn
+    public Collection<Product> getProducts() {
+		return products;
+	}
+	public void setProducts(Collection<Product> products) {
+		this.products = products;
+	}
+	@Override
     public String toString(){
         return super.toString() + "ID: " + id.toString() + " Name: " + name;
     }

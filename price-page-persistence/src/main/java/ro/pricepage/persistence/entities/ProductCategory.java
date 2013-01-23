@@ -1,8 +1,22 @@
 package ro.pricepage.persistence.entities;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
+import javax.persistence.Table;
 
 @Entity
 @Table(name="product_categories")
@@ -34,7 +48,7 @@ public class ProductCategory extends BaseEntity {
 		this.id = id;
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@ManyToOne(fetch = FetchType.EAGER, optional = true)
 	@JoinColumn(name="fk_parent", nullable = true, insertable = false, updatable = false)
 	public ProductCategory getParent() {
 		return parent;
@@ -43,7 +57,7 @@ public class ProductCategory extends BaseEntity {
 		this.parent = parent;
 	}
 
-    @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy="parent")
     @OrderColumn(name = "fk_parent")
     @JoinColumn(name = "fk_parent", nullable = true)
     public Collection<ProductCategory> getChildren(){
@@ -68,8 +82,8 @@ public class ProductCategory extends BaseEntity {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-    @Override
+	
+	@Override
     public boolean equals(Object obj){
         if(obj == null) return false;
         if(this == obj) return true;

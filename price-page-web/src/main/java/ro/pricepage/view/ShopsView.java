@@ -7,10 +7,10 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.inject.Named;
 
 import org.primefaces.event.NodeExpandEvent;
 import org.primefaces.event.map.PointSelectEvent;
@@ -37,7 +37,7 @@ import com.ocpsoft.pretty.faces.annotation.URLMapping;
  * Time: 10:49 PM
  * To change this template use File | Settings | File Templates.
  */
-@ManagedBean(name = "shopsView")
+@Named(value = "shopsView")
 @URLMapping(id = "shopsView", pattern = "/admin/magazine", viewId = "/WEB-INF/view/admin/shops.jsf")
 @ViewScoped
 public class ShopsView implements Serializable
