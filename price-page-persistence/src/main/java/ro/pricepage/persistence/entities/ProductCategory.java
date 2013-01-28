@@ -59,7 +59,6 @@ public class ProductCategory extends BaseEntity {
 
     @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy="parent")
     @OrderColumn(name = "fk_parent")
-    @JoinColumn(name = "fk_parent", nullable = true)
     public Collection<ProductCategory> getChildren(){
         return children;
     }

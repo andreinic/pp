@@ -1,12 +1,18 @@
 package ro.pricepage.producers;
 
-import ro.pricepage.qualifiers.MySQLDatabase;
-
-import javax.enterprise.inject.Produces;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.io.Serializable;
 
+import javax.ejb.Singleton;
+import javax.ejb.Stateless;
+import javax.enterprise.inject.Produces;
+import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import ro.pricepage.qualifiers.MySQLDatabase;
+
+@Stateless
+@Named("emProducer")
 public class EntityManagerProducer implements Serializable
 {
     private static final long serialVersionUID = 1L;
@@ -14,5 +20,5 @@ public class EntityManagerProducer implements Serializable
     @PersistenceContext
     @Produces
     @MySQLDatabase
-    private EntityManager em;
+    private static EntityManager em;
 }
