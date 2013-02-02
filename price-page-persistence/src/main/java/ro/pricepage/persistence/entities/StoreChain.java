@@ -1,5 +1,7 @@
 package ro.pricepage.persistence.entities;
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,7 +9,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
 
 @Entity
 @Table(name="store_chains")
@@ -26,6 +35,7 @@ public class StoreChain extends BaseEntity {
 	
 	private Integer id;
 	private String name;
+	private Collection<Store> stores;
 	
 	@Id
 	@Column(name="id", nullable=false, unique=true)
@@ -38,10 +48,20 @@ public class StoreChain extends BaseEntity {
 	}
 	
 	@Column(name="name", length=50)
+	@Field(name="name", store=org.hibernate.search.annotations.Store.YES, analyze=Analyze.YES, index=Index.YES)
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	@OneToMany(mappedBy="chain")
+	@ContainedIn
+	public Collection<Store> getStores() {
+		return stores;
+	}
+	public void setStores(Collection<Store> stores) {
+		this.stores = stores;
 	}
 }

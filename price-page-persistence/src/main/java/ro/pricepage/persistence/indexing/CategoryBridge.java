@@ -21,7 +21,9 @@ public class CategoryBridge implements FieldBridge {
 			String categoryName = category.getName();
 			if(categoryName != null){
 				sb.append(categoryName);
+				sb.append(" ");
 			}
+			category = category.getParent();
 		}
 		if(sb.length() > 0){
 			doc.add(new Field(CATEGORIES_FIELD, sb.toString(), Store.NO, Index.ANALYZED));

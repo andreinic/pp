@@ -33,7 +33,7 @@ public class ProductStore extends BaseEntity {
 	@Id
     @Column(name = "id", nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@DocumentId
+	@DocumentId(name="id")
     public Integer getId() {
         return id;
     }

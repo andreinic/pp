@@ -1,21 +1,21 @@
 package ro.pricepage.view;
 
-import com.ocpsoft.pretty.faces.annotation.URLMapping;
+import java.io.Serializable;
+import java.util.Set;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import org.jboss.seam.faces.context.RenderScoped;
 import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
+
 import ro.pricepage.persistence.entities.ProductCategory;
 import ro.pricepage.service.ProductCategoriesService;
 
-import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
-import java.io.Serializable;
-import java.util.Set;
+import com.ocpsoft.pretty.faces.annotation.URLMapping;
 
 /**
  * @author radutoev

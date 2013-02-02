@@ -18,6 +18,7 @@ import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.IndexedEmbedded;
 
 @Entity
 @Table(name="stores")
@@ -116,6 +117,7 @@ public class Store extends BaseEntity {
 
 	@ManyToOne
 	@JoinColumn(name="fk_chain")
+	@IndexedEmbedded
 	public StoreChain getChain() {
 		return chain;
 	}
@@ -141,6 +143,7 @@ public class Store extends BaseEntity {
 
 	@ManyToOne
 	@JoinColumn(name="fk_location")
+	@IndexedEmbedded
 	public Location getLocality() {
 		return locality;
 	}

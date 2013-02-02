@@ -1,5 +1,7 @@
 package ro.pricepage.persistence.entities;
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,7 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
 
 @Entity
 @Table(name="locations")
@@ -27,6 +35,7 @@ public class Location extends BaseEntity {
 	private Integer id;
     private String city;
     private String county;
+    private Collection<Store> stores;
 
 	@Id
 	@Column(name="id", unique=true, nullable=false, length = 11)
@@ -39,6 +48,7 @@ public class Location extends BaseEntity {
 	}
 
     @Column(name = "city", nullable = false, length = 50)
+    @Field(name="city", store=org.hibernate.search.annotations.Store.YES, analyze=Analyze.YES, index=Index.YES)
     public String getCity(){
         return city;
     }
@@ -47,10 +57,20 @@ public class Location extends BaseEntity {
     }
 
     @Column(name = "county", nullable = false, length = 50)
+    @Field(name="county", store=org.hibernate.search.annotations.Store.YES, analyze=Analyze.YES, index=Index.YES)
     public String getCounty(){
         return county;
     }
     public void setCounty(String county){
         this.county = county;
     }
+    
+    @OneToMany(mappedBy="locality")
+    @ContainedIn
+	public Collection<Store> getStores() {
+		return stores;
+	}
+	public void setStores(Collection<Store> stores) {
+		this.stores = stores;
+	}
 }

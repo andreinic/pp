@@ -58,7 +58,7 @@ public class Product extends BaseEntity
 
     @JoinColumn(name = "fk_category", nullable = false)
     @ManyToOne(fetch = FetchType.EAGER)
-    @FieldBridge(impl=CategoryBridge.class)
+    @Field(bridge=@FieldBridge(impl=CategoryBridge.class))
     public ProductCategory getCategory() {
         return category;
     }

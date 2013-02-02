@@ -2,8 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<parent>
-        <groupId>ro.pricepage</groupId>
-        <artifactId>price-page-parent</artifactId>
+		<groupId>ro.pricepage</groupId>
+		<artifactId>price-page-parent</artifactId>
 		<version>1.0</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
@@ -13,53 +13,57 @@
 		<finalName>price-page</finalName>
 	</build>
 	<dependencies>
-        <dependency>
-            <groupId>javax.enterprise</groupId>
-            <artifactId>cdi-api</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxrs</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.enterprise</groupId>
+			<artifactId>cdi-api</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
 		</dependency>
 
-        <dependency>
-            <groupId>org.jboss.seam.faces</groupId>
-            <artifactId>seam-faces-api</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.jboss.seam.faces</groupId>
+			<artifactId>seam-faces-api</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>org.jboss.seam.faces</groupId>
-            <artifactId>seam-faces</artifactId>
-            <scope>runtime</scope>
-        </dependency>
+		<dependency>
+			<groupId>org.jboss.seam.faces</groupId>
+			<artifactId>seam-faces</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 
-        <dependency>
-            <groupId>org.jboss.seam.international</groupId>
-            <artifactId>seam-international-api</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.jboss.seam.international</groupId>
+			<artifactId>seam-international-api</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>org.jboss.seam.international</groupId>
-            <artifactId>seam-international</artifactId>
-            <scope>runtime</scope>
-        </dependency>
+		<dependency>
+			<groupId>org.jboss.seam.international</groupId>
+			<artifactId>seam-international</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 
-        <dependency>
-            <groupId>org.jboss.seam.security</groupId>
-            <artifactId>seam-security-api</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.jboss.seam.security</groupId>
+			<artifactId>seam-security-api</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>org.jboss.seam.security</groupId>
-            <artifactId>seam-security</artifactId>
-            <scope>runtime</scope>
-        </dependency>
+		<dependency>
+			<groupId>org.jboss.seam.security</groupId>
+			<artifactId>seam-security</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.primefaces</groupId>
@@ -70,12 +74,13 @@
 			<artifactId>prettyfaces-jsf2</artifactId>
 		</dependency>
 		<dependency>
-            <groupId>ro.pricepage</groupId>
+			<groupId>ro.pricepage</groupId>
 			<artifactId>price-page-service</artifactId>
 		</dependency>
-        <dependency>
-            <groupId>org.hephaestus</groupId>
-            <artifactId>hephaestus-commons</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.hephaestus</groupId>
+			<artifactId>hephaestus-commons</artifactId>
+		</dependency>
+		
 	</dependencies>
 </project>
