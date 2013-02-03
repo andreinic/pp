@@ -13,7 +13,7 @@
                 <p:tab title="Detalii">
                     <h:panelGrid id="productForm" columns="3" columnClasses="admin-grid-col1,admin-grid-col2,admin-grid-col3,admin-grid-col14" styleClass="grid">
                         <h:outputText value="Name: *"/>
-                        <p:inputText id="productName" label="Name" value="#{productsView.product.name}"
+                        <p:inputText id="productName" label="Name" value="#{productsView.selectedProduct.name}"
                                      required="true" requiredMessage="Product name is requried">
                             <f:validator validatorId="requiredValidator"/>
                         </p:inputText>
@@ -21,7 +21,7 @@
 
                         <h:outputText value="Category: *"/>
                         <p:selectOneMenu id="productCateg" label="Category"
-                                         value="#{productsView.product.category}" converter="productCategoryConverter">
+                                         value="#{productsView.selectedProduct.category}" converter="productCategoryConverter">
                             <f:selectItem itemLabel="Select category"/>
                             <f:selectItems value="#{productsView.categories}" var="parent" itemLabel="#{parent.name}" itemValue="#{parent}"/>
                         </p:selectOneMenu>
@@ -29,14 +29,14 @@
 
                         <h:outputText value="Producator: *"/>
                         <p:selectOneMenu id="productProducers" label="Producers"
-                                         value="#{productsView.product.producer}" converter="producerConverter">
+                                         value="#{productsView.selectedProduct.producer}" converter="producerConverter">
                             <f:selectItem itemLabel="Select producer"/>
                             <f:selectItems value="#{producersView.producers}" var="producer" itemLabel="#{producer.name}" itemValue="#{producer}"/>
                         </p:selectOneMenu>
                         <p:message for="productProducers"/>
 
                         <h:outputText value="Description"/>
-                        <p:editor width="600" value="#{productsView.product.description}"/>
+                        <p:editor width="600" value="#{productsView.selectedProduct.description}"/>
                     </h:panelGrid>
                 </p:tab>
 
@@ -52,12 +52,11 @@
             </h:panelGrid>
 
             <br/><br />
-
             <p:dataTable id="productsTable"
                          value="#{productsView.productsModel}" lazy="true" var="product"
                          paginator="true" rows="20"
                          paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                         selectionMode="single" selection="#{productsView.product}" rowKey="#{product.name}">
+                         selectionMode="single" selection="#{productsView.selectedProduct}">
                 <p:column headerText="Nume">
                     <h:outputText value="#{product.name}"/>
                 </p:column>

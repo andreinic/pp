@@ -27,7 +27,7 @@ public class ProductsView implements Serializable
     private static final long serialVersionUID = 1L;
 
     private List<ProductCategory> categories;
-    private Product product;
+    private Product selectedProduct;
 
     @Inject
     private ProductsDataModel productsModel;
@@ -38,14 +38,14 @@ public class ProductsView implements Serializable
 
     @PostConstruct
     public void init(){
-        product = new Product();
+        selectedProduct = new Product();
         categories = categoriesService.list();
     }
 
     // Actions ---------------------------------------------------------------------------------------------
     public void onSave(){
-        if(product != null) productsModel.addProduct(product);
-        product = new Product();
+        if(selectedProduct != null) productsModel.addProduct(selectedProduct);
+        selectedProduct = new Product();
     }
 
     // Getters and setters ---------------------------------------------------------------------------------
@@ -53,11 +53,11 @@ public class ProductsView implements Serializable
     public List<ProductCategory> getCategories() { return categories; }
     public void setCategories(List<ProductCategory> categories) { this.categories = categories; }
 
-    public Product getProduct() {
-        return product;
+    public Product getSelectedProduct() {
+        return selectedProduct;
     }
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setSelectedProduct(Product product) {
+        this.selectedProduct = product;
     }
 
     public ProductsDataModel getProductsModel(){ return productsModel; }
