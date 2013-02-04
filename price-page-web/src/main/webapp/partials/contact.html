@@ -25,37 +25,13 @@
     <div class="col2"><!--col2 starts here-->
         <section>
             <h1>Page Left Content</h1>
-            <div class="categoryContainer"><!--l_menu starts here-->
-                <section>
-                    <hgroup>
-                        <h1>Categories</h1>
-                        <h1 class="menu">Catalog Produse</h1>
-                        <ul>
-                            <li><h2 class="submenu">Produse Alimentare</h2></li>
-                            <li><h2 class="submenu">Produse Non-alimentare</h2></li>
-                        </ul>
-                        <h1 class="menu">Magazine</h1>
-                        <ul>
-                            <li><h2 class="submenu">Hypermarketuri</h2></li>
-                            <li><h2 class="submenu">Cash and Carry</h2></li>
-                            <li><h2 class="submenu">Supermarket</h2></li>
-                            <li><h2 class="submenu">Mini market</h2></li>
-                        </ul>
-                        <h1 class="menu">Producatori</h1>
+            <!--l_menu starts here-->
+            <div class="categoryContainer" ng-include="'categories.html'">
+            </div>
 
-                    </hgroup>
-                </section>
-            </div><!--l_menu ends here-->
-            <div class="newsletterContainer"><!--newsletterContainer starts here-->
-                <section>
-                    <h1>Banner</h1>
-                    <img src="resources/images/client/banner.jpg" class="banner" alt="banner">
-                </section>
-                <section>
-                    <h1>Newsletter</h1>
-                    <div class="newsletterContent"></div>
-                </section>
-            </div> <!--newsletterContainer ends here-->
-        </section>
+            <!--newsletterContainer starts here-->
+            <div class="newsletterContainer" ng-include="'newsletter.html'">
+            </div>
+            <!--newsletterContainer ends here-->
     </div><!--col2 ends here-->
 </div><!--colleft ends here-->
