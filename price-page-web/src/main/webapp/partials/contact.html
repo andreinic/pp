@@ -2,18 +2,20 @@
     <header> <h1>Page Content</h1> </header>
     <div class="col1"><!--col1 starts here-->
         <section>
-            <div class="contactContainer fourtyTopMargin">
+            <div class="contactContainer fourtyTopMargin" ng-controller='ContactCtrl'>
                 <h1>Formular de contact</h1>
                 <div class="leftFloat fifthyPerc">
-                    <form class="form fourtyTopMargin">
+                    <form class="form fourtyTopMargin" name='contactForm'>
                         <ul><li><label for="name">Nume:</label></li></ul>
-                        <ul><li><input type="text" name="name"/></li></ul>
+                        <ul><li><input type="text" name="name" ng-model='msg.name'/></li></ul>
                         <ul><li><label for="email">Email:<span class="red">*</span></label></li></ul>
-                        <ul><li><input type="text" name="email"/></li></ul>
+                        <ul><li><input type="text" name="email" ng-model='msg.email' required="true"/></li></ul>
                         <ul><li><label for="telephone">Telefon:</label></li></ul>
-                        <ul><li><input type="text" name="telephone"/></li></ul>
+                        <ul><li><input type="text" name="telephone" ng-model='msg.phone'/></li></ul>
                         <ul><li><label for="message">Mesaj:<span class="red">*</span></label></li></ul>
-                        <ul><li><textarea name="message"></textarea></li></ul>
+                        <ul><li><textarea name="message" ng-model='msg.text' required="true"></textarea></li></ul>
+                        <span class="required_notification">Campurile marcate cu <span class="red">*</span> sunt obligatorii </span>
+                        <p><input type="submit" class="trimite" value="" ng-click="send()" ng-disabled="contactForm.$invalid"></p>
                     </form>
                 </div>
                 <div class="leftFloat fifthyPerc">

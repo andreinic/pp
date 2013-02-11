@@ -9,7 +9,7 @@
         <link href="resources/css/styles.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <div id="wrap" ng-controller="NavCntl"><!--wrap starts here-->
+        <div id="wrap"><!--wrap starts here-->
             <div id="wrapper"><!--wrapper starts here-->
                 <header ng-include="'partials/header.html'"></header>
 
@@ -17,12 +17,13 @@
                 <div class="colmask leftmenu" ng-view="mainContent">
                 </div>
 
-
                 <footer id="footer" ng-include="'partials/footer.html'"></footer>
             </div><!--wrapper ends here-->
         </div><!--wrap ends here-->
-        <script src="resources/js/angular.min.js" type="text/javascript"></script>
-        <script src="http://code.angularjs.org/1.0.4/angular-sanitize.min.js" type="text/javascript"></script>
+        <script src="resources/js/lib/angular.min.js" type="text/javascript"></script>
+        <script src="resources/js/lib/angular-resource.min.js" type="text/javascript"></script>
+        <!--<script src="resources/js/lib/angular-resource.min.js" type="text/javascript"/>-->
         <script src="resources/js/app.js" type="text/javascript"></script>
+        <script src="resources/js/controllers/ContactCtrl.js" type="text/javascript"></script>
     </body>
 </html>
