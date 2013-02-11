@@ -306,6 +306,22 @@ nav ul{
 	width:794px;
 	background-color:#ffffff;
 }
+.search_field{
+	width:500px;
+	height:35px;
+	float:left;
+}
+.search_btn{
+	cursor:pointer;
+	float:left;
+}
+#search_field{
+	float:right;
+	width:630px;
+	height:35px;
+	margin-top:23px;
+	margin-right:20px;
+}
 /*produse */
 #prod_container{
 	width:765px;
@@ -354,6 +370,17 @@ nav ul{
 	width:190px;
 	border-right:1px solid #d5cbd9;
 	display:table-row;
+}
+.prod_all{
+	height:310px;
+	float:left;
+	background-image:url("../images/bkg-prod.jpg");
+	background-repeat:no-repeat;
+	background-position:top;
+	width:190px;
+	border-right:1px solid #d5cbd9;
+	display:table-row;
+	border-top:1px solid #d5cbd9;
 }
 .prodImg{
 	margin:0 auto;
@@ -419,7 +446,91 @@ nav ul{
 	margin-bottom:5px;
 }
 
-
+/* product details */
+#produs_cont{
+	margin-top:20px;
+	width:763px;
+	height:315px;
+	margin:0 auto;
+	border:1px solid #d5cbd9;
+}
+#prod_pic{
+	border-right:1px solid #d5cbd9;
+	width:347px;
+	float:left;
+	height:315px;
+	position:relative
+}
+#prod_detalii{
+	width:415px;
+	float:left;
+}
+#prod_detalii h1{
+	font-weight:bold;
+	font-size:20px;
+	color:#a3799e;
+	margin-top:10px;
+	margin-left:10px;
+}
+#prod_detalii h2{
+	font-weight:bold;
+	font-size:14px;
+	color:#625d61;
+	margin-top:10px;
+	margin-left:10px;
+}
+#prod_detalii p{
+	font-weight:normal;
+	font-size:12px;
+	color:#625d61;
+	line-height:18px;
+	margin-top:10px;
+	margin-left:10px;
+	margin-right:10px;
+}
+#prod_price{
+	width:347px;
+	height:60px;
+	background-color:#ede7ef;
+	position:absolute; bottom:0;
+}
+.pret_descr{
+	color:#8f6289;
+	font-weight:bold;
+	font-size:14px;
+	margin-top:20px;
+	margin-left:20px;
+	margin-right:30px;
+	float:left;
+}
+.pret{
+	font-weight:bold;
+	font-size:24px;
+	font-family: Droid, Arial, sans-serif;
+	color:#53355d;
+	float:left;
+	margin-top:20px;
+	margin-left:10px;
+}
+.pret_up{
+	font-weight:bold;
+	font-size:14px;
+	font-family: Droid, Arial, sans-serif;
+}
+.pret_lei{
+	font-weight:bold;
+	font-size:24px;
+	font-family: Droid, Arial, sans-serif;
+}
+.intre{
+	font-weight:bold;
+	font-size:24px;
+	font-family: Droid, Arial, sans-serif;
+	color:#53355d;
+	float:left;
+	margin-top:20px;
+	margin-left:10px;
+}
 
 /*info*/
 #info{
@@ -469,6 +580,114 @@ nav ul{
 	padding-top:-10px;
 	margin-bottom:10px;
 	line-height:120%;
+}
+/*profil magazin*/
+#breadcrumb{
+	width:763px;
+	margin:0 auto;
+	border-top:1px solid #d5cbd9;
+	border-left:1px solid #d5cbd9;
+	border-right:1px solid #d5cbd9;
+}
+.breadcrumb{
+	list-style: none;
+	overflow: hidden;
+	font-size:14px;
+	font-family:'DroidSans', Arial, sans-serif;
+}
+.breadcrumb li {
+	float: left;
+	background-image:url('')
+}
+.breadcrumb li a {
+	text-decoration: none;
+	padding-left:15px;
+	padding-top:7px;
+	padding-bottom:5px;
+	position: relative;
+	display: block;
+	float: left;
+	color:#726e73;
+}
+#magazin_container{
+	border-right:1px solid #d5cbd9;
+	border-top:1px solid #d5cbd9;
+	position:relative;
+
+}
+#magazin_titlu{
+	float:left;
+	border-bottom:1px solid #d5cbd9;
+	width:430px;
+	height:40px;
+	background-image:url("../images/client/bkg-profil.jpg");
+	background-repeat:no-repeat;
+	background-color:#ffffff;
+}
+#magazin_titlu_all{
+	margin:0 auto;
+	width:763px;
+	height:50px;
+	background-image:url("../images/client/bkg-profil.jpg");
+	background-repeat:no-repeat;
+	background-color:#ffffff;
+	border-top:1px solid #d5cbd9;
+
+}
+#magazin_titlu_all h1{
+	font-family:'Droid Sans', Arial, sans-serif;
+	font-size:24px;
+	color:#8e8194;
+	margin-left:12px;
+	margin-top:8px;
+}
+#descr_titlu{
+	background-image:url("../images/client/bkg-descriere.jpg");
+	background-repeat:no-repeat;
+	background-color:#ffffff;
+	border-left:1px solid #d5cbd9;
+	border-bottom:1px solid #d5cbd9;
+	float:left;
+	width:332px;
+	height:40px
+}
+#magazin_titlu h1{
+	font-family:'Droid Sans', Arial, sans-serif;
+	font-size:24px;
+	color:#8e8194;
+	margin-left:12px;
+	margin-top:5px;
+}
+#descr_titlu h1{
+	font-family:'Droid Sans', Arial, sans-serif;
+	font-size:24px;
+	color:#8e8194;
+	margin-left:12px;
+	margin-top:5px;
+}
+#magazin{
+	border-right:1px solid #d5cbd9;
+	width:430px;
+	float:left;
+}
+#descr_magazin{
+	width:300px;
+	float:left;
+}
+#descr_magazin p{
+	font-family:'Droid Sans', Arial, sans-serif;
+	font-size:12px;
+	color:#646262;
+	line-height:24px;
+	padding-left:5px;
+	text-indent:10px;
+}
+#map{
+	margin:0 auto;
+	width:765px;
+	height:266px;
+	background-color:#000000;
+	margin-top:30px;
 }
 /*///////////////////////*/
 /*auth_pag*/
@@ -556,6 +775,20 @@ nav ul{
 	padding-top:2px;
 	
 }
+
+.trimite{
+	margin-top:40px;
+	background-image:url("../images/client/trimite.png");
+	background-repeat:no-repeat;
+	background-color:#ffffff;
+	width:85px;
+	height:40px;
+	cursor:pointer;
+
+}
+#date_contact h2{
+
+}
 /*///////////////////////*/
 /**** Autenth*************/
 #wrap_auth{
@@ -563,6 +796,57 @@ nav ul{
 	height:488px;
 	background-color:#edefed;
 	margin:0 auto;
+}
+
+#wrap_auth{
+	width:535px;
+	height:488px;
+	background-color:#edefed;
+	margin:0 auto;
+}
+#reg{
+	width:571px;
+	margin:0 auto;
+	float:left;
+}
+#reg p{
+	padding-left:40px;
+}
+.head_auth{
+	float:left;
+}
+.head_cr{
+	float:right;
+}
+#reg p{
+	float:left;
+	padding-top:8px;
+}
+#social{
+	float:left;
+	padding-left:30px;
+}
+.contact_form {
+	margin-top:30px;
+	margin-left:40px;
+	font-family:Arial;
+	font-weight:bold;
+	font-size:14px;
+}
+.contact_form ul{
+	list-style-type:none;
+	list-style-position:outside;
+}
+.contact_form li{
+	clear:both;
+	padding-top:14px;
+}
+.input{
+	border:1px solid #b8b9b8;
+	float:left;
+	height:30px;
+	width:330px;
+	background-color:#eaebea;
 }
 
 /*///////////////////////*/
@@ -612,6 +896,11 @@ nav ul{
 
 .aboutSitename{
 	color: #44a074;
+}
+
+.aboutSitename > a{
+	text-decoration:none;
+	color:#44a074;
 }
 
 .aboutSiteUrl{

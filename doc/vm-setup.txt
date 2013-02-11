@@ -1,0 +1,15 @@
+1. Configure java
+  - download jdk(.tar.gz)
+  - unzip: tar -xvf ~/Downloads/jdk-7u3-linux-i586.tar.gz
+  - create folder for java : sudo mkdir -p /usr/lib/jvm/jdk1.7.0 
+  - copy contents: sudo mv jdk1.7.0_03/* /usr/lib/jvm/jdk1.7.0/
+  - enable jdk: 
+     sudo update-alternatives --install "/usr/bin/java" "java" "/usr/lib/jvm/jdk1.7.0/bin/java" 1
+	 sudo update-alternatives --install "/usr/bin/javac" "javac" "/usr/lib/jvm/jdk1.7.0/bin/javac" 1 
+	 sudo update-alternatives --install "/usr/bin/javaws" "javaws" "/usr/lib/jvm/jdk1.7.0/bin/javaws" 1
+ - test: java -version
+ 
+ 2. Jboss setup
+  - download jboss. 
+  - unzip
+  - copy to /opt/jboss-version-info.
