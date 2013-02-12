@@ -1,6 +1,7 @@
 'use strict';
 
 function ProductsCtrl($scope, $location){
+    //make this global
     $scope.geolocationAvailable = navigator.geolocation ? true : false;
 
 	$scope.markers = [];
@@ -24,7 +25,6 @@ function ProductsCtrl($scope, $location){
             $scope.$apply();
         }, function () {});
     } else {
-        //set $scope.center lat and lng default valyes.
     }
 
     $scope.products = [{"name":"Geanta de umar", "price":"25"},
