@@ -378,7 +378,7 @@ nav ul{
 .prod_all{
 	height:310px;
 	float:left;
-	background-image:url("../images/bkg-prod.jpg");
+	background-image:url("../images/client/bkg-prod.jpg");
 	background-repeat:no-repeat;
 	background-position:top;
 	width:190px;
@@ -700,6 +700,7 @@ nav ul{
 .map{
 	height:327px;
 	background-color:#000;
+	display : block;
 }
 #map_ul {
 	list-style-type:none;
