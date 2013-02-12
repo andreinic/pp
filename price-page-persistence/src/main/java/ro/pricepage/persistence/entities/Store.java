@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
@@ -25,6 +26,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 @NamedQueries(value={
 		@NamedQuery(name=Store.Q_FIND_ALL_BY_CHAIN_AND_CITY, query="FROM Store WHERE chain.name = :chain AND locality.city = :city")
 })
+@Analyzer(definition = "ngram")
 public class Store extends BaseEntity {
 	public static final String Q_FIND_ALL_BY_CHAIN_AND_CITY = "Store.findAllByChainAndCity";
 	private static final long serialVersionUID = -316251772567024056L;

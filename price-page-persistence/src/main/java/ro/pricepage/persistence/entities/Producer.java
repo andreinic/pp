@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
@@ -29,6 +30,7 @@ import org.hibernate.search.annotations.Index;
     @NamedQuery(name = Producer.GET_PRODUCER_BY_NAME, query = "FROM Producer WHERE name = :name"),
     @NamedQuery(name = Producer.GET_PRODUCER_BY_ID, query = "FROM Producer WHERE id = :id")
 })
+@Analyzer(definition = "ngram")
 public class Producer extends BaseEntity
 {
     private static final long serialVersionUID = 1L;

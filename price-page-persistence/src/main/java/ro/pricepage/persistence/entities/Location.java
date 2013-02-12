@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
@@ -25,6 +26,7 @@ import org.hibernate.search.annotations.Index;
 		@NamedQuery(name=Location.Q_FIND_ALL_LOCATIONS_BY_COUNTY, query="FROM Location WHERE county = :county"),
 		@NamedQuery(name=Location.Q_FIND_ALL_CITIES_WITH_STORES, query="SELECT DISTINCT(city) FROM Location l WHERE EXISTS(SELECT s FROM Store s WHERE s.locality = l)")
 })
+@Analyzer(definition = "ngram")
 public class Location extends BaseEntity {
 	private static final long serialVersionUID = -2535910147758488039L;
 	public static final String Q_FIND_ALL_CITIES_BY_COUNTY = "Location.findAllCitiesByCounty";

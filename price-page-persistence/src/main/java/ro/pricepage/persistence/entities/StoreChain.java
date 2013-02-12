@@ -13,10 +13,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Indexed;
 
 @Entity
 @Table(name="store_chains")
@@ -26,6 +26,7 @@ import org.hibernate.search.annotations.Indexed;
 		@NamedQuery(name=StoreChain.Q_FIND_BY_NAME, query="FROM StoreChain WHERE name = :name"),
 		@NamedQuery(name=StoreChain.Q_FIND_ALL_NAMES_IN_CITY, query="SELECT DISTINCT(name) FROM StoreChain chain WHERE EXISTS (SELECT s FROM Store s WHERE s.chain = chain AND s.locality.city = :city)")
 })
+@Analyzer(definition = "ngram")
 public class StoreChain extends BaseEntity {
 	private static final long serialVersionUID = 887558032395422628L;
 	public static final String Q_FIND_ALL = "StoreChain.findAll";

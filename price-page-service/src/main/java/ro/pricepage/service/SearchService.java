@@ -10,7 +10,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
@@ -59,7 +58,7 @@ public class SearchService extends BaseService {
 		IndexReader reader = fullTextEm.getSearchFactory().getIndexReaderAccessor().open(ProductStore.class);
 		IndexSearcher searcher = new IndexSearcher(reader);
 		
-		MultiFieldQueryParser parser = new MultiFieldQueryParser(Version.LUCENE_35, fields, new StandardAnalyzer(Version.LUCENE_35));
+		MultiFieldQueryParser parser = new MultiFieldQueryParser(Version.LUCENE_CURRENT, fields, fullTextEm.getSearchFactory().getAnalyzer("ngram"));
 		parser.setDefaultOperator(Operator.OR);
 		Query query = parser.parse(text);
 		TopDocs topDocs = searcher.search(query, 20);

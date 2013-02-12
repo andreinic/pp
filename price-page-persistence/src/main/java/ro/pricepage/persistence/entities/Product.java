@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
@@ -32,6 +33,7 @@ import ro.pricepage.persistence.indexing.CategoryBridge;
     @NamedQuery(name = Product.GET_PRODUCTS, query = "FROM Product"),
     @NamedQuery(name = Product.COUNT_PRODUCTS, query = "SELECT COUNT(p.id) FROM Product AS p")
 })
+@Analyzer(definition = "ngram")
 public class Product extends BaseEntity
 {
     public static final long serialVersionUID = 1L;
