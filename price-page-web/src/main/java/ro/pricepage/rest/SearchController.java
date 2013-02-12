@@ -34,7 +34,7 @@ public class SearchController {
 			@QueryParam("first") int first,
 			@QueryParam("last") int last) throws ParseException, IOException{
 		List<Document> docs = searchService.fullTextSearch(text, first, last);
-		List<SearchHitDTO> dtos = null;
+		List<SearchHitDTO> dtos = SearchHitDTO.fromDocumentList(docs);
 		GenericEntity<List<SearchHitDTO>> entity = new GenericEntity<List<SearchHitDTO>>(dtos, List.class);
 		return Response.status(Status.OK).entity(entity).build();
 	}

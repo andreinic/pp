@@ -55,6 +55,8 @@ public class ShopsView implements Serializable
 	private TreeNode treeRoot;
 	private Store selectedStore;
 
+	private State inWorkState;
+
 	private String selectedChain;
 	private String selectedType;
 	private String storeName;
@@ -103,23 +105,48 @@ public class ShopsView implements Serializable
 		Store store = new Store(storeName, chain, type, locality, address, zip, longitude, latitude, url);
 		storesService.saveStore(store);
 	}
-	
-	public Object onTreePick(){
-		getSelectedStore();
-		return null;
+
+	public void onTreePick(){
+		saveInWorkDetails();
+		populateFromSelectedStore();
 	}
-	
+
 	public void onUpdate(){
-		
+		StoreChain chain = storesService.findSingleStoreChainByName(selectedChain);
+		if(chain == null){
+			chain = storesService.saveChainWithName(selectedChain);
+		}
+
+		StoreType type = storesService.findSingleStoreTypeByName(selectedType);
+		if(type == null){
+			type = storesService.saveTypeWithName(selectedType);
+		}
+
+		Location locality = findLocality(selectedLocalityId);
+
+		selectedStore.setName(storeName);
+		selectedStore.setChain(chain);
+		selectedStore.setStoreType(type);
+		selectedStore.setLocality(locality);
+		selectedStore.setAddress(address);
+		selectedStore.setZip(zip);
+		selectedStore.setLongitude(longitude);
+		selectedStore.setLatitude(latitude);
+		selectedStore.setUrl(url);
+
+		storesService.saveStore(selectedStore);
+		restoreInWorkDetails();
 	}
-	
+
 	public void onCancelEdit(){
-		
+		restoreInWorkDetails();
 	}
 
 	public void showOnMap(ActionEvent event){
 		map.getMarkers().clear();
-		map.addOverlay(new Marker(new LatLng(latitude.doubleValue(), longitude.doubleValue())));
+		if(latitude != null && longitude != null){
+			map.addOverlay(new Marker(new LatLng(latitude.doubleValue(), longitude.doubleValue())));
+		}
 	}
 
 	public void onPointSelect(PointSelectEvent event){
@@ -131,6 +158,49 @@ public class ShopsView implements Serializable
 	}
 
 	public void dummy(){
+	}
+
+	private void saveInWorkDetails(){
+		inWorkState = new State();
+		inWorkState.address = address;
+		inWorkState.latitude = latitude;
+		inWorkState.longitude = longitude;
+		inWorkState.selectedChain = selectedChain;
+		inWorkState.selectedCounty = selectedCounty;
+		inWorkState.selectedLocalityId = selectedLocalityId;
+		inWorkState.selectedType = selectedType;
+		inWorkState.storeName = storeName;
+		inWorkState.url = url;
+		inWorkState.zip = zip;
+	}
+
+	private void restoreInWorkDetails(){
+		address = inWorkState.address;
+		latitude = inWorkState.latitude;
+		longitude = inWorkState.longitude;
+		selectedChain = inWorkState.selectedChain;
+		selectedCounty = inWorkState.selectedCounty;
+		selectedLocalityId = inWorkState.selectedLocalityId;
+		selectedType = inWorkState.selectedType;
+		storeName = inWorkState.storeName;
+		url = inWorkState.url;
+		zip = inWorkState.zip;
+		showOnMap(null);
+		selectedStore = null;
+	}
+
+	private void populateFromSelectedStore(){
+		address = selectedStore.getAddress();
+		latitude = selectedStore.getLatitude();
+		longitude = selectedStore.getLongitude();
+		selectedChain = selectedStore.getChain().getName();
+		selectedCounty = selectedStore.getLocality().getCounty();
+		selectedLocalityId = selectedStore.getLocality().getId();
+		selectedType = selectedStore.getStoreType().getName();
+		storeName = selectedStore.getName();
+		url = selectedStore.getUrl();
+		zip = selectedStore.getZip();
+		showOnMap(null);
 	}
 
 	private void findAllChainNames(){
@@ -382,5 +452,20 @@ public class ShopsView implements Serializable
 				return false;
 			return true;
 		}
+	}
+
+	private static class State implements Serializable{
+		private static final long serialVersionUID = 1L;
+
+		private String selectedChain;
+		private String selectedType;
+		private String storeName;
+		private String selectedCounty;
+		private Integer selectedLocalityId;
+		private Double latitude;
+		private Double longitude;
+		private String address;
+		private String zip;
+		private String url;
 	}
 }

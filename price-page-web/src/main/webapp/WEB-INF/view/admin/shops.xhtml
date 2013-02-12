@@ -74,10 +74,10 @@
 
 				<h:panelGrid id="buttonsPanel" columns="2">
 					<p:commandButton value="Salveaza"
-						actionListener="#{shopsView.onSave}" update="formPanel"
+						actionListener="#{shopsView.onSave}" update="@form"
 						rendered="#{empty shopsView.selectedStore}" />
 					<p:commandButton value="Actualizeaza"
-						actionListener="#{shopsView.onUpdate}" update="formPanel"
+						actionListener="#{shopsView.onUpdate}" update="@form"
 						rendered="#{not empty shopsView.selectedStore}" />
 					<p:commandButton value="Inapoi la magazin nou"
 						actionListener="#{shopsView.onCancelEdit}" update="formPanel"

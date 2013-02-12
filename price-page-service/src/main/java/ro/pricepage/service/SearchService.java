@@ -4,13 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.Startup;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.FlushModeType;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -28,6 +26,7 @@ import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
 
 import ro.pricepage.persistence.entities.ProductStore;
+import ro.pricepage.persistence.indexing.Field;
 import ro.pricepage.qualifiers.MySQLDatabase;
 
 @Named(value = "searchService")
@@ -35,7 +34,7 @@ import ro.pricepage.qualifiers.MySQLDatabase;
 @Startup
 public class SearchService extends BaseService {
 	private static final long serialVersionUID = 1L;
-	private static final String[] fields = {};
+	private static final String[] fields = Field.getAllIndexedFieldPaths();
 
 	@Inject
 	@MySQLDatabase
