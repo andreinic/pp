@@ -11,6 +11,26 @@
 		<module>price-page-service</module>
 		<module>price-page-web</module>
 	</modules>
+    <profiles>
+        <profile>
+            <id>toev</id>
+            <properties>
+                <lucene.index.dir>e:/dev/projects/java/pp/pp-index</lucene.index.dir>
+            </properties>
+        </profile>
+        <profile>
+            <id>nicusan</id>
+            <properties>
+                <lucene.index.dir></lucene.index.dir>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <lucene.index.dir>/home/jboss/pp/lucene-index</lucene.index.dir>
+            </properties>
+        </profile>
+    </profiles>
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -23,6 +43,14 @@
 						<target>1.7</target>
 					</configuration>
 				</plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.5</version>
+                    <configuration>
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+                </plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>

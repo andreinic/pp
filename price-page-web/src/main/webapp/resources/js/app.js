@@ -1,6 +1,19 @@
 'use strict';
 
-angular.module("price-page", ['ngResource', "google-maps", "ui"])
+angular.module("price-page", ['ngResource', "google-maps"])
+	   .directive('opendialog', function(){
+       		var openDialog = {
+	        link : function(scope, element, attrs) {
+	            	function openDialog() {
+	              		var element = angular.element('#authModal');
+	              		var ctrl = element.controller();
+	              		// ctrl.setModel(scope.blub);
+	              		element.modal('show');
+	            	}
+	            	element.bind('click', openDialog);
+	       		}
+	        }
+       		return openDialog;})
        .config(function($routeProvider){
             $routeProvider.when("/", {templateUrl : 'partials/first.html'})
                           .when("/despre-noi", {templateUrl : 'partials/despre-noi.html'})
