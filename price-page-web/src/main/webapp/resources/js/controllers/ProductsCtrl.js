@@ -1,6 +1,6 @@
 'use strict';
 
-function ProductsCtrl($scope, $location){
+function ProductsCtrl($scope, $location, Product){
     //make this global
     $scope.geolocationAvailable = navigator.geolocation ? true : false;
 
@@ -27,10 +27,7 @@ function ProductsCtrl($scope, $location){
     } else {
     }
 
-    $scope.products = [{"name":"Geanta de umar", "price":"25"},
-                       {"name":"Geanta de umar2", "price":"125"},
-                       {"name":"Geanta de umar", "price":"25"},
-                       {"name":"Geanta de umar", "price":"25"}];
+    $scope.products = Product.query();
 
     $scope.toDetail = function(){
         $location.path("/produs");

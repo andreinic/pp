@@ -21,4 +21,9 @@ angular.module("price-page", ['ngResource', "google-maps"])
                           .when("/contact", {templateUrl : 'partials/contact.html'})
                           .when("/produs", {templateUrl : 'partials/product-details.html', controller : 'ProductsCtrl'})
                           .when("/cauta", {templateUrl : 'partials/search.html', controller : 'SearchCtrl'})
+       })
+       .factory('Product', function($resource){
+            return $resource('rest/products?start=:start&count=:count', {}, {
+                query : {method : 'GET', params:{start:0, count:5}, isArray:true}
+            })
        });
