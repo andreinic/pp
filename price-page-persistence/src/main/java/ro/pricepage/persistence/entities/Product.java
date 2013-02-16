@@ -15,7 +15,12 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.ContainedIn;
@@ -34,6 +39,7 @@ import ro.pricepage.persistence.indexing.CategoryBridge;
     @NamedQuery(name = Product.COUNT_PRODUCTS, query = "SELECT COUNT(p.id) FROM Product AS p")
 })
 @Analyzer(definition = "ngram")
+@XmlRootElement(name = "product")
 public class Product extends BaseEntity
 {
     public static final long serialVersionUID = 1L;
@@ -51,6 +57,8 @@ public class Product extends BaseEntity
     @Id
     @Column(name = "id", nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @XmlElement(name = "id")
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     public Integer getId() {
         return id;
     }
@@ -61,6 +69,7 @@ public class Product extends BaseEntity
     @JoinColumn(name = "fk_category", nullable = false)
     @ManyToOne(fetch = FetchType.EAGER)
     @Field(bridge=@FieldBridge(impl=CategoryBridge.class))
+    @JsonIgnore
     public ProductCategory getCategory() {
         return category;
     }
@@ -71,6 +80,7 @@ public class Product extends BaseEntity
     @JoinColumn(name = "fk_producer", nullable = false)
     @ManyToOne(fetch = FetchType.EAGER)
     @IndexedEmbedded
+    @JsonIgnore
     public Producer getProducer() {
         return producer;
     }
@@ -80,6 +90,8 @@ public class Product extends BaseEntity
 
     @Column(name = "name", nullable = false)
     @Field(name="name", store=Store.YES, analyze=Analyze.YES, index=Index.YES)
+    @XmlElement(name = "id")
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     public String getName() {
         return name;
     }
@@ -89,6 +101,8 @@ public class Product extends BaseEntity
 
     @Column(name = "description")
     @Field(name="description", store=Store.YES, analyze=Analyze.YES, index=Index.YES)
+    @XmlElement(name = "description")
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     public String getDescription() {
         return description;
     }
@@ -98,6 +112,7 @@ public class Product extends BaseEntity
 
     @OneToMany(mappedBy = "product", cascade=CascadeType.ALL)
     @ContainedIn
+    @JsonIgnore
     public Set<ProductStore> getStoreInstances() {
 		return storeInstances;
 	}
