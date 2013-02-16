@@ -30,13 +30,13 @@ public class SearchHitDTO {
 		return retList;
 	}
 
-	@XmlElement
+	@XmlElement(name = "name")
 	@JsonSerialize(include=Inclusion.NON_NULL)
 	public String getProductName() {
 		return productName;
 	}
 
-	@XmlElement
+	@XmlElement(name = "store")
 	@JsonSerialize(include=Inclusion.NON_NULL)
 	public String getStoreName() {
 		return storeName;

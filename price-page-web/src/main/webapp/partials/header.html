@@ -11,7 +11,7 @@
         <li><a href="#/">Creare cont</a></li>
     </ul>
 </nav>
-<section id="header" ng-controller="SearchCtrl">
+<section id="header" ng-controller="ProductsCtrl">
     <h1>Page Header</h1>
     <a class="logo" href="#/"><img src="resources/images/client/logo.png"/></a>
     <img src="resources/images/client/cauta_head.png" class="cauta_img" />
@@ -22,6 +22,9 @@
         </form>
     </div>
 </section>
+
+<div id="authModal" class="modal hide fade" ng-controller="AuthCtrl" ng-include="'partials/auth.html'">
+</div>
 
 <div id="authModal" class="modal hide fade" ng-controller="AuthCtrl">
     <div class="modal-body"><!--wrap_cr-->

@@ -20,10 +20,15 @@ angular.module("price-page", ['ngResource', "google-maps"])
                           .when("/magazine-promovate", {templateUrl : 'partials/magazine-promovate.html'})
                           .when("/contact", {templateUrl : 'partials/contact.html'})
                           .when("/produs", {templateUrl : 'partials/product-details.html', controller : 'ProductsCtrl'})
-                          .when("/cauta", {templateUrl : 'partials/search.html', controller : 'SearchCtrl'})
+                          .when("/cauta", {templateUrl : 'partials/search.html', controller : 'ProductsCtrl'})
        })
        .factory('Product', function($resource){
             return $resource('rest/products?start=:start&count=:count', {}, {
                 query : {method : 'GET', params:{start:0, count:5}, isArray:true}
+            })
+       })
+       .factory('Search', function($resource){
+            return $resource('rest/search/text?q=:query,first=:start&last=:count',{},{
+                query : {method:'GET', params:{query:'Le', start:0, count:5}, isArray:true}
             })
        });

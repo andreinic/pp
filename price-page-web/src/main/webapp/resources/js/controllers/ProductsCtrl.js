@@ -1,6 +1,6 @@
 'use strict';
 
-function ProductsCtrl($scope, $location, Product){
+function ProductsCtrl($scope, $location, Product, Search){
     //make this global
     $scope.geolocationAvailable = navigator.geolocation ? true : false;
 
@@ -31,5 +31,10 @@ function ProductsCtrl($scope, $location, Product){
 
     $scope.toDetail = function(){
         $location.path("/produs");
+    }
+
+    $scope.search = function(){
+        $scope.products = Search.query();
+        $location.path("/cauta");
     }
 }

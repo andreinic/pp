@@ -8,76 +8,10 @@
 					<p>Rezultate cautare</p>
 				</div><!-- title ends here-->
 				<div id="produse"><!-- produse starts here-->
-					<div class="prod"><!--prod starts here-->
-						<div class="prodImg">
-							<img src="resources/images/client/prod_ex.png" alt="prod" class="prod_ex"/>
-							<p class="prodtTitle">Geanta de umar</p>
-							<p class="prodStart">Preturi incepand de la</p>
-							<p class="prodPrice">25,<sup class="produtPriceUpper">99</sup><sub class="produtPriceLower">lei</sub></p>
-						</div>
-					</div>
-					<div class="prod"><!--prod starts here-->
-						<div class="prodImg">
-							<img src="resources/images/client/prod_ex.png" alt="prod" class="prod_ex">
-							<p class="prodtTitle">Geanta de umar</p>
-							<p class="prodStart">Preturi incepand de la</p>
-							<p class="prodPrice">25 <span class="productCurrency">lei</span></p>
-						</div>
-					</div>
-					<div class="prod"><!--prod starts here-->
-					</div>
-					<div class="prod"><!--prod starts here-->
-					</div>
+                    <div class="prod" ng-repeat="product in products" ng-include="'partials/product.html'">
+                    </div>
 				</div><!--produse ends here-->
 			</section>
-			<section>
-				<h1>Produse populare</h1>
-				<div id="produse"><!-- produse starts here-->
-				
-					<div class="prod_all"><!--prod starts here-->
-						<div class="prodImg">
-							<img src="resources/images/client/prod_ex.png" alt="prod" class="prod_ex"/>
-							<p class="prodtTitle">Geanta de umar</p>
-							<p class="prodStart">Preturi incepand de la</p>
-							<p class="prodPrice">25,<sup class="produtPriceUpper">99</sup><sub class="produtPriceLower">lei</sub></p>
-						</div>
-					</div>
-					<div class="prod_all"><!--prod starts here-->
-						<div class="prodImg">
-							<img src="resources/images/client/prod_ex.png" alt="prod" class="prod_ex"/>
-							<p class="prodtTitle">Geanta de umar</p>
-							<p class="prodStart">Preturi incepand de la</p>
-							<p class="prodPrice">25 <span class="productCurrency">lei</span></p>
-						</div>
-					</div>
-					<div class="prod_all"><!--prod starts here-->
-					</div>
-					<div class="prod_all"><!--prod starts here-->
-					</div>
-				</div><!--produse ends here-->
-				<div id="produse"><!-- produse starts here-->
-				
-					<div class="prod_all"><!--prod starts here-->
-						<div class="prodImg">
-							<img src="resources/images/client/prod_ex.png" alt="prod" class="prod_ex"/>
-							<p class="prodtTitle">Geanta de umar</p>
-							<p class="prodStart">Preturi incepand de la</p>
-							<p class="prodPrice">25,<sup class="produtPriceUpper">99</sup><sub class="produtPriceLower">lei</sub></p>
-						</div>
-					</div>
-					<div class="prod_all"><!--prod starts here-->
-						<div class="prodImg">
-							<img src="resources/images/client/prod_ex.png" alt="prod" class="prod_ex"/>
-							<p class="prodtTitle">Geanta de umar</p>
-							<p class="prodStart">Preturi incepand de la</p>
-							<p class="prodPrice">25 <span class="productCurrency">lei</span></p>
-						</div>
-					</div>
-					<div class="prod_all"><!--prod starts here-->
-					</div>
-					<div class="prod_all"><!--prod starts here-->
-					</div>
-				</div><!--produse ends here-->
 		</div><!--prod_container ends here-->
 	</div><!--col1 ends here-->
 	<div class="col2"><!--col2 starts here-->
