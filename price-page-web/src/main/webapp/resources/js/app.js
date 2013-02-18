@@ -7,7 +7,7 @@ angular.module("price-page", ['ngResource', "google-maps"])
 	            	function openDialog() {
 	              		var element = angular.element('#authModal');
 	              		var ctrl = element.controller();
-	              		// ctrl.setModel(scope.blub);
+	              		ctrl.setModel(arguments[0].currentTarget.name == 'login');
 	              		element.modal('show');
 	            	}
 	            	element.bind('click', openDialog);

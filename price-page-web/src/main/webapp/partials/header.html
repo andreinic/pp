@@ -7,8 +7,8 @@
         <li><a href="#/contact" class="third">Contact</a></li>
     </ul>
     <ul class="menuRight">
-        <li class="secondRight"><a opendialog role="button">Intra in cont</a></li>
-        <li><a href="#/">Creare cont</a></li>
+        <li class="secondRight"><a opendialog role="button" name="login">Intra in cont</a></li>
+        <li><a opendialog role="button">Creare cont</a></li>
     </ul>
 </nav>
 <section id="header" ng-controller="SearchCtrl">
@@ -23,5 +23,5 @@
     </div>
 </section>
 
-<div id="authModal" class="modal hide fade" ng-controller="AuthCtrl" ng-include="'partials/auth.html'">
+<div id="authModal" class="modal hide fade" ng-controller="UserCtrl" ng-include="'partials/auth.html'">
 </div>

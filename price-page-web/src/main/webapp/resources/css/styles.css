@@ -887,7 +887,7 @@ nav ul{
 /*///////////////////////*/
 /*auth_pag*/
 .wrap_cr{
-	width:571px;
+	/*width:571px;*/
 	height:563px;
 	background-color:#edefed;
 	margin:0 auto;
@@ -901,7 +901,7 @@ nav ul{
 	padding-top:110px;
 }
 #reg{
-	width:571px;
+	/*width:571px;*/
 	margin:0 auto;
 	float:left;
 }
@@ -909,12 +909,13 @@ nav ul{
 	float:left;
 }
 .head_cr{
-	float:right;
+	float:left;
 }
 #reg p{
 	float:left;
 	padding-top:8px;
 }
+
 #social{
 	float:left;
 	padding-left:30px;
@@ -991,13 +992,13 @@ nav ul{
 	height:488px;
 	background-color:#edefed;
 	margin:0 auto;
+	overflow-y: hidden !important; /* counter-balance bootstrap's css property */
+	padding: 0 !important; /* same as above */
+}
+.wrap_auth input[type=image]{
+    margin-top : -3px;
 }
 
-#reg{
-	width:571px;
-	margin:0 auto;
-	float:left;
-}
 #reg p{
 	padding-left:40px;
 }
@@ -1306,7 +1307,7 @@ nav ul{
     outline: 0 none;
     position: fixed;
     top: 10%;
-    width: 560px;
+    /*width: 560px;*/
     z-index: 1050;
 }
 .modal.fade {

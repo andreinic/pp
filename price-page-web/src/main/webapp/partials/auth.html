@@ -1,32 +1,30 @@
-	<div class="wrap_auth modal-body"><!--wrap_cr-->
+	<div class="modal-body {{auth && 'wrap_auth' || 'wrap_cr'}}" ng-controller="UserCtrl"><!--wrap_cr-->
 		<header>
 			<h1>Navigation Header</h1>
 			<div class="head_auth">
-				<a href="auth.html"><img src="resources/images/client/bkg-auth-on.png" alt="auth_head_off"/></a>
+				<a ng-click="choose(true)"><img src="{{auth && 'resources/images/client/bkg-auth-on.png' || 'resources/images/client/bkg-auth.png'}}" alt="auth_head_off"/></a>
 			</div>
 			<div class="head_cr">
-				<a href="cr_acc.html"><img src="resources/images/client/bkg-cr-off.png" alt="auth_head_off"/></a>
+				<a ng-click="choose(false)"><img src="{{auth && 'resources/images/client/bkg-cr-off.png' || 'resources/images/client/bkg-cr.png'}}" alt="auth_head_off"/></a>
 			</div>
 		</header>
 		<div id="cont_reg"><!--cont_inreg starts here-->
 			<header><h1>Pagina inregistrare</h1></header>
 			<div id="reg"><!--inreg starts here-->
-				<p>Autentificare cu:</p>
+				<p>{{auth && 'Autentificare cu:' || 'Inregistreaza-te cu:'}}</p>
 				<div id="social">
 					<a href="#"><img src="resources/images/client/auth-face.jpg" alt="facebook auth"/></a>
-					<a href="#"><img src="resources/images/client/auth-yahoo.jpg" alt="yahoo auth"/></a>
-					<a href="#"><img src="resources/images/client/auth-twitter.jpg" alt="twitter auth"/></a>
 				</div>
-				<form class="contact_form" action="" method="post" name="contact_form">
+				<form ng-show="auth" class="contact_form" action="" method="post" name="contact_form">
 					<ul>
 						<li>
-							<label for="name">Username:</label>
+							<label for="name">Nume:</label>
 						</li>
 						<li>
 							<input class="input" type="text" id="name"/>
 						</li>
 						<li>
-							<label for="email">Password:</label>
+							<label for="email">Parola:</label>
 						</li>
 						<li>
 							<input class="input" type="password" id="email"/>
@@ -44,66 +42,40 @@
 						</li>
 					</ul>
 				</form>
-				
+                <form ng-hide="auth" class="popup-form" action="" method="post" name="contact_form">
+                    <ul>
+                        <li>
+                            <label for="lName">Nume:<span class="red">*</span></label>
+                        </li>
+                        <li>
+                            <input type="text" id="lName"/>
+                        </li>
+                        <li>
+                            <label for="lEmail">Email:<span class="red">*</span></label>
+                        </li>
+                        <li>
+                            <input type="text" id="lEmail"/>
+                        </li>
+                        <li>
+                            <label for="lPassword">Parola:<span class="red">*</span></label>
+                        </li>
+                        <li>
+                            <input type="password" id="lPassword"/>
+                        </li>
+                        <li>
+                            <label for="lPasswordCheck">Confirmare parola:<span class="red">*</span></label>
+                        </li>
+                        <li>
+                            <input type="password" id="lPasswordCheck"/>
+                        </li>
+                            <span class="required_notification">Campurile marcate cu <span class="red">*</span> sunt obligatorii </span>
+                        <li>
+                            <input  type="submit" value="" class="submit_button" />
+                        </li>
+                    </ul>
+                </form>
 			</div><!-- inreg ends here-->	
 		</div><!-- cont_inreg ends here-->
-		<input src="resources/images/client/close2.png" type="image" value="" class="rightFloat"/>
+        <div class="clearFix"></div>
+		<input src="resources/images/client/close2.png" type="image" value="" class="rightFloat" ng-click="close()"/>
 	</div><!--wrap_cr-->
-
-
-    <!--<div class="wrap_cr modal-body">&lt;!&ndash;wrap_cr&ndash;&gt;-->
-        <!--<header>-->
-            <!--<h1>Navigation Header</h1>-->
-            <!--<div class="head_auth">-->
-                <!--<a href="auth.html"><img src="resources/images/client/bkg-auth.png" alt="auth_head_off"/></a>-->
-            <!--</div>-->
-            <!--<div class="head_cr">-->
-                <!--<a href="cr_acc.html"><img src="resources/images/client/bkg-cr.png" alt="auth_head_off"/></a>-->
-            <!--</div>-->
-        <!--</header>-->
-        <!--<div>&lt;!&ndash;cont_inreg starts here&ndash;&gt;-->
-            <!--<header><h1>Pagina inregistrare</h1></header>-->
-            <!--<div>&lt;!&ndash;inreg starts here&ndash;&gt;-->
-                <!--<p>Inregistreaza-te cu:</p>-->
-                <!--<div>-->
-                    <!--<a href="#"><img src="resources/images/client/auth-face.jpg" alt="facebook auth"/></a>-->
-                    <!--<a href="#"><img src="resources/images/client/auth-yahoo.jpg" alt="yahoo auth"/></a>-->
-                    <!--<a href="#"><img src="resources/images/client/auth-twitter.jpg" alt="twitter auth"/></a>-->
-                <!--</div>-->
-                <!--<form class="popup-form" action="" method="post" name="contact_form">-->
-                    <!--<ul>-->
-                        <!--<li>-->
-                            <!--<label for="name">Nume:<span class="red">*</span></label>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<input type="text" name="name"/>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<label for="email">Email:<span class="red">*</span></label>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<input type="text" name="email"/>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<label for="password">Parola:<span class="red">*</span></label>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<input type="password" name="password"/>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<label for="password_confirm">Confirmare parola:<span class="red">*</span></label>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<input type="password" name="password"/>-->
-                        <!--</li>-->
-                        <!--<span class="required_notification">Campurile marcate cu <span class="red">*</span> sunt obligatorii </span>-->
-                        <!--<li>-->
-                            <!--<input  type="submit" value="" class="submit_button" />-->
-                        <!--</li>-->
-                    <!--</ul>-->
-                <!--</form>-->
-
-            <!--</div>&lt;!&ndash; inreg ends here&ndash;&gt;-->
-            <!--<input src="resources/images/client/close2.png" type="image" value="" class="rightFloat"/>-->
-        <!--</div>&lt;!&ndash; cont_inreg ends here&ndash;&gt;-->
-    <!--</div>&lt;!&ndash;wrap_cr&ndash;&gt;-->
