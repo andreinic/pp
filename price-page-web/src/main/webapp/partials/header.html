@@ -11,72 +11,17 @@
         <li><a href="#/">Creare cont</a></li>
     </ul>
 </nav>
-<section id="header" ng-controller="ProductsCtrl">
+<section id="header" ng-controller="SearchCtrl">
     <h1>Page Header</h1>
     <a class="logo" href="#/"><img src="resources/images/client/logo.png"/></a>
     <img src="resources/images/client/cauta_head.png" class="cauta_img" />
     <div id="search_field">
-        <form>
-            <input type="text" id="search" name="search" class="search_field"/>
-            <button type="submit" class="search_btn" ng-click="search()"><img src="resources/images/client/search.jpg" title="Search" /></button>
+        <form ng-submit="search()">
+            <input type="text" id="search" name="search" class="search_field" ng-model="queryString"/>
+            <button type="submit" class="search_btn"><img src="resources/images/client/search.jpg" title="Search" /></button>
         </form>
     </div>
 </section>
 
 <div id="authModal" class="modal hide fade" ng-controller="AuthCtrl" ng-include="'partials/auth.html'">
-</div>
-
-<div id="authModal" class="modal hide fade" ng-controller="AuthCtrl">
-    <div class="modal-body"><!--wrap_cr-->
-        <header>
-            <h1>Navigation Header</h1>
-            <div class="head_auth">
-                <a href="auth.html"><img src="resources/images/client/bkg-auth-on.png" alt="auth_head_off"/></a>
-            </div>
-            <div class="head_cr">
-                <a href="cr_acc.html"><img src="resources/images/client/bkg-cr-off.png" alt="auth_head_off"/></a>
-            </div>
-        </header>
-        <div id="cont_reg"><!--cont_inreg starts here-->
-            <header><h1>Pagina inregistrare</h1></header>
-            <div id="reg"><!--inreg starts here-->
-                <p>Autentificare cu:</p>
-                <div id="social">
-                    <a href="#"><img src="resources/images/client/auth-face.jpg" alt="facebook auth"/></a>
-                    <a href="#"><img src="resources/images/client/auth-yahoo.jpg" alt="yahoo auth"/></a>
-                    <a href="#"><img src="resources/images/client/auth-twitter.jpg" alt="twitter auth"/></a>
-                </div>
-                <form class="contact_form" action="" method="post" name="contact_form">
-                    <ul>
-                        <li>
-                            <label for="name">Username:</label>
-                        </li>
-                        <li>
-                            <input class="input" type="text" name="name"/>
-                        </li>
-                        <li>
-                            <label for="email">Password:</label>
-                        </li>
-                        <li>
-                            <input class="input" type="password" name="password"/>
-                        </li>
-                        <li>
-                            <label for="password">Email:</label>
-                        </li>
-                        <li>
-                            <input class="input" type="email" name="password"/>
-                        </li>
-
-                        <span class="required_notification">Pastreaza-ma logat.<input type="checkbox" name="log" value="log" class="checkbox"><br></span>
-                        <li>
-                            <input  type="submit" value="" class="submit_button" />
-                        </li>
-                    </ul>
-                </form>
-                
-            </div><!-- inreg ends here-->   
-        
-        </div><!-- cont_inreg ends here-->
-        <input src="resources/images/client/close2.png" type="image" value="" class="rightFloat"/>
-    </div><!--wrap_cr-->
 </div>

@@ -32,9 +32,4 @@ function ProductsCtrl($scope, $location, Product, Search){
     $scope.toDetail = function(){
         $location.path("/produs");
     }
-
-    $scope.search = function(){
-        $scope.products = Search.query();
-        $location.path("/cauta");
-    }
 }
