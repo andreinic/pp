@@ -21,4 +21,5 @@ angular.module("price-page", ['ngResource'])
                           .when("/contact", {templateUrl : 'partials/contact.html'})
                           .when("/produs/:productId", {templateUrl : 'partials/product-details.html', controller : 'ProductDetailsCtrl'})
                           .when("/cauta", {templateUrl : 'partials/search.html', controller : 'SearchCtrl'})
+                          .when("/magazin", {templateUrl : 'partials/store.html'})
        });
