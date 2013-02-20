@@ -1,5 +1,6 @@
 package ro.pricepage.rest;
 
+import ro.pricepage.json.dto.ProductDTO;
 import ro.pricepage.persistence.entities.Product;
 import ro.pricepage.service.ProductsService;
 
@@ -12,7 +13,9 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 @Stateless
 @Path("/products")
@@ -26,7 +29,20 @@ public class ProductsController
     @Produces(MediaType.APPLICATION_JSON)
     public Response get(@QueryParam("start") int start,
                         @QueryParam("count") int count){
-        GenericEntity<List<Product>> entity = new GenericEntity<List<Product>>(productsService.list(start, count), List.class);
+        List<Product> products = productsService.list(start, count);
+        if(products.isEmpty()){
+            return Response.status(Response.Status.NO_CONTENT).build();
+        }
+        List<ProductDTO> ret = new LinkedList<>();
+        Random rnd = new Random();
+        for(Product p : products){
+            ProductDTO dto = new ProductDTO();
+            dto.setId(p.getId());
+            dto.setName(p.getName());
+            dto.setPrice(rnd.nextFloat());
+            ret.add(dto);
+        }
+        GenericEntity<List<Product>> entity = new GenericEntity(ret, List.class);
         return Response.status(200).entity(entity).build();
     }
 

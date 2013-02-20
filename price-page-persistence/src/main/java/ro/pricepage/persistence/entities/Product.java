@@ -39,7 +39,6 @@ import ro.pricepage.persistence.indexing.CategoryBridge;
     @NamedQuery(name = Product.COUNT_PRODUCTS_FOR_CATEGORY, query = "SELECT COUNT(p.id) FROM Product AS p WHERE p.category.id = :catId")
 })
 @Analyzer(definition = "ngram")
-@XmlRootElement(name = "product")
 public class Product extends BaseEntity
 {
     public static final long serialVersionUID = 1L;
@@ -58,8 +57,6 @@ public class Product extends BaseEntity
     @Id
     @Column(name = "id", nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @XmlElement(name = "id")
-    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     public Integer getId() {
         return id;
     }
@@ -70,7 +67,6 @@ public class Product extends BaseEntity
     @JoinColumn(name = "fk_category", nullable = false)
     @ManyToOne(fetch = FetchType.EAGER)
     @Field(bridge=@FieldBridge(impl=CategoryBridge.class))
-    @JsonIgnore
     public ProductCategory getCategory() {
         return category;
     }
@@ -81,7 +77,6 @@ public class Product extends BaseEntity
     @JoinColumn(name = "fk_producer", nullable = false)
     @ManyToOne(fetch = FetchType.EAGER)
     @IndexedEmbedded
-    @JsonIgnore
     public Producer getProducer() {
         return producer;
     }
@@ -91,8 +86,6 @@ public class Product extends BaseEntity
 
     @Column(name = "name", nullable = false)
     @Field(name="name", store=Store.YES, analyze=Analyze.YES, index=Index.YES)
-    @XmlElement(name = "id")
-    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     public String getName() {
         return name;
     }
@@ -102,8 +95,6 @@ public class Product extends BaseEntity
 
     @Column(name = "description")
     @Field(name="description", store=Store.YES, analyze=Analyze.YES, index=Index.YES)
-    @XmlElement(name = "description")
-    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     public String getDescription() {
         return description;
     }

@@ -31,8 +31,21 @@ function ProductsCtrl($scope, $location, $http){
         url : 'rest/products',
         method : 'GET',
         params : {start : 0, count : 5}
-    })
-    $scope.products = Product.query();
+    }).success(function(data, status, headers, configs){
+        var arr = [];
+        for(var i = 0 ; i < data.length ; ++i){
+            var product = {};
+            var p = data[i];
+            product.id = p["id"];
+            product.name = p["name"];
+            product.bigPrice = Math.floor(p["price"]);
+            product.smallPrice = p["price"] - product.bigPrice;
+            arr.push(product);
+        }
+        $scope.products = arr;
+    }).error(function(data, status, headers, configs){
+       //todo handle error
+    });
 
     $scope.toDetail = function(){
         $location.path("/produs");
