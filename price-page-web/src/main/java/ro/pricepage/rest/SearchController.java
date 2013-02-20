@@ -31,12 +31,19 @@ public class SearchController {
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	public Response search(@QueryParam("q") String text,
-			@QueryParam("first") int first,
-			@QueryParam("last") int last) throws ParseException, IOException{
-		List<Document> docs = searchService.fullTextSearch(text, first, last);
-		List<SearchHitDTO> dtos = SearchHitDTO.fromDocumentList(docs);
-		GenericEntity<List<SearchHitDTO>> entity = new GenericEntity<List<SearchHitDTO>>(dtos, List.class);
-		return Response.status(Status.OK).entity(entity).build();
+			@QueryParam("start") int first,
+			@QueryParam("count") int last) throws ParseException, IOException{
+        try{
+            List<Document> docs = searchService.fullTextSearch(text, first, last);
+            List<SearchHitDTO> dtos = SearchHitDTO.fromDocumentList(docs);
+            if(dtos.isEmpty()){
+                return Response.status(Status.NO_CONTENT).build();
+            }
+            GenericEntity<List<SearchHitDTO>> entity = new GenericEntity<List<SearchHitDTO>>(dtos, List.class);
+            return Response.status(Status.OK).entity(entity).build();
+        } catch (Exception e){
+            return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+        }
 	}
 	
 	@Path("/rebuild")

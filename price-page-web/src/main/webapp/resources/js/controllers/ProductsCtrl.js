@@ -1,6 +1,6 @@
 'use strict';
 
-function ProductsCtrl($scope, $location, Product, Search){
+function ProductsCtrl($scope, $location, $http){
     //make this global
     $scope.geolocationAvailable = navigator.geolocation ? true : false;
 
@@ -27,6 +27,11 @@ function ProductsCtrl($scope, $location, Product, Search){
     } else {
     }
 
+    $http({
+        url : 'rest/products',
+        method : 'GET',
+        params : {start : 0, count : 5}
+    })
     $scope.products = Product.query();
 
     $scope.toDetail = function(){
