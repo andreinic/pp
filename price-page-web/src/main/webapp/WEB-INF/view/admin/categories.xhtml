@@ -8,24 +8,18 @@
                 template="/WEB-INF/view/admin/templates/adminPage.xhtml">
     <ui:define name="title"><h:outputText value="Price Page Admin - Categorii"/></ui:define>
     <ui:define name="content">
-        <h:form>
-            <div class="admin-content-left-col">
+        <h:form id="outerForm">
+            <h:panelGroup layout="block" class="admin-content-left-col">
                 <p:tree id="categoriesTree" value="#{categoriesView.root}" var="doc" animate="true"
-                        selectionMode="single" selecttion="#{categoriesView.selectedNode}" dynamic="true">
-                    <p:ajax event="select" listener="#{categoriesView.onSelect}"/>
+                        selectionMode="#{categoriesView.treeSelectionMode}" selection="#{categoriesView.selectedNode}" dynamic="true">
+                    <p:ajax event="select" listener="#{categoriesView.onSelect}" update="@form" process="@this"/>
                     <p:treeNode expandedIcon="ui-icon-folder-open" collapsedIcon="ui-icon-folder-collapsed">
                         <h:outputText value="#{doc.name}"/>
                     </p:treeNode>
-                    <p:treeNode type="document" icon="ui-icon-document">
-                        <p:inplace editor="true">
-                            <p:ajax event="save" listener="#{categoriesView.onEdit}" update="categoriesTree"/>
-                            <p:inputText value="#{doc.name}" required="true"/>
-                        </p:inplace>
-                    </p:treeNode>
                 </p:tree>
-            </div>
+            </h:panelGroup>
 
-            <div class="admin-content-right-col">
+            <h:panelGroup id="rightPanel" layout="block" class="admin-content-right-col">
                 <h3>Categorie Noua</h3>
                 <h:panelGrid id="categoriesForm" columns="3">
                     <h:outputText value="Nume*: "/>
@@ -38,7 +32,8 @@
                     <h:outputText value="Parinte: "/>
                     <p:selectOneMenu id="catParent"
                                      value="#{categoriesView.parent}" converter="productCategoryConverter">
-                        <f:selectItems value="#{categoriesView.parents}" var="parent" itemLabel="#{parent.name}" itemValue="#{parent}"/>
+                        <f:selectItem itemLabel="::root::" itemValue="-1" />
+                        <f:selectItems value="#{categoriesView.all}" var="cat" itemLabel="#{cat.name}" itemValue="#{cat}"/>
                     </p:selectOneMenu>
                     <p:message for="catParent"/>
                 </h:panelGrid>
@@ -46,11 +41,19 @@
                     <p:commandButton value="Save" actionListener="#{categoriesView.onSave()}"
                                      update="categoriesTree,categoriesForm" process="@this,catName,catParent"/>
                 </h:panelGrid>
-            </div>
-
-            <p:contextMenu for="categoriesTree">
-                <p:menuitem value="Delete" icon="ui-icon-close" actionListener="#{categoriesView.onDelete}" update="categoriesTree" process="@this,categoriesTree"/>
-            </p:contextMenu>
+                
+                <h:panelGroup id="selectedOuterGrid" rendered="#{not empty categoriesView.selectedNode}">
+                	<h3>Selectie</h3>
+                	<h:panelGrid id="selectedInnerGrid" columns="4" rendered="#{not empty categoriesView.selectedNode}">
+                		<h:outputText value="#{categoriesView.selectedCategory.name}" rendered="#{not categoriesView.editing}"/>
+                		<p:inputText id="editInput" value="#{categoriesView.selectedCategory.name}" rendered="#{categoriesView.editing}"/>
+                		<p:commandButton value="Salveaza" rendered="#{categoriesView.editing}" actionListener="#{categoriesView.onSave}" process="@this editInput" update="@form"/>
+                		<p:commandButton value="Editeaza" rendered="#{not categoriesView.editing}" actionListener="#{categoriesView.onEdit}" process="@this" update="@form"/>
+                		<p:commandButton value="Sterge" rendered="#{categoriesView.selectedNode.childCount &lt; 1 and not categoriesView.selectedHasProducts}" actionListener="#{categoriesView.onDelete}" process="@this" update="@form"/>
+                		<h:outputText value="Nu puteti sterge o categorie care are produse sau subcategorii atasate" rendered="#{categoriesView.selectedNode.childCount &gt; 0 or categoriesView.selectedHasProducts}"/>
+                	</h:panelGrid>
+                </h:panelGroup>
+            </h:panelGroup>
         </h:form>
     </ui:define>
 </ui:composition>

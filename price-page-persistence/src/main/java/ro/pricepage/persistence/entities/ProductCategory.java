@@ -23,7 +23,8 @@ import javax.persistence.Table;
 @NamedQueries(value = {
     @NamedQuery(name = ProductCategory.GET_CATEGORY_BY_ID, query="FROM ProductCategory AS pc WHERE pc.id = :id"),
     @NamedQuery(name = ProductCategory.GET_CATEGORY_HIERARCHY, query = "FROM ProductCategory AS pc LEFT JOIN FETCH pc.children WHERE pc.parent IS NULL ORDER BY pc.parent, pc.id"),
-    @NamedQuery(name = ProductCategory.GET_CATEGORIES, query = "FROM ProductCategory AS pc WHERE pc.parent IS NOT NULL")
+    @NamedQuery(name = ProductCategory.GET_CATEGORIES, query = "FROM ProductCategory AS pc WHERE pc.parent IS NOT NULL"),
+    @NamedQuery(name = ProductCategory.GET_ALL_CATEGORIES, query = "FROM ProductCategory ORDER BY name ASC")
 })
 public class ProductCategory extends BaseEntity {
 	private static final long serialVersionUID = -3557158368102788220L;
@@ -31,6 +32,7 @@ public class ProductCategory extends BaseEntity {
     public static final String GET_CATEGORY_BY_ID = "ProductCategory.getCategoryById";
     public static final String GET_CATEGORY_HIERARCHY = "ProductCategory.getCategoryHierarchy";
     public static final String GET_CATEGORIES = "ProductCategory.getCategories";
+    public static final String GET_ALL_CATEGORIES = "ProductCategory.getAllCategories";
 
 	private Integer id;
 	private ProductCategory parent;

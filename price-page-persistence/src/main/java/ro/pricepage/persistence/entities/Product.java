@@ -19,7 +19,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
@@ -36,7 +35,8 @@ import ro.pricepage.persistence.indexing.CategoryBridge;
 @Table(name = "products")
 @NamedQueries({
     @NamedQuery(name = Product.GET_PRODUCTS, query = "FROM Product"),
-    @NamedQuery(name = Product.COUNT_PRODUCTS, query = "SELECT COUNT(p.id) FROM Product AS p")
+    @NamedQuery(name = Product.COUNT_PRODUCTS, query = "SELECT COUNT(p.id) FROM Product AS p"),
+    @NamedQuery(name = Product.COUNT_PRODUCTS_FOR_CATEGORY, query = "SELECT COUNT(p.id) FROM Product AS p WHERE p.category.id = :catId")
 })
 @Analyzer(definition = "ngram")
 @XmlRootElement(name = "product")
@@ -46,6 +46,7 @@ public class Product extends BaseEntity
 
     public static final String GET_PRODUCTS = "Product.getProducts";
     public static final String COUNT_PRODUCTS = "Product.countProducts";
+    public static final String COUNT_PRODUCTS_FOR_CATEGORY = "Product.countProductsForCategory";
 
     private Integer id;
     private ProductCategory category;
