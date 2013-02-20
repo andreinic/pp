@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module("price-page", ['ngResource', "google-maps"])
+angular.module("price-page", ['ngResource'])
 	   .directive('opendialog', function(){
        		var openDialog = {
 	        link : function(scope, element, attrs) {

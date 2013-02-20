@@ -42,26 +42,39 @@ function ProductDetailsCtrl($scope, $routeParams, $http){
     //make this global
     $scope.geolocationAvailable = navigator.geolocation ? true : false;
 
-    $scope.markers = [];
-    $scope.zoom = 8;
-
-    $scope.center = {
-        lat : 45,
-        lng : -73
-    };
-
     if ($scope.geolocationAvailable) {
         navigator.geolocation.getCurrentPosition(function (position) {
-            $scope.center = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
+            var mapOptions = {
+                zoom : 8,
+                center : new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+                mapTypeId: google.maps.MapTypeId.ROADMAP
             };
-            $scope.markers.push({
-                latitude : parseFloat($scope.center.lat),
-                longitude : parseFloat($scope.center.lng)
+            var map = new google.maps.Map(document.getElementById("ppMap"), mapOptions);
+            var locationMarker = new google.maps.Marker({
+                position : mapOptions.center,
+                icon : 'resources/images/client/b_poi_man.png',
+                map : map
             });
-            $scope.$apply();
+
+            //dummy
+            var closestMarker = new google.maps.Marker({
+                position : new google.maps.LatLng(position.coords.latitude+0.01, position.coords.longitude+0.01),
+                icon : 'resources/images/client/b_poi_green.png',
+                map : map
+            });
+            var cheapestMarker = new google.maps.Marker({
+                position : new google.maps.LatLng(position.coords.latitude+0.06, position.coords.longitude+0.06),
+                icon : 'resources/images/client/b_poi_red.png',
+                map : map
+            });
+            var otherMarker = new google.maps.Marker({
+                position : new google.maps.LatLng(position.coords.latitude-0.05, position.coords.longitude-0.05),
+                icon : 'resources/images/client/b_poi_blue.png',
+                map : map
+            });
         }, function () {});
     } else {
+        var map = new google.maps.Map($('#ppMap'));
     }
+
 }

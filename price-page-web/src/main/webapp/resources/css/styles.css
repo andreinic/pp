@@ -703,15 +703,15 @@ nav ul{
 	display : block;
 }
 #map_ul {
-	list-style-type:none;
-	padding:0;
-	margin-top:5px;
-	margin-left:22px;
-	
-	}
+    padding:0;
+    margin-top:5px;
+}
 
 #map_ul li{
+    list-style-type:none;
 	display:inline;
+	float:left;
+	margin-left:20px;
 }
 .map_poi{
 	padding-left:30px;
