@@ -19,16 +19,6 @@ angular.module("price-page", ['ngResource', "google-maps"])
                           .when("/despre-noi", {templateUrl : 'partials/despre-noi.html'})
                           .when("/magazine-promovate", {templateUrl : 'partials/magazine-promovate.html'})
                           .when("/contact", {templateUrl : 'partials/contact.html'})
-                          .when("/produs", {templateUrl : 'partials/product-details.html', controller : 'ProductsCtrl'})
+                          .when("/produs/:productId", {templateUrl : 'partials/product-details.html', controller : 'ProductDetailsCtrl'})
                           .when("/cauta", {templateUrl : 'partials/search.html', controller : 'SearchCtrl'})
-       })
-       .factory('Product', function($resource){
-            return $resource('rest/products?start=:start&count=:count', {}, {
-                query : {method : 'GET', params:{start:0, count:5}, isArray:true}
-            })
-       })
-       .factory('Search', function($resource){
-            return $resource('rest/search/text?q=:query,first=:start&last=:count',{},{
-                query : {method:'GET', isArray:true}
-            })
        });

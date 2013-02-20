@@ -1,6 +1,6 @@
 <div class="colleft"><!--colleft starts here-->
     <header> <h1>Page Content</h1> </header>
-    <div class="col1" ng-controller="ProductsCtrl"><!--col1 starts here-->
+    <div class="col1" ng-controller="ProductDetailsCtrl"><!--col1 starts here-->
         <div id="breadcrumb"><!-- bredcrumb starts here-->
             <ul class="breadcrumb">
                 <li><a href="#">Acasa</a></li>
@@ -17,9 +17,9 @@
                 </div><!--prod_price ends here-->
             </div><!--prod_pic ends here-->
             <div id="prod_detalii"><!--prod detalii starts here-->
-                <h1>Ceai "Amaretto Flavour Infuzie"</h1>
+                <h1>{{product.name}}</h1>
                 <h2>Descriere</h2>
-                <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
+                <p>{{product.description}}</p>
             </div><!--prod detalii ends here-->
         </div><!--produs_cont ends here-->
         <div class="divTable"><!--divTable starts here-->

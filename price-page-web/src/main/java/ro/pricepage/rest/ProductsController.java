@@ -1,15 +1,13 @@
 package ro.pricepage.rest;
 
 import ro.pricepage.json.dto.ProductDTO;
+import ro.pricepage.json.dto.ProductDetailDTO;
 import ro.pricepage.persistence.entities.Product;
 import ro.pricepage.service.ProductsService;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -46,5 +44,19 @@ public class ProductsController
         return Response.status(200).entity(entity).build();
     }
 
-
+    @GET
+    @Path("/{productId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response get(@PathParam("productId") int id){
+        try{
+            Product p = productsService.get(id);
+            ProductDetailDTO ret = new ProductDetailDTO();
+            ret.setId(p.getId());
+            ret.setName(p.getName());
+            ret.setDescription(p.getDescription());
+            return Response.status(Response.Status.OK).entity(new GenericEntity(ret, ProductDetailDTO.class)).build();
+        } catch (Exception e){
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }

@@ -29,6 +29,10 @@ public class ProductsService extends BaseService
         return products;
     }
 
+    public Product get(int id){
+        return em.createNamedQuery(Product.GET_PRODUCT_BY_ID, Product.class).setParameter("productId", id).getSingleResult();
+    }
+
     public Long count(){
         return (Long) em.createNamedQuery(Product.COUNT_PRODUCTS).getSingleResult();
     }

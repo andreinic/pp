@@ -1,32 +1,6 @@
 'use strict';
 
-function ProductsCtrl($scope, $location, $http){
-    //make this global
-    $scope.geolocationAvailable = navigator.geolocation ? true : false;
-
-	$scope.markers = [];
-	$scope.zoom = 8;
-
-	$scope.center = {
-        lat : 45,
-        lng : -73
-    };
-
-    if ($scope.geolocationAvailable) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            $scope.center = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-            $scope.markers.push({
-                latitude : parseFloat($scope.center.lat),
-                longitude : parseFloat($scope.center.lng)
-            });
-            $scope.$apply();
-        }, function () {});
-    } else {
-    }
-
+function ProductsCtrl($scope, $http, $location){
     $http({
         url : 'rest/products',
         method : 'GET',
@@ -47,7 +21,47 @@ function ProductsCtrl($scope, $location, $http){
        //todo handle error
     });
 
-    $scope.toDetail = function(){
-        $location.path("/produs");
+    $scope.toDetail = function(productId){
+        $location.path("/produs/"+productId.toString());
+    }
+}
+
+function ProductDetailsCtrl($scope, $routeParams, $http){
+    $http({
+       url : 'rest/products/' + $routeParams.productId,
+       method : 'GET'
+    }).success(function(data, status, headers, configs){
+        var p = {};
+        p.id = data["id"];
+        p.name = data["name"];
+        p.description = data["description"];
+        $scope.product = p;
+    }).error(function(data, status, headers, configs){
+
+    });
+    //make this global
+    $scope.geolocationAvailable = navigator.geolocation ? true : false;
+
+    $scope.markers = [];
+    $scope.zoom = 8;
+
+    $scope.center = {
+        lat : 45,
+        lng : -73
+    };
+
+    if ($scope.geolocationAvailable) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            $scope.center = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+            $scope.markers.push({
+                latitude : parseFloat($scope.center.lat),
+                longitude : parseFloat($scope.center.lng)
+            });
+            $scope.$apply();
+        }, function () {});
+    } else {
     }
 }
