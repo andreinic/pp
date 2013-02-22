@@ -27,10 +27,29 @@ public class ProductsController
     @Produces(MediaType.APPLICATION_JSON)
     public Response get(@QueryParam("start") int start,
                         @QueryParam("count") int count){
-        List<Product> products = productsService.list(start, count);
+        List<Product> products = productsService.list(start, start + count);
         if(products.isEmpty()){
             return Response.status(Response.Status.NO_CONTENT).build();
         }
+        List<ProductDTO> ret = new LinkedList<>();
+        Random rnd = new Random();
+        for(Product p : products){
+            ProductDTO dto = new ProductDTO();
+            dto.setId(p.getId());
+            dto.setName(p.getName());
+            dto.setPrice(rnd.nextFloat());
+            ret.add(dto);
+        }
+        GenericEntity<List<Product>> entity = new GenericEntity(ret, List.class);
+        return Response.status(200).entity(entity).build();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response get(@QueryParam("categoryId") int categoryId,
+                           @QueryParam("start") int start,
+                           @QueryParam("count") int count){
+        List<Product> products = productsService.list(categoryId, start, start + count);
         List<ProductDTO> ret = new LinkedList<>();
         Random rnd = new Random();
         for(Product p : products){

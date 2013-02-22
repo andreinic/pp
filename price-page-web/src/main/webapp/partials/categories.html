@@ -1,10 +1,10 @@
 <section>
-    <hgroup>
+    <hgroup ng-controller="ProductsCtrl">
         <h1>Categories</h1>
         <h1 class="menu">Catalog Produse</h1>
         <ul>
-            <li><a href="#/"><h2 class="submenu">Produse Alimentare</h2></a></li>
-            <li><a href="#/"><h2 class="submenu">Produse Non-alimentare</h2></a></li>
+            <li><a ng-click="fetchForCateg(2)"><h2 class="submenu">Produse Alimentare</h2></a></li>
+            <li><a ng-click="fetchForCateg(2)"><h2 class="submenu">Produse Non-alimentare</h2></a></li>
         </ul>
         <h1 class="menu">Magazine</h1>
         <ul>

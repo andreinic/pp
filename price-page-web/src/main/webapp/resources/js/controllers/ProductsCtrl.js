@@ -1,28 +1,54 @@
 'use strict';
 
 function ProductsCtrl($scope, $http, $location){
-    $http({
-        url : 'rest/products',
-        method : 'GET',
-        params : {start : 0, count : 5}
-    }).success(function(data, status, headers, configs){
-        var arr = [];
-        for(var i = 0 ; i < data.length ; ++i){
-            var product = {};
-            var p = data[i];
-            product.id = p["id"];
-            product.name = p["name"];
-            product.bigPrice = Math.floor(p["price"]);
-            product.smallPrice = p["price"] - product.bigPrice;
-            arr.push(product);
-        }
-        $scope.products = arr;
-    }).error(function(data, status, headers, configs){
-       //todo handle error
-    });
+    if(!$scope.products){
+        $http({
+            url : 'rest/products',
+            method : 'GET',
+            params : {start : 0, count : 5}
+        }).success(function(data, status, headers, configs){
+            var arr = [];
+            for(var i = 0 ; i < data.length ; ++i){
+                var product = {};
+                var p = data[i];
+                product.id = p["id"];
+                product.name = p["name"];
+                product.bigPrice = Math.floor(p["price"]);
+                product.smallPrice = p["price"] - product.bigPrice;
+                arr.push(product);
+            }
+            $scope.products = arr;
+        }).error(function(data, status, headers, configs){
+           //todo handle error
+        });
+    }
 
     $scope.toDetail = function(productId){
         $location.path("/produs/"+productId.toString());
+    }
+
+    //maybe move this into a categoryCtrl??
+    $scope.fetchForCateg = function(categoryId){
+         $http({
+             url : 'rest/products',
+             method : 'GET',
+             params : {categoryId: 2, start : 0, count : 5}
+         }).success(function(data, status, headers, configs){
+             var arr = [];
+             for(var i = 0 ; i < data.length ; ++i){
+                 var product = {};
+                 var p = data[i];
+                 product.id = p["id"];
+                 product.name = p["name"];
+                 product.bigPrice = Math.floor(p["price"]);
+                 product.smallPrice = p["price"] - product.bigPrice;
+                 arr.push(product);
+             }
+             $scope.products = arr;
+             $location.path("/produse");
+         }).error(function(data, status, headers, configs){
+            //todo handle error
+         });
     }
 }
 

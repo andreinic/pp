@@ -29,6 +29,15 @@ public class ProductsService extends BaseService
         return products;
     }
 
+    public List<Product> list(int categoryId, int start, int end){
+        List<Product> products = em.createNamedQuery(Product.GET_PRODUCTS_FOR_PARENT_CATEGORY, Product.class)
+                                   .setMaxResults(end - start)
+                                   .setFirstResult(start)
+                                   .setParameter("parentId", categoryId)
+                                   .getResultList();
+        return products;
+    }
+
     public Product get(int id){
         return em.createNamedQuery(Product.GET_PRODUCT_BY_ID, Product.class).setParameter("productId", id).getSingleResult();
     }
