@@ -20,7 +20,6 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.queryParser.ParseException;
 
 import ro.pricepage.json.dto.ProductDTO;
-import ro.pricepage.json.dto.SearchHitDTO;
 import ro.pricepage.persistence.entities.ProductStore;
 import ro.pricepage.persistence.indexing.ProductIndexField;
 import ro.pricepage.service.ProductsService;
