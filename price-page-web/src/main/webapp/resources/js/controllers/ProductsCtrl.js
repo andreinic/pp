@@ -1,28 +1,6 @@
 'use strict';
 
 function ProductsCtrl($scope, $http, $location){
-    $scope.fetch = function(){
-        $http({
-              url : 'rest/products',
-              method : 'GET',
-              params : {start : 0, count : 5}
-        }).success(function(data, status, headers, configs){
-            var arr = [];
-            for(var i = 0 ; i < data.length ; ++i){
-               var product = {};
-               var p = data[i];
-               product.id = p["id"];
-               product.name = p["name"];
-               product.bigPrice = Math.floor(p["price"]);
-               product.smallPrice = p["price"] - product.bigPrice;
-               arr.push(product);
-            }
-            $scope.products = arr;
-        }).error(function(data, status, headers, configs){
-             //todo handle error
-        });
-    }
-
     $scope.toDetail = function(productId){
         $location.path("/produs/"+productId.toString());
     }
@@ -40,8 +18,9 @@ function ProductsCtrl($scope, $http, $location){
                  var p = data[i];
                  product.id = p["id"];
                  product.name = p["name"];
-                 product.bigPrice = Math.floor(p["price"]);
-                 product.smallPrice = p["price"] - product.bigPrice;
+                 var priceArr = p["price"].toString().split(".");
+                 product.bigPrice = priceArr[0];
+                product.smallPrice = priceArr.length != 0 ? priceArr[1] : 0;
                  arr.push(product);
              }
              $scope.products = arr;
@@ -51,9 +30,40 @@ function ProductsCtrl($scope, $http, $location){
          });
     }
 
-    if($scope.products === undefined){
-        $scope.fetch();
+//    if($scope.products === undefined){
+//        $scope.fetch();
+//    }
+}
+
+function PromotionsCtrl($scope, $location, $http){
+    $scope.toDetail = function(productId){
+        $location.path("/produs/"+productId.toString());
     }
+
+    $scope.fetchPromotions = function(){
+        $http({
+              url : 'rest/products/promotions',
+              method : 'GET',
+              params : {start : 0, count : 8}
+        }).success(function(data, status, headers, configs){
+            var arr = [];
+            for(var i = 0 ; i < data.length ; ++i){
+               var product = {};
+               var p = data[i];
+               product.id = p["id"];
+               product.name = p["name"];
+               var priceArr = p["price"].toString().split(".");
+               product.bigPrice = priceArr[0];
+               product.smallPrice = priceArr.length != 0 ? priceArr[1] : null;
+               arr.push(product);
+            }
+            $scope.products = arr;
+        }).error(function(data, status, headers, configs){
+             //todo handle error
+        });
+    }
+
+    $scope.fetchPromotions();
 }
 
 function ProductDetailsCtrl($scope, $routeParams, $http){

@@ -1,5 +1,6 @@
 package ro.pricepage.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -28,6 +29,10 @@ public class ProductsService extends BaseService
         assert start > end : "start must be greater than end";
         List<Product> products = em.createNamedQuery(Product.GET_PRODUCTS, Product.class).setMaxResults(end - start).setFirstResult(start).getResultList();
         return products;
+    }
+
+    public List<Object[]> getAggregatedProducts(int start, int end){
+        return em.createQuery("SELECT p.id, p.name, MIN(ps.price) FROM ProductStore ps JOIN ps.product p GROUP BY ps.price", Object[].class).setMaxResults(end - start).setFirstResult(start).getResultList();
     }
 
     public List<Product> list(int categoryId, int start, int end){

@@ -1,0 +1,45 @@
+<div class="colmask leftmenu"><!--colmask leftmenu starts here-->
+    <div class="colleft"><!--colleft starts here-->
+        <header> <h1>Page Content</h1> </header>
+        <div class="col1"><!--col1 starts here-->
+            <div id="breadcrumb"><!-- bredcrumb starts here-->
+                <ul class="breadcrumb">
+                    <li><a href="#">Acasa</a></li>
+                    <li><a href="#">Magazine</a></li>
+                    <li><a href="#">Hypermaketuri</a></li>
+                    <li><a href="#">Real</a></li>
+                    <li><a href="#">Vezi toate produsele</a></li>
+                </ul>
+            </div><!-- breadcrumb ends here-->
+            <div id="magazin_titlu_all">
+                <h1>Hypermarket Real</h1>
+            </div>
+            <div id="prod_container"><!--prod_container here-->
+                <section>
+                    <h1>Promotii</h1>
+                    <div id="title"><!-- title starts here-->
+                        <p>Branzeturi</p>
+                    </div><!-- title ends here-->
+                    <div id="produse"><!-- produse starts here-->
+                        <div class="prod" ng-repeat="product in products" ng-include="'partials/product.html'">
+                        </div>
+                    </div><!--produse ends here-->
+                </section>
+            </div><!--prod_container ends here-->
+        </div><!--col1 ends here-->
+        <div class="col2"><!--col2 starts here-->
+            <section>
+                <h1>Page Left Content</h1>
+                <!--l_menu starts here-->
+                <div class="categoryContainer" ng-include="'partials/categories.html'">
+                </div>
+                <!--l_menu ends here-->
+
+                <!--newsletterContainer starts here-->
+                <div class="newsletterContainer" ng-include="'partials/newsletter.html'">
+                </div>
+                <!--newsletterContainer ends here-->
+            </section>
+        </div><!--col2 ends here-->
+    </div><!--colleft ends here-->
+</div><!--colmask leftmenu ends here-->

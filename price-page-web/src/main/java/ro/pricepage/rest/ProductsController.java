@@ -23,32 +23,32 @@ public class ProductsController
     @Inject
     private ProductsService productsService;
 
+    @Path("/promotions")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response get(@QueryParam("start") int start,
-                        @QueryParam("count") int count){
-        List<Product> products = productsService.list(start, start + count);
+    public Response getPromotions(@QueryParam("start") int start,
+                                  @QueryParam("count") int count){
+        List<Object[]> products = productsService.getAggregatedProducts(start, start + count);
         if(products.isEmpty()){
             return Response.status(Response.Status.NO_CONTENT).build();
         }
         List<ProductDTO> ret = new LinkedList<>();
-        Random rnd = new Random();
-        for(Product p : products){
+        for(Object[] p : products){
             ProductDTO dto = new ProductDTO();
-            dto.setId(p.getId());
-            dto.setName(p.getName());
-            dto.setPrice(rnd.nextDouble());
+            dto.setId((Integer)p[0]);
+            dto.setName(p[1].toString());
+            dto.setPrice((Double)p[2]);
             ret.add(dto);
         }
         GenericEntity<List<Product>> entity = new GenericEntity(ret, List.class);
-        return Response.status(200).entity(entity).build();
+        return Response.status(Response.Status.OK).entity(entity).build();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response get(@QueryParam("categoryId") int categoryId,
-                           @QueryParam("start") int start,
-                           @QueryParam("count") int count){
+                        @QueryParam("start") int start,
+                        @QueryParam("count") int count){
         List<Product> products = productsService.list(categoryId, start, start + count);
         List<ProductDTO> ret = new LinkedList<>();
         Random rnd = new Random();
@@ -60,7 +60,7 @@ public class ProductsController
             ret.add(dto);
         }
         GenericEntity<List<Product>> entity = new GenericEntity(ret, List.class);
-        return Response.status(200).entity(entity).build();
+        return Response.status(Response.Status.OK).entity(entity).build();
     }
 
     @GET
