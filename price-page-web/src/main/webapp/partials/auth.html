@@ -1,11 +1,11 @@
-	<div class="modal-body {{auth && 'wrap_auth' || 'wrap_cr'}}" ng-controller="UserCtrl"><!--wrap_cr-->
+	<div class="modal-body {{!auth && 'wrap_auth' || 'wrap_cr'}}" ng-controller="UserCtrl"><!--wrap_cr-->
 		<header>
 			<h1>Navigation Header</h1>
 			<div class="head_auth">
-				<a ng-click="choose(true)"><img src="{{auth && 'resources/images/client/bkg-auth-on.png' || 'resources/images/client/bkg-auth.png'}}" alt="auth_head_off"/></a>
+				<a ng-click="choose(false)"><img src="{{!auth && 'resources/images/client/bkg-auth-on.png' || 'resources/images/client/bkg-auth.png'}}" alt="auth_head_off"/></a>
 			</div>
 			<div class="head_cr">
-				<a ng-click="choose(false)"><img src="{{auth && 'resources/images/client/bkg-cr-off.png' || 'resources/images/client/bkg-cr.png'}}" alt="auth_head_off"/></a>
+				<a ng-click="choose(true)"><img src="{{!auth && 'resources/images/client/bkg-cr-off.png' || 'resources/images/client/bkg-cr.png'}}" alt="auth_head_off"/></a>
 			</div>
 		</header>
 		<div id="cont_reg"><!--cont_inreg starts here-->
@@ -15,7 +15,7 @@
 				<div id="social">
 					<a href="#"><img src="resources/images/client/auth-face.jpg" alt="facebook auth"/></a>
 				</div>
-				<form ng-show="auth" class="contact_form" action="" method="post" name="contact_form">
+				<form ng-hide="auth" class="contact_form" action="" method="post" name="contact_form">
 					<ul>
 						<li>
 							<label for="name">Nume:</label>
@@ -42,7 +42,7 @@
 						</li>
 					</ul>
 				</form>
-                <form ng-hide="auth" class="popup-form" action="" method="post" name="contact_form">
+                <form ng-show="auth" class="popup-form" action="" method="post" name="contact_form">
                     <ul>
                         <li>
                             <label for="lName">Nume:<span class="red">*</span></label>

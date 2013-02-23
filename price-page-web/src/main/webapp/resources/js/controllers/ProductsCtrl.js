@@ -1,25 +1,25 @@
 'use strict';
 
 function ProductsCtrl($scope, $http, $location){
-    if(!$scope.products){
+    $scope.fetch = function(){
         $http({
-            url : 'rest/products',
-            method : 'GET',
-            params : {start : 0, count : 5}
+              url : 'rest/products',
+              method : 'GET',
+              params : {start : 0, count : 5}
         }).success(function(data, status, headers, configs){
             var arr = [];
             for(var i = 0 ; i < data.length ; ++i){
-                var product = {};
-                var p = data[i];
-                product.id = p["id"];
-                product.name = p["name"];
-                product.bigPrice = Math.floor(p["price"]);
-                product.smallPrice = p["price"] - product.bigPrice;
-                arr.push(product);
+               var product = {};
+               var p = data[i];
+               product.id = p["id"];
+               product.name = p["name"];
+               product.bigPrice = Math.floor(p["price"]);
+               product.smallPrice = p["price"] - product.bigPrice;
+               arr.push(product);
             }
             $scope.products = arr;
         }).error(function(data, status, headers, configs){
-           //todo handle error
+             //todo handle error
         });
     }
 
@@ -49,6 +49,10 @@ function ProductsCtrl($scope, $http, $location){
          }).error(function(data, status, headers, configs){
             //todo handle error
          });
+    }
+
+    if($scope.products === undefined){
+        $scope.fetch();
     }
 }
 
