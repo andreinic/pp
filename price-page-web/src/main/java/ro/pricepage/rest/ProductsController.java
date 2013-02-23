@@ -37,7 +37,7 @@ public class ProductsController
             ProductDTO dto = new ProductDTO();
             dto.setId(p.getId());
             dto.setName(p.getName());
-            dto.setPrice(rnd.nextFloat());
+            dto.setPrice(rnd.nextDouble());
             ret.add(dto);
         }
         GenericEntity<List<Product>> entity = new GenericEntity(ret, List.class);
@@ -56,7 +56,7 @@ public class ProductsController
             ProductDTO dto = new ProductDTO();
             dto.setId(p.getId());
             dto.setName(p.getName());
-            dto.setPrice(rnd.nextFloat());
+            dto.setPrice(rnd.nextDouble());
             ret.add(dto);
         }
         GenericEntity<List<Product>> entity = new GenericEntity(ret, List.class);

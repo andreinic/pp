@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import org.apache.solr.analysis.LowerCaseFilterFactory;
@@ -35,9 +37,12 @@ import org.hibernate.search.annotations.TokenizerDef;
 				@Parameter(name = "minGramSize", value = "3"),
 				@Parameter(name = "maxGramSize", value = "3") }) })
 @Analyzer(definition = "ngram")
+@NamedQueries(value = { @NamedQuery(name = ProductStore.FIND_ALL_FOR_PRODUCT_ID, query = "FROM ProductStore WHERE product.id = :id") })
 public class ProductStore extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
+
+	public static final String FIND_ALL_FOR_PRODUCT_ID = "ProductStore.findAllForProductId";
 
 	private Integer id;
 	private Double price;

@@ -8,8 +8,10 @@ import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 import ro.pricepage.persistence.entities.Product;
+import ro.pricepage.persistence.entities.ProductStore;
 import ro.pricepage.qualifiers.MySQLDatabase;
 
 @Named(value = "productsService")
@@ -39,6 +41,12 @@ public class ProductsService extends BaseService
 
     public Product get(int id){
         return em.createNamedQuery(Product.GET_PRODUCT_BY_ID, Product.class).setParameter("productId", id).getSingleResult();
+    }
+    
+    public List<ProductStore> getAllInstancesForProduct(int id){
+    	TypedQuery<ProductStore> q = em.createNamedQuery(ProductStore.FIND_ALL_FOR_PRODUCT_ID, ProductStore.class);
+    	q.setParameter("id", id);
+    	return q.getResultList();
     }
 
     public Long count(){

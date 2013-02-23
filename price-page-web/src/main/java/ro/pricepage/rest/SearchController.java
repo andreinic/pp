@@ -1,6 +1,7 @@
 package ro.pricepage.rest;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateful;
@@ -18,7 +19,11 @@ import javax.ws.rs.core.Response.Status;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.queryParser.ParseException;
 
+import ro.pricepage.json.dto.ProductDTO;
 import ro.pricepage.json.dto.SearchHitDTO;
+import ro.pricepage.persistence.entities.ProductStore;
+import ro.pricepage.persistence.indexing.ProductIndexField;
+import ro.pricepage.service.ProductsService;
 import ro.pricepage.service.SearchService;
 
 @Stateful
@@ -29,6 +34,9 @@ public class SearchController {
 	@Inject
 	private SearchService searchService;
 	
+	@Inject
+	private ProductsService productsService;
+	
 	@Path("/text")
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
@@ -36,14 +44,16 @@ public class SearchController {
 			@QueryParam("start") int first,
 			@QueryParam("count") int last) throws ParseException, IOException{
         try{
-            List<Document> docs = searchService.fullTextSearch(text, first, last);
-            
-            //TODO: handle product documents instead of product-store documents; perform needed aggregations
-            List<SearchHitDTO> dtos = SearchHitDTO.fromDocumentList(docs);
-            if(dtos.isEmpty()){
-                return Response.status(Status.NO_CONTENT).build();
+            List<Document> docs = searchService.fullTextSearch(text, first, last);            
+            List<ProductDTO> dtos = new ArrayList<ProductDTO>();
+            for(Document doc : docs){
+            	String stringId = doc.get(ProductIndexField.ID.getPath());
+            	int id = Integer.parseInt(stringId);
+            	List<ProductStore> instances = productsService.getAllInstancesForProduct(id);
+            	ProductDTO dto = new ProductDTO(Integer.valueOf(id), doc.get(ProductIndexField.NAME.getPath()), instances);
+            	dtos.add(dto);
             }
-            GenericEntity<List<SearchHitDTO>> entity = new GenericEntity<List<SearchHitDTO>>(dtos, List.class);
+            GenericEntity<List<ProductDTO>> entity = new GenericEntity<List<ProductDTO>>(dtos, List.class);
             return Response.status(Status.OK).entity(entity).build();
         } catch (Exception e){
             return Response.status(Status.INTERNAL_SERVER_ERROR).build();
