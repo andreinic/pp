@@ -50,15 +50,18 @@ public class ProductCategoriesService extends BaseService
 	}
 
 	@SuppressWarnings("unchecked")
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<ProductCategory> list(){
 		return (List<ProductCategory>) em.createNamedQuery(GET_CATEGORIES).getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<ProductCategory> listAll(){
 		return (List<ProductCategory>) em.createNamedQuery(GET_ALL_CATEGORIES).getResultList();
 	}
 
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public ProductCategory getById(Integer id){
 		TypedQuery<ProductCategory> query = em.createNamedQuery(GET_CATEGORY_BY_ID, ProductCategory.class).setParameter("id", id).setMaxResults(1);
 		try{
@@ -74,9 +77,7 @@ public class ProductCategoriesService extends BaseService
 		ProductCategory pc = new ProductCategory();
 		pc.setName(name);
 		pc.setParent(parent);
-		parent.getChildren().add(pc);
-		em.persist(pc);
-		em.merge(parent);
+		pc = merge(pc);
 		return pc;
 	}
 

@@ -21,7 +21,7 @@
         <profile>
             <id>nicusan</id>
             <properties>
-                <lucene.index.dir></lucene.index.dir>
+                <lucene.index.dir>d:/devzone/pp-index</lucene.index.dir>
             </properties>
         </profile>
         <profile>

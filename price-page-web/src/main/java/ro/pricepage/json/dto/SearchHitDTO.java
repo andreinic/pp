@@ -10,7 +10,7 @@ import org.apache.lucene.document.Document;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
-import ro.pricepage.persistence.indexing.Field;
+import ro.pricepage.persistence.indexing.ProductStoreIndexField;
 
 @XmlRootElement(name="searchHitDTO")
 public class SearchHitDTO {
@@ -18,8 +18,8 @@ public class SearchHitDTO {
 	private String storeName;
 	
 	public SearchHitDTO(Document d){
-		this.productName = d.get(Field.PRODUCT_NAME.getPath());
-		this.storeName = d.get(Field.STORE_NAME.getPath());
+		this.productName = d.get(ProductStoreIndexField.PRODUCT_NAME.getPath());
+		this.storeName = d.get(ProductStoreIndexField.STORE_NAME.getPath());
 	}
 	
 	public static List<SearchHitDTO> fromDocumentList(List<Document> docs){

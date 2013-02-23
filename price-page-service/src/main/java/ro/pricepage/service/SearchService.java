@@ -24,8 +24,9 @@ import org.hibernate.search.MassIndexer;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
 
-import ro.pricepage.persistence.entities.ProductStore;
-import ro.pricepage.persistence.indexing.Field;
+import ro.pricepage.persistence.entities.Product;
+import ro.pricepage.persistence.indexing.ProductIndexField;
+import ro.pricepage.persistence.indexing.ProductStoreIndexField;
 import ro.pricepage.qualifiers.MySQLDatabase;
 
 @Named(value = "searchService")
@@ -33,7 +34,8 @@ import ro.pricepage.qualifiers.MySQLDatabase;
 @Startup
 public class SearchService extends BaseService {
 	private static final long serialVersionUID = 1L;
-	private static final String[] fields = Field.getAllIndexedFieldPaths();
+	private static final String[] productFields = ProductIndexField.getAllIndexedFieldPaths();
+	private static final String[] productStoreFields = ProductStoreIndexField.getAllIndexedFieldPaths();
 
 	@Inject
 	@MySQLDatabase
@@ -41,7 +43,7 @@ public class SearchService extends BaseService {
 
 	public void rebuildProductIndex() throws InterruptedException{
 		FullTextEntityManager fullTextEm = Search.getFullTextEntityManager(em);
-		MassIndexer massIndexer = fullTextEm.createIndexer(ProductStore.class);
+		MassIndexer massIndexer = fullTextEm.createIndexer(Product.class);
 		massIndexer.purgeAllOnStart(true).startAndWait();
 		fullTextEm.flushToIndexes();
 	}
@@ -55,10 +57,10 @@ public class SearchService extends BaseService {
 	 */
 	public List<Document> fullTextSearch(String text, int first, int last) throws ParseException, IOException{
 		FullTextEntityManager fullTextEm = Search.getFullTextEntityManager(em);
-		IndexReader reader = fullTextEm.getSearchFactory().getIndexReaderAccessor().open(ProductStore.class);
+		IndexReader reader = fullTextEm.getSearchFactory().getIndexReaderAccessor().open(Product.class);
 		IndexSearcher searcher = new IndexSearcher(reader);
 		
-		MultiFieldQueryParser parser = new MultiFieldQueryParser(Version.LUCENE_CURRENT, fields, fullTextEm.getSearchFactory().getAnalyzer("ngram"));
+		MultiFieldQueryParser parser = new MultiFieldQueryParser(Version.LUCENE_CURRENT, productFields, fullTextEm.getSearchFactory().getAnalyzer("ngram"));
 		parser.setDefaultOperator(Operator.OR);
 		Query query = parser.parse(text);
 		TopDocs topDocs = searcher.search(query, 20);

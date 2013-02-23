@@ -15,17 +15,14 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.FieldBridge;
 import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Store;
 
@@ -33,6 +30,7 @@ import ro.pricepage.persistence.indexing.CategoryBridge;
 
 @Entity
 @Table(name = "products")
+@Indexed(index = "products")
 @NamedQueries({
     @NamedQuery(name = Product.GET_PRODUCT_BY_ID, query = "FROM Product AS p WHERE p.id = :productId"),
     @NamedQuery(name = Product.GET_PRODUCTS, query = "FROM Product"),
@@ -106,7 +104,6 @@ public class Product extends BaseEntity
 
     @OneToMany(mappedBy = "product", cascade=CascadeType.ALL)
     @ContainedIn
-    @JsonIgnore
     public Set<ProductStore> getStoreInstances() {
 		return storeInstances;
 	}

@@ -51,7 +51,7 @@ public class ProductCategory extends BaseEntity {
 	}
 	
 	@ManyToOne(fetch = FetchType.EAGER, optional = true)
-	@JoinColumn(name="fk_parent", nullable = true, insertable = false, updatable = false)
+	@JoinColumn(name="fk_parent", nullable = true)
 	public ProductCategory getParent() {
 		return parent;
 	}

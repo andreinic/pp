@@ -70,19 +70,9 @@ public class CategoriesView implements Serializable {
 	// Actions
 	// ---------------------------------------------------------------------------------------------
 	public void onNew(ActionEvent event) {
-		TreeNode treeParent = null;
-		for (TreeNode node : root.getChildren()) {
-			if (((ProductCategory) node.getData()).getName().equals(
-					parent.getName())) {
-				treeParent = node;
-				break;
-			}
-		}
-		parent = getParent(parent);
-		assert treeParent != null : "unable to find parent node in tree structure";
-		new DefaultTreeNode("document", categoriesService.add(prodCatName,
-				parent), treeParent);
-		prodCatName = "";
+		categoriesService.add(prodCatName, parent);
+		initAll();
+		initTree();
 	}
 	
 	public void onSave(ActionEvent event){

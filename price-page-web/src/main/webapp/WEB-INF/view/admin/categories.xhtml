@@ -32,13 +32,13 @@
                     <h:outputText value="Parinte: "/>
                     <p:selectOneMenu id="catParent"
                                      value="#{categoriesView.parent}" converter="productCategoryConverter">
-                        <f:selectItem itemLabel="::root::" itemValue="-1" />
+                        <f:selectItem itemLabel="::root::" itemValue="::root::" />
                         <f:selectItems value="#{categoriesView.all}" var="cat" itemLabel="#{cat.name}" itemValue="#{cat}"/>
                     </p:selectOneMenu>
                     <p:message for="catParent"/>
                 </h:panelGrid>
                 <h:panelGrid>
-                    <p:commandButton value="Save" actionListener="#{categoriesView.onSave()}"
+                    <p:commandButton value="Adauga" actionListener="#{categoriesView.onNew}"
                                      update="categoriesTree,categoriesForm" process="@this,catName,catParent"/>
                 </h:panelGrid>
                 

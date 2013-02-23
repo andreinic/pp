@@ -1,7 +1,6 @@
 package ro.pricepage.service;
 
-import ro.pricepage.persistence.entities.Product;
-import ro.pricepage.qualifiers.MySQLDatabase;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -9,9 +8,9 @@ import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import java.util.List;
+
+import ro.pricepage.persistence.entities.Product;
+import ro.pricepage.qualifiers.MySQLDatabase;
 
 @Named(value = "productsService")
 @Stateless

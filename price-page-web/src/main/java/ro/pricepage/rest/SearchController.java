@@ -3,7 +3,8 @@ package ro.pricepage.rest;
 import java.io.IOException;
 import java.util.List;
 
-import javax.ejb.Stateless;
+import javax.ejb.Stateful;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -20,7 +21,8 @@ import org.apache.lucene.queryParser.ParseException;
 import ro.pricepage.json.dto.SearchHitDTO;
 import ro.pricepage.service.SearchService;
 
-@Stateless
+@Stateful
+@SessionScoped
 @Path("/search")
 public class SearchController {
 
@@ -35,6 +37,8 @@ public class SearchController {
 			@QueryParam("count") int last) throws ParseException, IOException{
         try{
             List<Document> docs = searchService.fullTextSearch(text, first, last);
+            
+            //TODO: handle product documents instead of product-store documents; perform needed aggregations
             List<SearchHitDTO> dtos = SearchHitDTO.fromDocumentList(docs);
             if(dtos.isEmpty()){
                 return Response.status(Status.NO_CONTENT).build();

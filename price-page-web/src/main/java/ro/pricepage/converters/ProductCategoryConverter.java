@@ -16,13 +16,17 @@ import java.io.Serializable;
 @RequestScoped
 public class ProductCategoryConverter implements Converter, Serializable
 {
-    private static final long serialVersionUID = 1L;
+    private static final String ROOT = "::root::";
+	private static final long serialVersionUID = 1L;
 
     /**
      * Responsible for conversion between the page and the backing bean
      */
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String value) {
+    	if(ROOT.equals(value)){
+    		return null;
+    	}
         try{
             //Note: EJB annotated injection would fail because the converter is in the faces context and it does not have access to the ejb context.
             //Also from the spec: "allow the container to inject references to container managed resources into a managed bean instance before it is made accessible to the JSF application. Only beans declared to be in request, session, or application scope are eligble for resource injection."
