@@ -2,6 +2,7 @@ package ro.pricepage.rest;
 
 import ro.pricepage.json.dto.ProductDTO;
 import ro.pricepage.json.dto.ProductDetailDTO;
+import ro.pricepage.json.dto.StoreDTO;
 import ro.pricepage.persistence.entities.Product;
 import ro.pricepage.service.ProductsService;
 
@@ -19,10 +20,10 @@ import java.util.Random;
 @Path("/products")
 public class ProductsController
 {
-
     @Inject
     private ProductsService productsService;
 
+    //TODO Implement accordingly
     @Path("/promotions")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -44,6 +45,7 @@ public class ProductsController
         return Response.status(Response.Status.OK).entity(entity).build();
     }
 
+    //TODO Implement accordingly
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response get(@QueryParam("categoryId") int categoryId,
@@ -69,10 +71,27 @@ public class ProductsController
     public Response get(@PathParam("productId") int id){
         try{
             Product p = productsService.get(id);
+            List<Object[]> details = productsService.getProductDetails(p.getId());
+
             ProductDetailDTO ret = new ProductDetailDTO();
             ret.setId(p.getId());
             ret.setName(p.getName());
             ret.setDescription(p.getDescription());
+            if(details != null){
+                List<StoreDTO> stores = new LinkedList<>();
+                for(Object[] o : details){
+                    StoreDTO s = new StoreDTO();
+                    s.setId((Integer)o[0]);
+                    s.setName(o[4].toString());
+                    s.setPrice((Double)o[5]);
+                    s.setAddress(o[3].toString());
+                    s.setLatitude((Double)o[2]);
+                    s.setLongitude((Double)o[1]);
+                    s.setZip(o[6].toString());
+                    stores.add(s);
+                }
+                ret.setStores(stores);
+            }
             return Response.status(Response.Status.OK).entity(new GenericEntity(ret, ProductDetailDTO.class)).build();
         } catch (Exception e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();

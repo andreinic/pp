@@ -47,6 +47,10 @@ public class ProductsService extends BaseService
     public Product get(int id){
         return em.createNamedQuery(Product.GET_PRODUCT_BY_ID, Product.class).setParameter("productId", id).getSingleResult();
     }
+
+    public List<Object[]> getProductDetails(int id){
+        return em.createQuery("SELECT s.id, s.longitude, s.latitude, s.address, sc.name, ps.price, s.zip FROM StoreChain sc JOIN sc.stores s JOIN s.productInstances ps WHERE ps.product.id = :productId ORDER BY ps.price", Object[].class).setParameter("productId", id).getResultList();
+    }
     
     public List<ProductStore> getAllInstancesForProduct(int id){
     	TypedQuery<ProductStore> q = em.createNamedQuery(ProductStore.FIND_ALL_FOR_PRODUCT_ID, ProductStore.class);

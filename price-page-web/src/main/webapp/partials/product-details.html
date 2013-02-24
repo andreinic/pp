@@ -13,7 +13,11 @@
                 <img class="prod_det" src="resources/images/client/bkg-prod.jpg"/>
                 <div id="prod_price"><!--prod_price starts here-->
                     <p class="pret_descr">Pret <br />intre:</p>
-                    <p class="pret">25,<sup class="pret_up">99</sup>lei</p><p class="intre">-</p><p class="pret">27,<sup class="pret_up">99</sup>lei</p>
+                    <p class="pret" ng-show="product.maxSmallPrice">{{product.maxBigPrice}},<sup class="pret_up">{{product.maxSmallPrice}}</sup>lei</p>
+                    <p class="pret" ng-hide="product.maxSmallPrice">{{product.maxBigPrice}} lei</p>
+                    <p class="intre">-</p>
+                    <p class="pret" ng-show="product.minSmallPrice">{{product.minBigPrice}},<sup class="pret_up">{{product.minSmallPrice}}</sup>lei</p>
+                    <p class="pret" ng-hide="product.minSmallPrice">{{product.minBigPrice}} lei</p>
                 </div><!--prod_price ends here-->
             </div><!--prod_pic ends here-->
             <div id="prod_detalii"><!--prod detalii starts here-->
@@ -30,32 +34,7 @@
              </div>
              <h2>Economiile cresc mai</br> usor cu <b>PRICE PAGE</b></h2>
              <div class="clear"></div>
-            <div class="divRow">
-                <div class="divCell_1">001</div>
-                <div class="divCell_2"><p>Carrefour</p><img src="resources/images/client/carrefour.png" alt="carrefour" class="logo_mag"></div>
-                <div class="divCell_3"><p>Strada Crisului 18, Brasov 500283</br>0268 320 043 <a href="#/magazin">Vezi detalii...</a></p><img src="resources/images/client/poi_rosu.png" class="mag_point"alt="mag_point"/></div>
-            </div>
-            
-            <div class="best"></div>
-            <div class="divRow">
-                <div class="divCell_1">aaa</div>
-                <div class="divCell_2"><p>Carrefour</p><img src="resources/images/client/carrefour.png" alt="carrefour" class="logo_mag"></div>
-                <div class="divCell_3"><p>Strada Crisului 18, Brasov 500283</br>0268 320 043 <a href="#/magazin">Vezi detalii...</a></p><img src="resources/images/client/poi_albastru.png" class="mag_point"alt="mag_point"/></div>
-                
-           </div>
-           <div class="border_bkg"></div>   
-            <div class="divRow">
-                <div class="divCell_1">ttt</div>
-                <div class="divCell_2"><p>Carrefour</p><img src="resources/images/client/carrefour.png" alt="carrefour" class="logo_mag"></div>
-                <div class="divCell_3"><p>Strada Crisului 18, Brasov 500283</br>0268 320 043 <a href="#/magazin">Vezi detalii...</a></p><img src="resources/images/client/poi_verde.png" class="mag_point"alt="mag_point"/></div>
-           </div>
-           <div class="border_bkg"></div>
-           <div class="divRow">
-                <div class="divCell_1">ttt</div>
-                <div class="divCell_2"><p>Carrefour</p><img src="resources/images/client/carrefour.png" alt="carrefour" class="logo_mag"></div>
-                <div class="divCell_3"><p>Strada Crisului 18, Brasov 500283</br>0268 320 043 <a href="#/magazin">Vezi detalii...</a></p><img src="resources/images/client/poi_mov.png" class="mag_point"alt="mag_point"/></div>
-           </div>
-           <div class="border_bkg"></div>
+             <div ng-show="product.stores" ng-repeat="store in product.stores" ng-include="'partials/product-store.html'"></div>
         </div><!--divTable ends here-->
         <div id="map_cont"><!--#map_cont starts here-->
             <div class="map_cont"><!--map_cont starts here-->
