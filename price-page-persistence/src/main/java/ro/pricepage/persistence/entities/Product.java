@@ -47,7 +47,6 @@ public class Product extends BaseEntity
     public static final String GET_PRODUCT_BY_ID = "Product.getProductById";
     public static final String GET_PRODUCTS = "Product.getProducts";
     public static final String GET_PRODUCTS_FOR_PARENT_CATEGORY = "Product.getProductsForParentCategory";
-    public static final String GET_PRODUCTS_FOR_CATEGORY = "Product.getProductsForCategory";
     public static final String COUNT_PRODUCTS = "Product.countProducts";
     public static final String COUNT_PRODUCTS_FOR_CATEGORY = "Product.countProductsForCategory";
 

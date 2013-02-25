@@ -1,9 +1,14 @@
 'use strict';
 
 function ContactCtrl($scope, $http){
-    $scope.httpError = false;
-    $scope.success = false;
     $scope.send = function(){
-        $scope.success = true;
+        if($scope.contactForm.$invalid){
+            $scope.httpError = true;
+            $scope.success = false;
+        } else {
+            $scope.httpError = false;
+            $scope.success = true;
+        }
     }
+
 }

@@ -1,0 +1,140 @@
+<div class="colleft"><!--colleft starts here-->
+    <header> <h1>Page Content</h1> </header>
+    <div class="col1"><!--col1 starts here-->
+        <div id="breadcrumb"><!-- bredcrumb starts here-->
+            <ul class="breadcrumb">
+                <li><a href="#">Acasa</a></li>
+                <li><a href="#">Termeni si conditii</a></li>
+            </ul>
+        </div><!-- breadcrumb ends here-->
+        <div class="tos_cont" ng-controller="TosCtrl"><!--tos_cont starts here-->
+            <h1>TERMENI SI CONDITII</h1>
+            <div class="tos_head"><!--tos_head starts here-->
+                <a ng-click="choose(0)">
+                    <div class="{{idx == 0 && 'for_client_on' || 'for_client_off'}}">
+                        <h1>PENTRU CLIENTI</h1>
+                    </div>
+                </a>
+                <a ng-click="choose(1)">
+                    <div class="{{idx == 1 && 'for_mag_on' || 'for_mag_off'}}">
+                        <h1>PENTRU MAGAZINE</h1>
+                    </div>
+                </a>
+                <a ng-click="choose(2)">
+                    <div class="{{idx == 2 && 'for_prod_on' || 'for_prod_off'}}">
+                        <h1>PENTRU 	PRODUCATORI</h1>
+                    </div>
+                </a>
+            </div>
+            <div class="tos_body" ng-show="idx==0">
+                <p>PricePage.ro reprezinta un intermediar, intre producatori, magazine, si clientul finit.</p>
+                <p>PricePage.ro reprezinta un site de informare a clientilor, despre produsele aflate in diverse magazine.</p>
+                <p>PricePage.ro nu se declara responsabil pentru diferentele de pret sau informatii despre produsele afisate in cadrul PricePage.ro. Site-ul in cauza este doar un informator gratuit, pentru clienti, avand drept obiectiv distribuirea informatiilor puse la dispozitie de catre producatori si magazine.</p>
+                <p>PricePage.ro nu se declara responsabil pentru nemodificarea informatiilor legate de pret sau produs, netransmise site-ului de catre magazine sau producatori, cu cel putin 12 ore, inainte de dorirea efectuarii modificarilor. </p>
+                <p>PricePage.ro se angajeaza sa afiseze in cadrul site-ului exact informatiile primite din partea producatorilor si a
+                    magazinelor.</p>
+                <p>Informatiile puse la dispozitia clientilor de catre producatori si magazine, prin intermediul www.PricePage.ro, sunt urmatoarele:</p>
+                <ul>
+                    <li>1. Producatori: poze si informatii despre produse</li>
+                    <li>2. Magazine: preturile produselor afisate pe site.</li>
+                </ul>
+                <p>Pozele produselor afisate pe site reprezinta sugestie de prezentare. </p>
+                <p>PricePage.ro nu va afisa comentariile utilizatorilor, ce aduc injurii, sau contin cuvinte vulgare, la adresa produselor,
+                    magazinelor, sau site-ului in sine.</p>
+                <p>PricePage.ro nu solicita utilizatorilor site-ului niciun fel de rasplata monetara, pentru oferirea libertatii de utilizare a
+                    siteului, in scopul informarii lor.</p>
+                <p>PricePage.ro se angajeaza sa respecte confidentialitatea utilizatorilor site-ului, a numelui de utilizator, si a parolei alese de catre utilizator.</p>
+            </div>
+
+            <div class="tos_body" ng-show="idx==1">
+                <p>PricePage.ro reprezinta un intermediar, intre producatori, magazine, si clientul finit.</p>
+                <p>PricePage.ro ofera diferitelor magazine, posibilitatea de a promova in mod gratuit produsele afisate la vanzare, in cadrul spatiului lor de vanzare, si apartinand diversilor producatori, colaboratori ai www.PricePage.ro.</p>
+                <p>PricePage.ro se angajeaza sa afiseze exact informatiile sau datele despre produse, primite din partea magazinelor si a producatorilor.</p>
+                <p>Pentru ca un magazin sa poata avea acceptul www.PricePage.ro pentru promovarea produselor sale pe site-ul mai sus mentionat, magazinul este nevoit sa trimita catre site informatiile necesare din partea acestuia.</p>
+                <p>Informatiile necesare pentru PricePage.ro, din partea magazinului sunt: pretul produselor, si diferitele modalitati de achizitionare, in rate, a diferitelor produse, in cazul in care acestea exista.</p>
+                <p>Magazinele colaboratoare se angajeaza sa transmita orice modificari legate de pretul produselor sau a modalitatilor de achizitionare a produselor cu cel putin 12 ore inaintea realizarii modificarilor respective in cadrul magazinului respectiv.</p>
+                <p>PricePage.ro nu isi asuma raspunderea pentru  modificarile legate de pret sau a modalitatilor de achizitionare a produselor, netransmise site-ului cu cel putin 12 ore inaintea (doririi) efectuarii respectivelor modificari in cadrul site-ului. </p>
+                <p>Promovarea anumitor produse in cadrul PricePage.ro se poate realiza doar cu acceptul producatorilor care realizeaza produsele respective. Promovarea produselor unui anumit producator, se poate realiza doar in cazul in care respectivul producator este colaborator PricePage.ro </p>
+                <p>In cazul in care un magazin doreste promovarea unor produse pentru care producatorul colaborator nu a transmis catre www.PricePage.ro informatiile necesare din partea acestuia, magazinul poate pune la dispozitia site-ului informatiile necesare. www.pricePage.ro  va afisa informatiile primite pentru produsele respective din partea magazinului, avand in vedere faptul ca anterior trimiterii informatiilor din partea magazinului, acesta din urma a primit acceptul din partea producatorului sau producatorilor, ale caror produse doreste sa le promoveze.</p>
+                <p>Informatiile necesare pentru PricePage.ro, din partea producatorilor colaboratori:</p>
+                <ul>
+                    <li>1. 3 poze pentru fiecare produs alimentar, in cazul producatorilor de bunuri alimentare </li>
+                    <li>2. 5 poze pentru fiecare producator nonalimentar, in cazul producatorilor de bunuri nonalimenatre</li>
+                </ul>
+                <p>Producatorii vor trimite, minim 1 poza pentru fiecare produs, si maxim numarul de poze alocat fiecarui gen de produs, alimentar sau nonalimentar.</p>
+                <p>Trimiterea unui numar mai mare de poze pentru categoria de produse pe care o fabrica producatorul, nu  va fi luata in considerare, urmand a fi afisate aleatoriu numarul necesar de poze cerut de www.PricePage.ro</p>
+                <ul>
+                    <li>3. Informatii despre produs: informatii despre continutul produselor in cazul produselor alimentare, si informatii despre caracteristiciile produselor, in cazul produselor non-alimentare.</li>
+                </ul>
+                <p>Produsele alese pentru promovare de catre magazin, sunt afisate in cadrul PricePage.ro , doar cu acceptul directorului sau sefului, magazinului respectiv.</p>
+                <p>Magazinele care au mai multe sucursale in acelasi oras, pot alege pentru promovare  aceleasi produse pentru fiecare sucursala existenta in respectivul oras, sau pot alege sa promoveze in mod separat si independent de celelalte sucursale, produsele dorite.</p>
+                <p>PricePage.ro ofera un numar limita de produse ce pot fi promovate din fiecare magazin, in functie de numarul total al articolelor existente in magazinul respectiv si disponibile pentru vanzarea catre clienti.</p>
+                <ul>
+                    <li>1. Magazinele avand peste 25000 de produse, diferite intre ele, vor putea solicita afisarea a maxim 5% , din respectivele articole.</li>
+                    <li>2. Magazinele avand intre 10001 si 25000 de produse, diferite intre ele, vor putea solicita afisarea a maxim 8% din respectivele articole.</li>
+                    <li>3. Magazinele avand intre 5001 si 10000 de produse, diferite intre ele, vor putea solicita afisarea a maxim 12% din respectivele articole.</li>
+                    <li>4. Magazinele avand intre 1001 si 5000 de produse, diferite intre ele, vor putea solicita afisarea a maxim 15% din respectivele articole. </li>
+                    <li>5. Magazinele avand mai putin de 1000 de produse, diferite intre ele, vor putea solicita afisarea a maxim 20% din respectivele articole.</li>
+                </ul>
+                <p>PricePage.ro are dreptul de a promova din fiecare magazin colaborator, orice produs neaflat in lista produselor dorite pentru promovare de catre magazin.</p>
+                <p>Produsele dorite pentru promovare de catre PricePage.ro  in cadrul site-ului, nu vor fi calculate in numarul maxim de articole alocate fiecarui magazin. </p>
+                <p>Magazinul se angajeaza sa ofere PricePage.ro informatiile necesare, legate de pret si modalitatile de achizitionare a produselor, pe care site-ul doreste sa le promoveze independent, de produsele dorite pentru promovare de catre magazin.</p>
+                <p>PricePage.ro nu solicita niciun fel de rasplata monetara pentru prezenta pe site, a produselor, oferite spre vanzare in magazinele colaboratoare.</p>
+                <p>PricePage.ro are dreptul sa solicite magazinului date exacte in legatura cu vanzarea anumitor produse in anumite intervale de timp, in cazul in care produsele respective au fost, sau sunt, afisate in cadrul site-ului. Magazinelecolaboratoare vor furniza informatiile necesare in maxim 48 de ore, de la transmiterea cererii din partea site-ului.Informatiile legate de vanzarea diferitelor produse, sunt si vor ramane, confidentiale, PricePage.ro neavand dreptul de a divulga respectivele informatii.</p>
+                <p class="mov">Prin acceptarea colaborarii, cu PricePage.ro , din partea magazinului, prin acceptarea termeniilor si conditiilor, magazinul accepta sa promoveze site-ul PricePage.ro , in cadrul magazinului respectiv. Magazinul va afisa mesajul standard realizat de catre PricePage.ro , si aflat disponibil pentru download din cadrul site-ului. </p>
+                <p class="mov">Zonele destinate promovarii sunt:</p>
+                <ul class="mov">
+                    <li>1. SPATIILE DE VANZARE ASISTATA</li>
+                    <li>2. CASELE DE MARCAT</li>
+                </ul>
+                <p>Implementarea afiselor pentru promovare se va face in prezenta unui reprezentat PricePage.ro. Afisele vor avea dimensiunea A4. </p>
+                <p>Magazinele care doresc sa devina colaboratoare a PricePage.ro se angajeaza sa indeplineasca termenii si conditiile destinate lor. </p>
+                <div class="afis">
+                    <a href=""><img src="resources/images/client/down_afis.png"/></a>
+                </div>
+            </div>
+
+            <div class="tos_body" ng-show="idx==2">
+                <p>PricePage.ro reprezinta un intermediar, intre producatori, magazine, si clientul finit. PricePage.ro ofera diferitilor producatori de bunuri, oferite spre vanzare, posibilitatea de a avea promovate, in mod gratuit, in cadrul site-ului mai sus mentionat, produsele lor.</p>
+                <p>Promovarea in cadrul PricePage.ro a diverselor produse, se face prin informarea site-ului, in legatura cu pretul produsului si informatiile despre acesta cu cel putin 12 ore, inaintea doririi promovarii produsului respectiv pe site, din partea magazinului</p>
+                <p>PricePage.ro nu se declara responsabil pentru nemodificarea informatiilor legate de pret sau produs, netransmise site-ului de catre magazine sau producatori, cu cel putin 12 ore, inainte de dorirea efectuarii modificarilor. </p>
+                <p>PricePage.ro se angajeaza sa afiseze in cadrul site-ului exact informatiile primite din partea producatorilor si a magazinelor.</p>
+                <p>Alegerea produselor ce urmeaza a fi afisate de catre magazine, in cadrul site-ului PricePage.ro, va fi realizata de catre  magazine.</p>
+                <p>Producatorii dornici sa colaboreze, in scopul obtinerii avantajului mai sus mentionat, vor fi nevoiti sa accepte, ca este la latitudinea magazinului sa aleaga,care vor fi produsele promovate in cadrul PricePage.ro, indiferent daca produsele promovate vor apartine producatorului in cauza, sau  altui producator.</p>
+                <p>Magazinele colaboratoare au puterea de a decide ce produse sa promoveze, si cand sa promoveze in cadrul siteului PricePage.ro.</p>
+                <p>Pentru ca un producator de bunuri sa poata fi colaborator PricePage.ro, este nevoit sa accepte termenii si conditiile destinate lui.</p>
+                <p>Pentru ca un producator sa poata avea promovate produsele sale, in cadrul site-ului PricePage.ro este nevoit sa trimita prin e-mail, informatiile necesare site-ului pentru desfasurarea optima a colaborarii.</p>
+                <p class="bold">Fiecare colaborator se angajeaza sa transmita urmatoarele informatii: </p>
+                <ul>
+                    <li>1. 	3 poze pentru fiecare produs alimentar, in cazul producatorilor de bunuri alimentare 	</li>
+                    <li>2. 	5 poze pentru fiecare producator nonalimentar, in cazul producatorilor de bunuri nonalimenatre</li>
+                </ul>
+                <p>Producatorii vor trimite, minim 1 poza pentru fiecare produs, si maxim numarul de poze alocat fiecarui gen de produs, alimentar sau nonalimentar.</p>
+                <p>Trimiterea unui numar mai mare de poze pentru categoria de produse pe care o fabrica producatorul, nu va fi luata in considerare, urmand a fi afisate aleatoriu numarul necesar de poze cerut de www.PricePage.ro</p>
+                <ul>
+                    <li>3.	 Informatii despre produs: informatii despre continutul produselor in cazul produselor alimentare, si informatii despre caracteristiciile produselor, in cazul produselor non-alimentare</li>
+                </ul>
+                <p>In situatia in care, un magazin doreste promovarea unui anumit produs, apartinand unui anumit producator colaborator cu PricePage.ro, insa acel producator nu a transmis in prealabil informatiile necesare despre produs, magazinul respectiv, poate solicita PricePage.ro afisarea acelui produs, urmand ca magazinul sa puna la dispozitia site-ului informatiile primite in mod normal de la producator.</p>
+                <p>Informatiile despre produsul in cauza, vor fi utilizate pe site, pana la primirea informatiilor din partea producatorului. Informatiile respective vor putea fi folosite ulterior si in scopul promovarii in alte magazine, in cazul mentionarii dorintei de promovare a respectivului produs din partea magazinelor.  </p>
+                <p>PricePage.ro poate solicita in orice moment magazinelor informatii legate de pret, in scopul afisarii unor produse, apartinand anumitor producatori, exclusiv fata de produsele alese de magazinele colaboratoare.</p>
+                <p>PricePage.ro are dreptul de a face publicitate in cadrul site-ului, unui produs sau game de  produse apartinand anumitor producatori colaboratori.</p>
+                <p>PricePage.ro nu solicita niciun fel de rasplata monetara pentru prezenta pe site, a produselor, producatorilor, in scopul promovarii.</p>
+                <p>Producatorii care doresc sa devina colaboratori ai PricePage.ro se angajeaza sa indeplineasca termenii si conditiile destinate lor.</p>
+            </div>
+        </div><!--tos_cont ends here-->
+    </div><!--col1 ends here-->
+    <div class="col2"><!--col2 starts here-->
+        <section>
+            <h1>Page Left Content</h1>
+            <!--l_menu starts here-->
+            <div class="categoryContainer" ng-include="'partials/categories.html'">
+            </div>
+            <!--l_menu ends here-->
+
+            <!--newsletterContainer starts here-->
+            <div class="newsletterContainer" ng-include="'partials/newsletter.html'">
+            </div>
+            <!--newsletterContainer ends here-->
+        </section>
+    </div><!--col2 ends here-->
+</div><!--colleft ends here-->

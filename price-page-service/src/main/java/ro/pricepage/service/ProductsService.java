@@ -1,5 +1,6 @@
 package ro.pricepage.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -21,11 +22,6 @@ import ro.pricepage.qualifiers.MySQLDatabase;
 public class ProductsService extends BaseService
 {
     private static final long serialVersionUID = 1L;
-    
-	@Inject
-	@JcrRepository
-	private Repository repository;
-    
     @Inject
     @MySQLDatabase
     private EntityManager em;
@@ -35,6 +31,10 @@ public class ProductsService extends BaseService
         assert start > end : "start must be greater than end";
         List<Product> products = em.createNamedQuery(Product.GET_PRODUCTS, Product.class).setMaxResults(end - start).setFirstResult(start).getResultList();
         return products;
+    }
+
+    public List<Object[]> getAggregatedProducts(int start, int end){
+        return em.createQuery("SELECT p.id, p.name, MIN(ps.price) FROM ProductStore ps JOIN ps.product p GROUP BY ps.price", Object[].class).setMaxResults(end - start).setFirstResult(start).getResultList();
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -50,6 +50,10 @@ public class ProductsService extends BaseService
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public Product get(int id){
         return em.createNamedQuery(Product.GET_PRODUCT_BY_ID, Product.class).setParameter("productId", id).getSingleResult();
+    }
+
+    public List<Object[]> getProductDetails(int id){
+        return em.createQuery("SELECT s.id, s.longitude, s.latitude, s.address, sc.name, ps.price, s.zip FROM StoreChain sc JOIN sc.stores s JOIN s.productInstances ps WHERE ps.product.id = :productId ORDER BY ps.price", Object[].class).setParameter("productId", id).getResultList();
     }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRED)

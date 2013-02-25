@@ -3,10 +3,11 @@ package ro.pricepage.json.dto;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import java.util.List;
 
-//TODO add store + prices + location info
 @XmlRootElement(name = "productDetail")
 public class ProductDetailDTO implements Serializable
 {
@@ -15,6 +16,7 @@ public class ProductDetailDTO implements Serializable
     private Integer id;
     private String name;
     private String description;
+    private List<StoreDTO> stores;
 
     @XmlElement(name = "id")
     @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
@@ -41,5 +43,15 @@ public class ProductDetailDTO implements Serializable
     }
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @XmlElementWrapper(name = "stores")
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+    public List<StoreDTO> getStores() {
+        return stores;
+    }
+
+    public void setStores(List<StoreDTO> stores) {
+        this.stores = stores;
     }
 }
