@@ -29,103 +29,86 @@
                 </div>
                 <br class="clearFix"/><br />
                 <div class="hrWrapper"><hr/></div>
-                <form class="form">
+                <form class="form" name="recommendForm" ng-controller="ContactCtrl">
                     <div class="fourtyTopMargin">
                         <div class="leftFloat fifthyPerc">
                             <ul>
-                                <li>
-                                    <label for="name">Numele magazinului:<span class="red">*</span></label>
-                                </li>
-                                <li>
-                                    <input class="input" type="text" name="name"/>
-                                </li>
-                                <li>
-                                    <label for="category">Categoria magazinului:<span class="red">*</span></label>
-                                </li>
+                                <li><label>Numele magazinului:<span class="red">*</span></label></li>
+                                <li><input class="input" type="text" name="name" required/></li>
+                                <li><label>Categoria magazinului:<span class="red">*</span></label></li>
                                 <li>
                                     <select name="category">
-                                        <option value="Bla1" selected="true">Bla1</option>
-                                        <option value="Bla2">Bla2</option>
-                                        <option value="Bla3">Bla3</option>
+                                        <option value="Hypermarket" selected="true">Hypermarket</option>
+                                        <option value="Cash and Carry">Cash and Carry</option>
+                                        <option value="Supermarket">Supermarket</option>
+                                        <option value="Mini market">Mini market</option>
                                     </select>
                                 </li>
-                                <li>
-                                    <label for="address">Adresa:<span class="red">*</span></label>
-                                </li>
-                                <li>
-                                    <input class="input" type="text" name="address"/>
-                                </li>
-                                <li>
-                                    <label for="address">Telefon:</label>
-                                </li>
-                                <li>
-                                    <input class="input" type="text" name="phone"/>
-                                </li>
-                                <li>
-                                    <label for="productCategories">Categorie Produse:</label>
-                                </li>
+                                <li><label>Adresa:<span class="red">*</span></label></li>
+                                <li><input class="input" type="text" name="address" required/></li>
+                                <li><label>Telefon:</label></li>
+                                <li><input class="input" type="text" name="phone"/></li>
+                                <li><label>Categorie Produse:</label></li>
                                 <li>
                                     <select name="productCategories">
                                         <option value="Toate" selected="true">Toate</option>
-                                        <option value="Bla2">Bla2</option>
-                                        <option value="Bla3">Bla3</option>
+                                        <option value="Alimentare">Produse Alimentare</option>
+                                        <option value="NonAlimentare">Produse Non-Alimentare</option>
                                     </select>
                                 </li>
                                 <ul>
-                                    <li>
-                                        <input type="submit" value=""/>
-                                    </li>
+                                    <li><input type="submit" value=""/></li>
                                 </ul>
                             </ul>
                         </div>
-                        <div class="leftFloat fifthyPerc">
-                            <ul>
-                                <li>
-                                    <label for="name">Numele magazinului:<span class="red">*</span></label>
-                                </li>
-                                <li>
-                                    <input class="input" type="text" name="name"/>
-                                </li>
-                                <li>
-                                    <label for="category">Categoria magazinului:<span class="red">*</span></label>
-                                </li>
-                                <li>
-                                    <select name="category">
-                                        <option value="Bla1" selected="true">Bla1</option>
-                                        <option value="Bla2">Bla2</option>
-                                        <option value="Bla3">Bla3</option>
-                                    </select>
-                                </li>
-                                <li>
-                                    <label for="address">Adresa:<span class="red">*</span></label>
-                                </li>
-                                <li>
-                                    <input class="input" type="text" name="address"/>
-                                </li>
-                                <li>
-                                    <label for="address">Telefon:</label>
-                                </li>
-                                <li>
-                                    <input class="input" type="text" name="phone"/>
-                                </li>
-                                <li>
-                                    <label for="productCategories">Categorie Produse:</label>
-                                </li>
-                                <li>
-                                    <select name="productCategories">
-                                        <option value="Toate" selected="true">Toate</option>
-                                        <option value="Bla2">Bla2</option>
-                                        <option value="Bla3">Bla3</option>
-                                    </select>
-                                </li>
-                                <ul>
-                                    <li>
-                                        <input type="submit" value=""/>
-                                    </li>
-                                </ul>
-                            </ul>
-                        </div>
-                    </div>
+                        <!--<div class="leftFloat fifthyPerc">-->
+                            <!--<ul>-->
+                                <!--<li>-->
+                                    <!--<label for="name">Numele magazinului:<span class="red">*</span></label>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--<input class="input" type="text" name="name"/>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--<label for="category">Categoria magazinului:<span class="red">*</span></label>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--<select name="category">-->
+                                        <!--<option value="Bla1" selected="true">Bla1</option>-->
+                                        <!--<option value="Bla2">Bla2</option>-->
+                                        <!--<option value="Bla3">Bla3</option>-->
+                                    <!--</select>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--<label for="address">Adresa:<span class="red">*</span></label>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--<input class="input" type="text" name="address"/>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--<label for="address">Telefon:</label>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--<input class="input" type="text" name="phone"/>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--<label for="productCategories">Categorie Produse:</label>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--<select name="productCategories">-->
+                                        <!--<option value="Toate" selected="true">Toate</option>-->
+                                        <!--<option value="Bla2">Bla2</option>-->
+                                        <!--<option value="Bla3">Bla3</option>-->
+                                    <!--</select>-->
+                                <!--</li>-->
+                                <!--<ul>-->
+                                    <!--<li>-->
+                                        <!--<input type="submit" value=""/>-->
+                                    <!--</li>-->
+                                <!--</ul>-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                    <!--</div>-->
                 </form>
             </div>
         </section>

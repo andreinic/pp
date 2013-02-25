@@ -58,7 +58,7 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, nav
 body{
 	background-color: #f9f9f9;
 	background-image: url('../images/client/bkg.jpg');
-	background-repeat: repeat-x;
+	background-repeat: repeat;
 	font-family: 'DroidSansRegular', Arial, Helvetica, sans-serif;
 }
 
