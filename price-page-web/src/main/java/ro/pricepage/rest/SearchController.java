@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ejb.Stateful;
-import javax.enterprise.context.SessionScoped;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -25,8 +24,7 @@ import ro.pricepage.persistence.indexing.ProductIndexField;
 import ro.pricepage.service.ProductsService;
 import ro.pricepage.service.SearchService;
 
-@Stateful
-@SessionScoped
+@Stateless
 @Path("/search")
 public class SearchController {
 
@@ -40,10 +38,10 @@ public class SearchController {
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	public Response search(@QueryParam("q") String text,
-			@QueryParam("start") int first,
-			@QueryParam("count") int last) throws ParseException, IOException{
+			@QueryParam("start") int start,
+			@QueryParam("count") int count) throws ParseException, IOException{
         try{
-            List<Document> docs = searchService.fullTextSearch(text, first, last);            
+            List<Document> docs = searchService.fullTextSearch(text, start, start + count);            
             List<ProductDTO> dtos = new ArrayList<ProductDTO>();
             for(Document doc : docs){
             	String stringId = doc.get(ProductIndexField.ID.getPath());

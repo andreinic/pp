@@ -17,6 +17,12 @@
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-jaxrs</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-multipart-provider</artifactId>
+		</dependency>
+		
 		<dependency>
 			<groupId>javax.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>
@@ -81,6 +87,6 @@
 			<groupId>org.hephaestus</groupId>
 			<artifactId>hephaestus-commons</artifactId>
 		</dependency>
-		
+
 	</dependencies>
 </project>

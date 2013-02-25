@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ejb.Startup;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -31,12 +32,11 @@ import ro.pricepage.qualifiers.MySQLDatabase;
 
 @Named(value = "searchService")
 @Stateless
-@Startup
 public class SearchService extends BaseService {
 	private static final long serialVersionUID = 1L;
 	private static final String[] productFields = ProductIndexField.getAllIndexedFieldPaths();
 	private static final String[] productStoreFields = ProductStoreIndexField.getAllIndexedFieldPaths();
-
+	
 	@Inject
 	@MySQLDatabase
 	private EntityManager em;
@@ -55,6 +55,7 @@ public class SearchService extends BaseService {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<Document> fullTextSearch(String text, int first, int last) throws ParseException, IOException{
 		FullTextEntityManager fullTextEm = Search.getFullTextEntityManager(em);
 		IndexReader reader = fullTextEm.getSearchFactory().getIndexReaderAccessor().open(Product.class);

@@ -11,26 +11,26 @@
 		<module>price-page-service</module>
 		<module>price-page-web</module>
 	</modules>
-    <profiles>
-        <profile>
-            <id>toev</id>
-            <properties>
-                <lucene.index.dir>e:/dev/projects/java/pp/pp-index</lucene.index.dir>
-            </properties>
-        </profile>
-        <profile>
-            <id>nicusan</id>
-            <properties>
-                <lucene.index.dir>d:/devzone/pp-index</lucene.index.dir>
-            </properties>
-        </profile>
-        <profile>
-            <id>test</id>
-            <properties>
-                <lucene.index.dir>/home/jboss/pp/lucene-index</lucene.index.dir>
-            </properties>
-        </profile>
-    </profiles>
+	<profiles>
+		<profile>
+			<id>toev</id>
+			<properties>
+				<lucene.index.dir>e:/dev/projects/java/pp/pp-index</lucene.index.dir>
+			</properties>
+		</profile>
+		<profile>
+			<id>nicusan</id>
+			<properties>
+				<lucene.index.dir>d:/devzone/pp-index</lucene.index.dir>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<lucene.index.dir>/home/jboss/pp/lucene-index</lucene.index.dir>
+			</properties>
+		</profile>
+	</profiles>
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -43,14 +43,14 @@
 						<target>1.7</target>
 					</configuration>
 				</plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-resources-plugin</artifactId>
-                    <version>2.5</version>
-                    <configuration>
-                        <encoding>UTF-8</encoding>
-                    </configuration>
-                </plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>2.5</version>
+					<configuration>
+						<encoding>UTF-8</encoding>
+					</configuration>
+				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>
@@ -68,11 +68,18 @@
 				<version>6.0</version>
 				<scope>provided</scope>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>org.jboss.resteasy</groupId>
 				<artifactId>resteasy-jaxrs</artifactId>
-				<version>2.3.1.GA</version>
+				<version>2.3.5.Final</version>
+				<scope>provided</scope>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.jboss.resteasy</groupId>
+				<artifactId>resteasy-multipart-provider</artifactId>
+				<version>2.3.5.Final</version>
 				<scope>provided</scope>
 			</dependency>
 
@@ -141,11 +148,31 @@
 				<version>3.3.3</version>
 			</dependency>
 
+			<dependency>
+				<groupId>org.jboss.seam.jcr</groupId>
+				<artifactId>seam-jcr-api</artifactId>
+				<version>3.1.0.Final</version>
+				<scope>compile</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.jboss.seam.jcr</groupId>
+				<artifactId>seam-jcr</artifactId>
+				<version>3.1.0.Final</version>
+				<scope>runtime</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.jackrabbit</groupId>
+				<artifactId>jackrabbit-core</artifactId>
+				<version>2.6.0</version>
+			</dependency>
+
 			<!-- Hibernate Search -->
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-search</artifactId>
-				<version>4.1.1.Final</version>
+				<version>4.2.0.Final</version>
 			</dependency>
 
 			<!-- Testing related -->
