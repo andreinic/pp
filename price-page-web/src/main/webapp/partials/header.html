@@ -1,15 +1,12 @@
 <h1>Navigation Header</h1>
 <nav id="navBar">
     <h1>Navigation zone</h1>
-    <ul>
-        <li><a href="#/despre-noi">Despre Price Page</a></li>
-        <li><a href="#/magazine-promovate" class="second">Magazine Promovate</a></li>
-        <li><a href="#/contact" class="third">Contact</a></li>
-    </ul>
-    <ul class="menuRight">
-        <!--<li class="secondRight"><a opendialog role="button" name="login">Intra in cont</a></li>-->
-        <li><a opendialog role="button">Contul Meu</a></li>
-    </ul>
+    <div class="h_menu_left"><a href="#/despre-noi">Despre Price Page</a></div>
+    <div class="h_menu_left"><a href="#/magazine-promovate">Magazine promovate</a></div>
+    <div class="h_menu_left"><a href="#/contact">Contact</a></div>
+    <div class="h_menu_left"><a href="#/cum-compar">Cum compar?</a></div>
+    <div class="h_menu_left"><a href="#/termeni-si-conditii">Termeni si conditii</a></div>
+    <div class="h_menu_right"><a opendialog role="button">Contul Meu</a></div>
 </nav>
 <section id="header" ng-controller="SearchCtrl">
     <h1>Page Header</h1>
@@ -18,7 +15,7 @@
     <div id="search_field">
         <form ng-submit="search()">
             <input type="text" id="search" name="search" class="search_field" ng-model="queryString"/>
-            <button type="submit" class="search_btn"><img src="resources/images/client/search2.jpg" title="Search" /></button>
+            <button type="submit" class="search_btn"><img src="resources/images/client/search.jpg" title="Search" /></button>
         </form>
     </div>
 </section>

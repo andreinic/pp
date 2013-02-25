@@ -118,7 +118,7 @@ nav h1{
 	height: 24px;	
 	width: 1000px;
 	margin-top: 15px;
-	background-image: url("../images/client/bkg-nav.jpg");
+    background-image: url("../images/client/bkg-header1.jpg");
 	background-repeat: no-repeat;
 	font-style:italic;
 }
@@ -165,6 +165,41 @@ nav h1{
 nav ul{
 	list-style: none;
 }
+
+.h_menu_left{
+	background-image:url("../images/client/h_left_bkg.jpg");
+	background-repeat:no-repeat;
+	background-position:right;
+	height:24px;
+	float:left;
+	padding-right:20px;
+
+	}
+.h_menu_left a{
+	font-family: 'DroidSansRegular', Arial, sans-serif;
+	font-size: 10pt;
+	text-decoration: none;
+	color: #E2C2EC;
+	margin-left: 18px;
+	margin-top:10px;
+}
+.h_menu_right{
+	background-image:url("../images/client/h_right_bkg.jpg");
+	background-repeat:no-repeat;
+	background-position:left;
+	height:24px;
+	float:right;
+	padding-left:20px;
+	}
+	.h_menu_right a{
+	font-family: 'DroidSansRegular', Arial, sans-serif;
+	font-size: 10pt;
+	text-decoration: none;
+	color: #E2C2EC;
+	margin-right: 18px;
+	margin-top:10px;
+}
+
 
 #header{
 	width: 1000px;
@@ -318,6 +353,7 @@ nav ul{
 .search_btn{
 	cursor:pointer;
 	float:left;
+	height:34px;
 }
 #search_field{
 	float:right;
@@ -453,7 +489,7 @@ nav ul{
 /* product details */
 #produs_cont{
 	margin-top:20px;
-	width:763px;
+	width:765px;
 	height:315px;
 	margin:0 auto;
 	border:1px solid #d5cbd9;
@@ -707,6 +743,14 @@ nav ul{
     margin-top:5px;
 }
 
+#text_ul {
+	list-style-type:none;
+	padding:0;
+	margin-top:5px;
+	margin-left:22px;
+	}
+
+
 #map_ul li{
     list-style-type:none;
 	display:inline;
@@ -724,6 +768,70 @@ nav ul{
 	color:#828083;
 	line-height:14px;
 	
+}
+
+
+#text_ul li{
+	display:inline;
+	float:left;
+}
+.visit{
+	float:right;
+	width:267px;
+	height:166px;
+	margin-bottom:14px;
+}
+.visit_head{
+	height:27px;
+	background-color:#44a074;
+	padding-left:30px;
+	border-left:1px solid #c6c6c7;
+	border-right:1px solid #c6c6c7;
+}
+.visit_head h2{
+	padding-top:8px;
+	font-weight:normal;
+	font-size:12px;
+	color:#fff;
+
+}
+.visit_body{
+	height:106px;
+	border-left:1px solid #c6c6c7;
+	border-right:1px solid #c6c6c7;
+}
+.left_prod{
+	width:133px;
+	height:106px;
+	border-right:1px solid #c6c6c7;
+}
+.right_prod{
+}
+.visit_price{
+	border:1px solid #c6c6c7;
+	height:30px;
+}
+.visit_price p{
+	font-size:11px;
+	font-weight:regular;
+	color:#4a484b;
+	line-height:0.9em;
+	margin-left:10px;
+}
+.v_title{
+	margin-top:5px;
+}
+.v_priceUp{
+	font-size: 8px;
+}
+.left_price{
+	float:left;
+	width:133px;
+	height:30px;
+	border-right:1px solid #c6c6c7;
+	}
+.right_price{
+	float:right;
 }
 
 
@@ -783,6 +891,7 @@ nav ul{
 	border-top:1px solid #d5cbd9;
 	border-left:1px solid #d5cbd9;
 	border-right:1px solid #d5cbd9;
+	border-bottom:1px solid #d5cbd9;
 }
 .breadcrumb{
 	list-style: none;
@@ -792,7 +901,16 @@ nav ul{
 }
 .breadcrumb li {
 	float: left;
-	background-image:url('')
+    padding-right:20px;
+    background-image:url("../images/client/log_arrow.png");
+    background-repeat:no-repeat;
+    background-position:center right;
+    background-size:7px 13px;
+}
+.breadcrumb li:last-child{
+	float: left;
+	padding-right:20px;
+	background:#fff;
 }
 .breadcrumb li a {
 	text-decoration: none;
@@ -805,10 +923,12 @@ nav ul{
 	color:#726e73;
 }
 #magazin_container{
+	width:763px;
+	margin:0 auto;
+	border-left:1px solid #d5cbd9;
 	border-right:1px solid #d5cbd9;
 	border-top:1px solid #d5cbd9;
 	position:relative;
-
 }
 #magazin_titlu{
 	float:left;
@@ -982,9 +1102,36 @@ nav ul{
 	cursor:pointer;
 
 }
-#date_contact h2{
-
+#date_contact{
+	margin-top:50px;
+	background-color:#fbfbfb;
+	padding-left:30px;
+	padding-top:20px;
 }
+#date_contact h2{
+	width:350px;
+	margin-bottom:15px;
+	margin-left:25px;
+	font-size:24px;
+	color:#838181;
+	text-shadow: 0px 2px 1px #bbabc2;
+}
+#date_contact h3{
+	margin-left:25px;
+	margin-bottom:10px;
+	font-size:18px;
+	color:#838181;
+	text-shadow: 0px 1px 1px #bbabc2;
+}
+.f_connect{
+	margin-left:80px;
+	margin-top:25px;
+	margin-bottom:70px;
+}
+.logo_contact{
+	margin-left:50px;
+}
+
 /*///////////////////////*/
 /**** Autenth*************/
 .wrap_auth{
@@ -1102,6 +1249,12 @@ nav ul{
 	font-family: "DroidSansBold";
 }
 
+.aboutSitename > a{
+	text-decoration:none;
+	color:#44a074;
+}
+
+
 /*///////////////////////*/
 /**** Promoted Shops******/
 .promotedShopsImg{
@@ -1199,8 +1352,6 @@ nav ul{
 	color: #4d6113;
 }
 
-/*///////////////////////*/
-/* Footer */
 .contactContainer{
 	margin-left: 40px;
 }
@@ -1211,17 +1362,216 @@ nav ul{
 	font-size: 18px;
 }
 
-/*///////////////////////*/
-/* Footer */
-#footer{
-	clear: both;
-	margin: 0 auto;
-	background-image: url("../images/client/bkg-footer.jpg");
-	background-repeat: no-repeat;
-	width: 100%;
+/*************************/
+/* ToS */
+.tos_cont{
+	width:748px;
+	margin:0 auto;
+	margin-top:15px;
 }
+.tos_cont > h1{
+	font-size:24px;
+	color:#90749d;
+	margin-bottom:15px;
+}
+.tos_head{
+	width:750px;
+	height:38px;
+}
+.tos_body{
+	width:748px;
+	border-right:1px solid #deddde;
+	border-left:1px solid #deddde;
+	border-bottom:1px solid #deddde;
+	background-color:#f4f2f2;
+	color:#4e4c4c;
+	padding-top:30px;
+	line-height:24px;
+	font-size:13px;
+	font-weight:normal;
+}
+.tos_body p {
+	margin-left:20px;
+	margin-right:20px;
+}
+.tos_body li{
+	list-style-type:none;
+	margin-left:60px;
+}
+.for_client_on{
+	width:250px;
+	height:38px;
+	float:left;
+	background-image:url("../images/client/pt_clienti_on.jpg");
+}
+.for_client_on h1{
+	margin-top:13px;
+	margin-left:45px;
+	font-size:18px;
+	color:#666567;
+}
+
+.for_client_off{
+	width:249px;
+	height:35px;
+	float:left;
+	margin-top:3px;
+	border-bottom:1px solid #c1c0c1;
+	border-left:1px solid #c1c0c1;
+	background-image:url("../images/client/pt_clienti_off_1.jpg");
+	background-repeat:no-repeat;
+}
+.for_client_off h1{
+	margin-top:10px;
+	margin-left:45px;
+	font-size:18px;
+	color:#f4f2f2;
+}
+
+.for_mag_on{
+	float:left;
+	width:250px;
+	height:38px;
+	background-image:url("../images/client/pt_mag_on.jpg");
+}
+.for_mag_on h1{
+	margin-top:13px;
+	margin-left:35px;
+	font-size:18px;
+	color:#666567;
+
+}
+.for_mag_off{
+	float:left;
+	width:249px;
+	height:35px;
+	margin-top:3px;
+	border-bottom:1px solid #c1c0c1;
+	border-right:1px solid #c1c0c1;
+	background-image:url("../images/client/pt_mag_off_1.jpg");
+}
+.for_mag_off h1{
+	margin-top:10px;
+	margin-left:35px;
+	font-size:18px;
+	color:#f4f2f2;
+}
+
+.for_prod_on{
+	float:left;
+	width:249px;
+	height:38px;
+	border-right:1px solid #deddde;
+	background-image:url("../images/client/pt_prod_on.jpg");
+}
+.for_prod_on h1{
+	margin-top:13px;
+	margin-left:25px;
+	font-size:18px;
+	color:#666567;
+}
+.for_prod_off{
+	float:left;
+	width:249px;
+	height:35px;
+	margin-top:3px;
+	border-right:1px solid #c1c0c1;
+	border-bottom:1px solid #c1c0c1;
+	background-image:url("../images/client/pt_prod_off_1.jpg");
+}
+
+.for_prod_off h1{
+	margin-top:10px;
+	margin-left:25px;
+	font-size:18px;
+	color:#f4f2f2;
+}
+.mov{
+	color:#774f81;
+}
+.mov1{
+	color:#973089;
+}
+.afis{
+	margin:0 auto;
+	width:132px;
+	height:34px;
+	margin-top:90px;
+	margin-bottom:40px;
+}
+.bold{
+	color:#4e4c4c;
+	font-weight:bold;
+}
+/*************************/
+/*warning*/
+#warning_cont{
+	height:400px;
+	background-color:#291e3f;
+}
+#warning{
+	margin-left:177px;
+	padding-top:30px;
+	float:left;
+}
+#warning_links{
+	float:left;
+	padding-top:30px;
+	margin-left:30px;
+	color:#fff;
+}
+#warning_links p{
+	margin-bottom:10px;
+}
+#warning_links img{
+	margin-right:10px;
+}
+/***********************/
+/* Cum compar */
+
+#comp_cont{
+	width:765px;
+	margin: 0 auto;
+	margin-top:30px;
+}
+#comp_cont h1{
+	float:right;
+	color:#90749d;
+	font-size:24px;
+}
+.step{
+	float:right;
+	margin-top:-15px;
+}
+#comp_cont h2{
+	padding-top:80px;
+	margin-left:77px;
+	font-family:'RalewayThin',Arial;
+	color:#8a7f8f;
+}
+.step1_pic{
+	margin-left:60px;
+	margin-bottom:20px;
+}
+.step2_text{
+	font-size:24px;
+	color:#599578;
+	margin-left:78px;
+	margin-top:75px;
+}
+.step3_text{
+	font-size:24px;
+	color:#a3899f;
+	margin-left:78px;
+	margin-top:75px;
+}
+/*///////////////////////*
+
+
+/* Footer */
 #footer h1{
-	display: none;
+	/*display: none;*/
+    font-size : 0.001em;/* TODO Fix this */
 }
 .footerContainer{
 	width: 1000px;
@@ -1307,7 +1657,6 @@ nav ul{
     outline: 0 none;
     position: fixed;
     top: 10%;
-    /*width: 560px;*/
     z-index: 1050;
 }
 .modal.fade {
