@@ -37,6 +37,8 @@ public class FileService extends BaseService{
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void uploadImageForStore(int storeId, InputStream content, boolean isHead, boolean forceResize) throws LoginException, RepositoryException, FileSystemException{
 		//TODO: resize
+		
+		//TODO: neaparat de scos in profil configul de JCR
 		Session s = repository.login();
 		try{
 			Node root = s.getRootNode();	
