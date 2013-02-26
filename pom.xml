@@ -16,18 +16,21 @@
 			<id>toev</id>
 			<properties>
 				<lucene.index.dir>e:/dev/projects/java/pp/pp-index</lucene.index.dir>
+				<jcr.repository.home>e:/dev/projects/java/pp/pp-cr</jcr.repository.home>
 			</properties>
 		</profile>
 		<profile>
 			<id>nicusan</id>
 			<properties>
 				<lucene.index.dir>d:/devzone/pp-index</lucene.index.dir>
+				<jcr.repository.home>d:/devzone/pp-cr</jcr.repository.home>
 			</properties>
 		</profile>
 		<profile>
 			<id>test</id>
 			<properties>
 				<lucene.index.dir>/home/jboss/pp/lucene-index</lucene.index.dir>
+				<jcr.repository.home>/home/jboss/pp/cr</jcr.repository.home>
 			</properties>
 		</profile>
 	</profiles>

@@ -1,10 +1,12 @@
 package ro.pricepage.json.dto;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
 import ro.pricepage.persistence.entities.ProductStore;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.List;
@@ -17,10 +19,11 @@ public class ProductDTO implements Serializable
     private Integer id;
     private String name;
     private Double price;
+    private List<String> imagesPaths;
     
     public ProductDTO(){}
     
-    public ProductDTO(Integer id, String name, List<ProductStore> allInstances){
+    public ProductDTO(Integer id, String name, List<ProductStore> allInstances, List<String> imagesPath){
     	this.id = id;
     	this.name = name;
     	this.price = null;
@@ -30,6 +33,7 @@ public class ProductDTO implements Serializable
     			this.price = Double.valueOf(instPrice.doubleValue());
     		}
     	}
+    	this.imagesPaths = imagesPath;
     }
 
     @XmlElement(name = "id")
@@ -58,4 +62,14 @@ public class ProductDTO implements Serializable
     public void setPrice(Double price) {
         this.price = price;
     }
+
+    @XmlElementWrapper(name = "imagesPaths")
+    @JsonSerialize(include = Inclusion.NON_NULL)
+	public List<String> getImagesPaths() {
+		return imagesPaths;
+	}
+
+	public void setImagesPaths(List<String> imagesPaths) {
+		this.imagesPaths = imagesPaths;
+	}
 }

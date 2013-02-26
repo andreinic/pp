@@ -1,6 +1,8 @@
 package ro.pricepage.service;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.ejb.Stateless;
@@ -12,9 +14,12 @@ import javax.jcr.Binary;
 import javax.jcr.ItemExistsException;
 import javax.jcr.LoginException;
 import javax.jcr.Node;
+import javax.jcr.NodeIterator;
+import javax.jcr.Property;
 import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
+import javax.jcr.SimpleCredentials;
 import javax.jcr.UnsupportedRepositoryOperationException;
 import javax.jcr.lock.LockException;
 import javax.jcr.nodetype.ConstraintViolationException;
@@ -35,11 +40,10 @@ public class FileService extends BaseService{
 	private Repository repository;
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public void uploadImageForStore(int storeId, InputStream content, boolean isHead, boolean forceResize) throws LoginException, RepositoryException, FileSystemException{
+	public String uploadImageForStore(int storeId, InputStream content, boolean isHead, boolean forceResize) throws LoginException, RepositoryException, FileSystemException{
 		//TODO: resize
-		
-		//TODO: neaparat de scos in profil configul de JCR
-		Session s = repository.login();
+
+		Session s = repository.login(new SimpleCredentials(FileUtils.ADMIN, FileUtils.ADMIN.toCharArray()));
 		try{
 			Node root = s.getRootNode();	
 			Node storesNode = getNodeRecursively(root, FileUtils.STORE_IMAGES_PATH + "/" + storeId);
@@ -50,6 +54,7 @@ public class FileService extends BaseService{
 			Node leafNode = storesNode.addNode(leafNodeName);
 			copyFileContentToNode(leafNode, s, content);
 			s.save();
+			return FileUtils.STORE_IMAGES_PATH + "/" + storeId + "/" + leafNodeName;
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -61,10 +66,19 @@ public class FileService extends BaseService{
 	}
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public void uploadImageForChain(int chainId, InputStream content, boolean forceResize) throws LoginException, RepositoryException, FileSystemException{
-		Session s = repository.login();
+	public String uploadImageForChain(int chainId, InputStream content, boolean forceResize) throws LoginException, RepositoryException, FileSystemException{
+		Session s = repository.login(new SimpleCredentials(FileUtils.ADMIN, FileUtils.ADMIN.toCharArray()));
 		try{
-			//TODO:
+			Node root = s.getRootNode();	
+			Node chainsNode = getNodeRecursively(root, FileUtils.CHAIN_IMAGES_PATH + "/" + chainId);
+			String leafNodeName = FileUtils.HEAD;
+			if(chainsNode.hasNode(leafNodeName)){
+				chainsNode.getNode(leafNodeName).remove();
+			}
+			Node leafNode = chainsNode.addNode(leafNodeName);
+			copyFileContentToNode(leafNode, s, content);
+			s.save();
+			return FileUtils.CHAIN_IMAGES_PATH + "/" + chainId + "/" + FileUtils.HEAD;
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -76,10 +90,81 @@ public class FileService extends BaseService{
 	}
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public void uploadImageForProduct(int chainId, InputStream content, boolean isHead, boolean forceResize) throws LoginException, RepositoryException, FileSystemException{
-		Session s = repository.login();
+	public String uploadImageForProduct(int productId, InputStream content, boolean isHead, boolean forceResize) throws LoginException, RepositoryException, FileSystemException{
+		Session s = repository.login(new SimpleCredentials(FileUtils.ADMIN, FileUtils.ADMIN.toCharArray()));
 		try{
-			//TODO:
+			Node root = s.getRootNode();	
+			Node productsNode = getNodeRecursively(root, FileUtils.PRODUCT_IMAGES_PATH + "/" + productId);
+			String leafNodeName = isHead ? FileUtils.HEAD : UUID.randomUUID().toString();
+			if(productsNode.hasNode(leafNodeName)){
+				productsNode.getNode(leafNodeName).remove();
+			}
+			Node leafNode = productsNode.addNode(leafNodeName);
+			copyFileContentToNode(leafNode, s, content);
+			s.save();
+			return FileUtils.PRODUCT_IMAGES_PATH + "/" + productId + "/" + leafNodeName;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			throw new FileSystemException(e.getMessage(), e);
+		}
+		finally{
+			s.logout();
+		}
+	}
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public InputStream getFileContent(String path) throws FileSystemException, LoginException, RepositoryException{
+		Session s = repository.login(new SimpleCredentials(FileUtils.ADMIN, FileUtils.ADMIN.toCharArray()));
+		try{
+			Node root = s.getRootNode();	
+			Node n = root.getNode(path);
+			Property content = n.getProperty(FileUtils.FILE_CONTENT_PROPERTY_NAME);
+			return content.getBinary().getStream();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			throw new FileSystemException(e.getMessage(), e);
+		}
+		finally{
+			s.logout();
+		}
+	}
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<String> getImagePathsForStore(int storeId) throws LoginException, RepositoryException, FileSystemException{
+		Session s = repository.login(new SimpleCredentials(FileUtils.ADMIN, FileUtils.ADMIN.toCharArray()));
+		try{
+			List<String> retList = new ArrayList<>();
+			Node root = s.getRootNode();
+			Node storeNode = getNodeRecursively(root, FileUtils.STORE_IMAGES_PATH + "/" + storeId);
+			NodeIterator children = storeNode.getNodes();
+			while(children.hasNext()){
+				retList.add(children.nextNode().getPath());
+			}
+			return retList;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			throw new FileSystemException(e.getMessage(), e);
+		}
+		finally{
+			s.logout();
+		}
+	}
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<String> getImagePathsForProduct(int productId) throws LoginException, RepositoryException, FileSystemException{
+		Session s = repository.login(new SimpleCredentials(FileUtils.ADMIN, FileUtils.ADMIN.toCharArray()));
+		try{
+			List<String> retList = new ArrayList<>();
+			Node root = s.getRootNode();
+			Node productNode = getNodeRecursively(root, FileUtils.PRODUCT_IMAGES_PATH + "/" + productId);
+			NodeIterator children = productNode.getNodes();
+			while(children.hasNext()){
+				retList.add(children.nextNode().getPath());
+			}
+			return retList;
 		}
 		catch(Exception e){
 			e.printStackTrace();

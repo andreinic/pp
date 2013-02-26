@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -21,6 +22,7 @@ import org.apache.lucene.queryParser.ParseException;
 import ro.pricepage.json.dto.ProductDTO;
 import ro.pricepage.persistence.entities.ProductStore;
 import ro.pricepage.persistence.indexing.ProductIndexField;
+import ro.pricepage.service.FileService;
 import ro.pricepage.service.ProductsService;
 import ro.pricepage.service.SearchService;
 
@@ -34,12 +36,15 @@ public class SearchController {
 	@Inject
 	private ProductsService productsService;
 	
+	@Inject
+	private FileService fileService;
+	
 	@Path("/text")
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	public Response search(@QueryParam("q") String text,
-			@QueryParam("start") int start,
-			@QueryParam("count") int count) throws ParseException, IOException{
+			@QueryParam("start") @DefaultValue("0") int start,
+			@QueryParam("count") @DefaultValue("10") int count) throws ParseException, IOException{
         try{
             List<Document> docs = searchService.fullTextSearch(text, start, start + count);            
             List<ProductDTO> dtos = new ArrayList<ProductDTO>();
@@ -47,7 +52,7 @@ public class SearchController {
             	String stringId = doc.get(ProductIndexField.ID.getPath());
             	int id = Integer.parseInt(stringId);
             	List<ProductStore> instances = productsService.getAllInstancesForProduct(id);
-            	ProductDTO dto = new ProductDTO(Integer.valueOf(id), doc.get(ProductIndexField.NAME.getPath()), instances);
+            	ProductDTO dto = new ProductDTO(Integer.valueOf(id), doc.get(ProductIndexField.NAME.getPath()), instances, fileService.getImagePathsForProduct(id));
             	dtos.add(dto);
             }
             GenericEntity<List<ProductDTO>> entity = new GenericEntity<List<ProductDTO>>(dtos, List.class);
