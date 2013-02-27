@@ -1,6 +1,6 @@
 'use strict';
 
-function CategoryCtrl($scope, $http){
+function CategoryCtrl($scope, $http, $location, productsService){
     $scope.fetch = function(){
         $http({
             url : 'rest/categories',
@@ -34,4 +34,10 @@ function CategoryCtrl($scope, $http){
     }
 
     $scope.init();
+
+
+    $scope.fetchForCateg = function(catId){
+       productsService.fetchForCateg(catId);
+       $location.path("/produse");
+    }
 }

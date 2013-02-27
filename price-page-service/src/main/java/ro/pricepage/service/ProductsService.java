@@ -34,6 +34,11 @@ public class ProductsService extends BaseService
         return em.createQuery("SELECT p.id, p.name, MIN(ps.price) FROM ProductStore ps JOIN ps.product p GROUP BY ps.price", Object[].class).setMaxResults(end - start).setFirstResult(start).getResultList();
     }
 
+    //TODO Need to handle n-level depth. currently only 2 levels of categories are being queried.
+    public List<Object[]> getAggregatedProducts(int categoryId, int start, int end){
+        return em.createQuery("SELECT p.id, p.name, MIN(ps.price) FROM ProductStore ps JOIN ps.product p WHERE p.category.id IN(SELECT c.id FROM ProductCategory c WHERE c.parent.id =:categId) GROUP BY ps.price", Object[].class).setParameter("categId", categoryId).setMaxResults(end - start).setFirstResult(start).getResultList();
+    }
+
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public List<Product> list(int categoryId, int start, int end){
         List<Product> products = em.createNamedQuery(Product.GET_PRODUCTS_FOR_PARENT_CATEGORY, Product.class)

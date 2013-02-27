@@ -69,15 +69,39 @@ angular.module("price-page", ['ngResource'])
 
                }
            };
-       })
-       .config(function($routeProvider){
+       }).factory('productsService', function($rootScope, $http){
+            var productsService = {};
+            productsService.fetchForCateg = function(catId){
+                 $http({
+                     url : 'rest/products',
+                     method : 'GET',
+                     params : {categoryId: catId, start : 0, count : 5}
+                 }).success(function(data, status, headers, configs){
+                     var arr = [];
+                     for(var i = 0 ; i < data.length ; ++i){
+                         var product = {};
+                         var p = data[i];
+                         product.id = p["id"];
+                         product.name = p["name"];
+                         var priceArr = p["price"].toString().split(".");
+                         product.bigPrice = priceArr[0];
+                         product.smallPrice = priceArr.length != 0 ? priceArr[1] : 0;
+                         arr.push(product);
+                     }
+                     $rootScope.$broadcast("productsChanged", arr);
+                 }).error(function(data, status, headers, configs){
+                    alert('error retrieving products');
+                 });
+            }
+            return productsService;
+       }).config(function($routeProvider){
             $routeProvider.when("/", {templateUrl : 'partials/first.html'})
                           .when("/despre-noi", {templateUrl : 'partials/despre-noi.html'})
                           .when("/magazine-promovate", {templateUrl : 'partials/magazine-promovate.html'})
                           .when("/contact", {templateUrl : 'partials/contact.html'})
                           .when("/produs/:productId", {templateUrl : 'partials/product-details.html', controller : 'ProductDetailsCtrl'})
                           .when("/cauta", {templateUrl : 'partials/search.html', controller : 'SearchCtrl'})
-                          .when("/produse", {templateUrl : 'partials/search.html', controller : 'ProductsCtrl'})
+                          .when("/produse", {templateUrl : 'partials/products.html', controller : 'ProductsCtrl'})
                           .when("/magazin", {templateUrl : 'partials/store.html'})
                           .when("/cum-compar", {templateUrl : 'partials/compare.html'})
                           .when("/termeni-si-conditii", {templateUrl : 'partials/terms.html'})

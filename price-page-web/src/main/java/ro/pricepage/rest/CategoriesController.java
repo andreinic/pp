@@ -41,6 +41,9 @@ public class CategoriesController
                 c.setChildren(childRet);
                 ret.add(c);
             }
+            if(ret.isEmpty()){
+                return Response.status(Response.Status.NO_CONTENT).build();
+            }
             return Response.status(Response.Status.OK).entity(new GenericEntity<>(ret, List.class)).build();
         } catch (Exception e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();

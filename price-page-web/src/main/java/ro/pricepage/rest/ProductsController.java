@@ -46,7 +46,7 @@ public class ProductsController
 				dto.setId((Integer)p[0]);
 				dto.setName(p[1].toString());
 				dto.setPrice((Double)p[2]);
-				dto.setImagesPaths(fileService.getImagePathsForProduct(((Integer)p[0]).intValue()));
+//				dto.setImagesPaths(fileService.getImagePathsForProduct(((Integer)p[0]).intValue()));
 				ret.add(dto);
 			}
 			GenericEntity<List<Product>> entity = new GenericEntity(ret, List.class);
@@ -57,29 +57,28 @@ public class ProductsController
 		}
 	}
 
-	//TODO Implement accordingly
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get(@QueryParam("categoryId") int categoryId,
-			@QueryParam("start") int start,
-			@QueryParam("count") int count){
+                        @QueryParam("start") int start,
+                        @QueryParam("count") int count){
 		try{
-			List<Product> products = productsService.list(categoryId, start, start + count);
+			List<Object[]> products = productsService.getAggregatedProducts(categoryId, start, start + count);
+            if(products.isEmpty()) return Response.status(Status.NO_CONTENT).build();
 			List<ProductDTO> ret = new LinkedList<>();
-			Random rnd = new Random();
-			for(Product p : products){
+			for(Object[] p : products){
 				ProductDTO dto = new ProductDTO();
-				dto.setId(p.getId());
-				dto.setName(p.getName());
-				dto.setPrice(rnd.nextDouble());
-				dto.setImagesPaths(fileService.getImagePathsForProduct(p.getId().intValue()));
+                dto.setId((Integer)p[0]);
+                dto.setName(p[1].toString());
+                dto.setPrice((Double)p[2]);
+//				dto.setImagesPaths(fileService.getImagePathsForProduct(p.getId().intValue()));
 				ret.add(dto);
 			}
 			GenericEntity<List<Product>> entity = new GenericEntity(ret, List.class);
 			return Response.status(Response.Status.OK).entity(entity).build();
 		}
 		catch (Exception e) {
-			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
 
