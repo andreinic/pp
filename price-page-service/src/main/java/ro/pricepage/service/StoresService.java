@@ -44,6 +44,11 @@ public class StoresService extends BaseService {
 		return q.getResultList();
 	}
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public List<StoreType> findAllStoreTypes(){
+        return em.createNamedQuery(StoreType.Q_FINAL_ALL, StoreType.class).getResultList();
+    }
+
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public StoreChain findSingleStoreChainByName(String name) {
 		TypedQuery<StoreChain> q = em.createNamedQuery(StoreChain.Q_FIND_BY_NAME, StoreChain.class)

@@ -1,19 +1,13 @@
 <section>
-    <hgroup ng-controller="ProductsCtrl">
+    <hgroup ng-controller="CategoryCtrl">
         <h1>Categories</h1>
         <h1 class="menu">Catalog Produse</h1>
         <ul>
-            <li><a ng-click="fetchForCateg(2)"><h2 class="submenu">Produse Alimentare</h2></a></li>
-            <li><a ng-click="fetchForCateg(2)"><h2 class="submenu">Produse Non-alimentare</h2></a></li>
+            <li ng-repeat="category in categories" ng-include="'partials/category.html'"></li>
         </ul>
         <h1 class="menu">Magazine</h1>
         <ul>
-            <li><a href="#/"><h2 class="submenu">Hypermarketuri</h2></a></li>
-            <li><a href="#/"><h2 class="submenu">Cash and Carry</h2></a></li>
-            <li><a href="#/"><h2 class="submenu">Supermarket</h2></a></li>
-            <li><a href="#/"><h2 class="submenu">Mini market</h2></a></li>
+            <li ng-repeat="storeType in storeTypes" ng-include="'partials/store-type.html'"></li>
         </ul>
-        <!--<a href="#/cum-compar"><h1 class="menu">Cum Compar</h1></a>-->
-
     </hgroup>
 </section>

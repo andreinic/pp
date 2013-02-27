@@ -16,3 +16,6 @@ pp-index
 
 # Project Files #
 target/
+
+# repository #
+pp-cr/

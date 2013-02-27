@@ -29,10 +29,6 @@ function ProductsCtrl($scope, $http, $location){
             //todo handle error
          });
     }
-
-//    if($scope.products === undefined){
-//        $scope.fetch();
-//    }
 }
 
 function PromotionsCtrl($scope, $location, $http){
