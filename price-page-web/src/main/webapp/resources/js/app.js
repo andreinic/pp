@@ -70,6 +70,20 @@ angular.module("price-page", ['ngResource'])
                }
            };
        }).factory('productsService', function($rootScope, $http){
+            var build = function(data){
+                var arr = [];
+                for(var i = 0 ; i < data.length ; ++i){
+                    var product = {};
+                    var p = data[i];
+                    product.id = p["id"];
+                    product.name = p["name"];
+                    var priceArr = p["price"].toString().split(".");
+                    product.bigPrice = priceArr[0];
+                    product.smallPrice = priceArr.length != 0 ? priceArr[1] : 0;
+                    arr.push(product);
+                }
+                return arr;
+            }
             var productsService = {};
             productsService.fetchForCateg = function(catId){
                  $http({
@@ -77,18 +91,18 @@ angular.module("price-page", ['ngResource'])
                      method : 'GET',
                      params : {categoryId: catId, start : 0, count : 5}
                  }).success(function(data, status, headers, configs){
-                     var arr = [];
-                     for(var i = 0 ; i < data.length ; ++i){
-                         var product = {};
-                         var p = data[i];
-                         product.id = p["id"];
-                         product.name = p["name"];
-                         var priceArr = p["price"].toString().split(".");
-                         product.bigPrice = priceArr[0];
-                         product.smallPrice = priceArr.length != 0 ? priceArr[1] : 0;
-                         arr.push(product);
-                     }
-                     $rootScope.$broadcast("productsChanged", arr);
+                     $rootScope.$broadcast("productsChanged", build(data));
+                 }).error(function(data, status, headers, configs){
+                    alert('error retrieving products');
+                 });
+            }
+            productsService.fetchForStoreType = function(stId){
+                 $http({
+                     url : 'rest/products',
+                     method : 'GET',
+                     params : {storeTypeId: stId, start : 0, count : 5}
+                 }).success(function(data, status, headers, configs){
+                     $rootScope.$broadcast("productsChanged", build(data));
                  }).error(function(data, status, headers, configs){
                     alert('error retrieving products');
                  });

@@ -17,7 +17,6 @@ import javax.ws.rs.core.Response.Status;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 @Stateless
 @Path("/products")
@@ -63,24 +62,41 @@ public class ProductsController
                         @QueryParam("start") int start,
                         @QueryParam("count") int count){
 		try{
-			List<Object[]> products = productsService.getAggregatedProducts(categoryId, start, start + count);
+			List<Object[]> products = productsService.getAggregatedProductsByCateg(categoryId, start, start + count);
             if(products.isEmpty()) return Response.status(Status.NO_CONTENT).build();
-			List<ProductDTO> ret = new LinkedList<>();
-			for(Object[] p : products){
-				ProductDTO dto = new ProductDTO();
-                dto.setId((Integer)p[0]);
-                dto.setName(p[1].toString());
-                dto.setPrice((Double)p[2]);
-//				dto.setImagesPaths(fileService.getImagePathsForProduct(p.getId().intValue()));
-				ret.add(dto);
-			}
-			GenericEntity<List<Product>> entity = new GenericEntity(ret, List.class);
-			return Response.status(Response.Status.OK).entity(entity).build();
+			return Response.status(Response.Status.OK).entity(new GenericEntity(buildFromProducts(products), List.class)).build();
 		}
 		catch (Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
 	}
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getByStoreType(@QueryParam("storeTypeId") int storeTypeId,
+                                   @QueryParam("start") int start,
+                                   @QueryParam("count") int count){
+        try{
+            List<Object[]> products = productsService.getAggregatedProductsByStoreType(storeTypeId, start, count);
+            if(products.isEmpty()) return Response.status(Status.NO_CONTENT).build();
+            return Response.status(Response.Status.OK).entity(new GenericEntity(buildFromProducts(products), List.class)).build();
+        } catch (Exception e){
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+        }
+    }
+
+    private List<ProductDTO> buildFromProducts(List<Object[]> products){
+        List<ProductDTO> ret = new LinkedList<>();
+        for(Object[] p : products){
+            ProductDTO dto = new ProductDTO();
+            dto.setId((Integer)p[0]);
+            dto.setName(p[1].toString());
+            dto.setPrice((Double)p[2]);
+//				dto.setImagesPaths(fileService.getImagePathsForProduct(p.getId().intValue()));
+            ret.add(dto);
+        }
+        return ret;
+    }
 
 	@GET
 	@Path("/{productId}")

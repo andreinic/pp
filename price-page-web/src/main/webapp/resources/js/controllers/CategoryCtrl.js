@@ -40,4 +40,9 @@ function CategoryCtrl($scope, $http, $location, productsService){
        productsService.fetchForCateg(catId);
        $location.path("/produse");
     }
+
+    $scope.fetchForStoreType = function(storeTypeId){
+        productsService.fetchForStoreType(storeTypeId);
+        $location.path("/produse");
+    }
 }
