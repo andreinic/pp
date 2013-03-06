@@ -8,7 +8,7 @@
             </div>
         </section>
         <section>
-            <div class="promotedShopsContainer">
+            <div class="promotedShopsContainer" ng-controller='ProposalCtrl'>
                 <h1>MAGAZINE PROMOVATE</h1>
                 <div class="fourtyTopMargin">
                     <div class="leftFloat fifthyPerc">
@@ -29,15 +29,15 @@
                 </div>
                 <br class="clearFix"/><br />
                 <div class="hrWrapper"><hr/></div>
-                <form class="form" name="recommendForm" ng-controller="ContactCtrl">
+                <form class="form" name="recommendForm">
                     <div class="fourtyTopMargin">
                         <div class="leftFloat fifthyPerc">
                             <ul>
                                 <li><label>Numele magazinului:<span class="red">*</span></label></li>
-                                <li><input class="input" type="text" name="name" required/></li>
+                                <li><input class="input" type="text" name="name" required ng-model="prop.name"/></li>
                                 <li><label>Categoria magazinului:<span class="red">*</span></label></li>
                                 <li>
-                                    <select name="category">
+                                    <select name="category" ng-model="prop.storeType">
                                         <option value="Hypermarket" selected="true">Hypermarket</option>
                                         <option value="Cash and Carry">Cash and Carry</option>
                                         <option value="Supermarket">Supermarket</option>
@@ -45,19 +45,19 @@
                                     </select>
                                 </li>
                                 <li><label>Adresa:<span class="red">*</span></label></li>
-                                <li><input class="input" type="text" name="address" required/></li>
+                                <li><input class="input" type="text" name="address" required ng-model="prop.address"/></li>
                                 <li><label>Telefon:</label></li>
-                                <li><input class="input" type="text" name="phone"/></li>
+                                <li><input class="input" type="text" name="phone" ng-model="prop.phone"/></li>
                                 <li><label>Categorie Produse:</label></li>
                                 <li>
-                                    <select name="productCategories">
+                                    <select name="productCategories" ng-model="prop.category">
                                         <option value="Toate" selected="true">Toate</option>
                                         <option value="Alimentare">Produse Alimentare</option>
                                         <option value="NonAlimentare">Produse Non-Alimentare</option>
                                     </select>
                                 </li>
                                 <ul>
-                                    <li><input type="submit" value=""/></li>
+                                    <li><input type="submit" value="" ng-click="sendProposal()"/></li>
                                 </ul>
                             </ul>
                         </div>
@@ -108,7 +108,7 @@
                                 <!--</ul>-->
                             <!--</ul>-->
                         <!--</div>-->
-                    <!--</div>-->
+                    </div>
                 </form>
             </div>
         </section>

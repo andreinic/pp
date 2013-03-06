@@ -5,7 +5,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "proposal_message")
+@XmlRootElement(name = "proposalMessage")
 public class ProposalMessageDTO
 {
     private String storeName;
@@ -14,7 +14,7 @@ public class ProposalMessageDTO
     private String phone;
     private String category;
 
-    @XmlElement(name = "store_name")
+    @XmlElement(name = "storeName")
     @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     public String getStoreName() {
         return storeName;
@@ -24,7 +24,7 @@ public class ProposalMessageDTO
         this.storeName = storeName;
     }
 
-    @XmlElement(name = "store_type")
+    @XmlElement(name = "storeType")
     @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
     public String getStoreType() {
         return storeType;
