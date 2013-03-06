@@ -14,7 +14,9 @@ import java.util.Map;
 @Named(value = "productsDataModel")
 public class ProductsDataModel extends LazyDataModel<Product> implements SelectableDataModel<Product>
 {
-    @Inject
+	private static final long serialVersionUID = -8530048834277234726L;
+
+	@Inject
     private ProductsService productsService;
 
     private List<Product> products;

@@ -29,10 +29,11 @@
                     </p:column>
                     <p:column headerText="Options">
                         <p:rowEditor />
-                        <p:commandLink value="Delete" update="producersList" actionListener="#{producersView.onDelete()}"/>
+                        <p:commandLink value="Delete" update="producersList" actionListener="#{producersView.onDelete()}" rendered="#{empty producer.products}"/>
                     </p:column>
                     <f:facet name="footer">
-                        <p:commandButton value="New" update="producersList" actionListener="#{producersView.makeProducer()}"/>
+                    	<p:inputText id="newName" value="#{producersView.newName}" />
+                        <p:commandButton value="New" update="producersList" actionListener="#{producersView.addProducer()}"/>
                     </f:facet>
                 </p:dataTable>
             </div>
