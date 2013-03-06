@@ -1,6 +1,19 @@
 'use strict';
 
 angular.module("price-page", ['ngResource'])
+       .config(function($routeProvider){
+            $routeProvider.when("/", {templateUrl : 'partials/first.html'})
+                          .when("/despre-noi", {templateUrl : 'partials/despre-noi.html'})
+                          .when("/magazine-promovate", {templateUrl : 'partials/magazine-promovate.html'})
+                          .when("/contact", {templateUrl : 'partials/contact.html'})
+                          .when("/produs/:productId", {templateUrl : 'partials/product-details.html', controller : 'ProductDetailsCtrl'})
+                          .when("/cauta", {templateUrl : 'partials/search.html', controller : 'SearchCtrl'})
+                          .when("/produse", {templateUrl : 'partials/products.html', controller : 'ProductsCtrl'})
+                          .when("/magazin", {templateUrl : 'partials/store.html'})
+                          .when("/cum-compar", {templateUrl : 'partials/compare.html'})
+                          .when("/termeni-si-conditii", {templateUrl : 'partials/terms.html'})
+                          .when("/browser-incompatibil", {templateUrl : 'partials/warning.html'})
+       })
 	   .directive('opendialog', function(){
        		var openDialog = {
 	        link : function(scope, element, attrs) {
@@ -12,8 +25,19 @@ angular.module("price-page", ['ngResource'])
 	            	element.bind('click', openDialog);
 	       		}
 	        }
-       		return openDialog;})
-       .directive('simple-captcha', function() {
+       		return openDialog;
+       }).directive('onScroll', function(){
+            /* http://jsfiddle.net/vojtajina/U7Bz9/ */
+            return function(scope, elem, attr){
+                var raw = elem[0];
+                elm.bind('scroll', function(){
+                   if(raw.scrollTop + raw.offsetHeight >= raw.scrollHeight){
+                        scope.$apply(attr.onScroll);
+                   }
+                });
+            }
+       }).directive('simple-captcha', function() {
+           /* not working yet */
            return {
                restrict: 'E',
                scope: { valid: '=' },
@@ -55,8 +79,6 @@ angular.module("price-page", ['ngResource'])
                        }
 //                       $scope.$apply(); // needed to solve 2 cycle delay problem;
                    };
-
-
                    $scope.$watch('a.value', function(){
                        checkValidity();
                    });
@@ -64,9 +86,6 @@ angular.module("price-page", ['ngResource'])
                    $scope.$watch('b.value', function(){
                        checkValidity();
                    });
-
-
-
                }
            };
        }).factory('productsService', function($rootScope, $http){
@@ -108,20 +127,7 @@ angular.module("price-page", ['ngResource'])
                  });
             }
             return productsService;
-       }).config(function($routeProvider){
-            $routeProvider.when("/", {templateUrl : 'partials/first.html'})
-                          .when("/despre-noi", {templateUrl : 'partials/despre-noi.html'})
-                          .when("/magazine-promovate", {templateUrl : 'partials/magazine-promovate.html'})
-                          .when("/contact", {templateUrl : 'partials/contact.html'})
-                          .when("/produs/:productId", {templateUrl : 'partials/product-details.html', controller : 'ProductDetailsCtrl'})
-                          .when("/cauta", {templateUrl : 'partials/search.html', controller : 'SearchCtrl'})
-                          .when("/produse", {templateUrl : 'partials/products.html', controller : 'ProductsCtrl'})
-                          .when("/magazin", {templateUrl : 'partials/store.html'})
-                          .when("/cum-compar", {templateUrl : 'partials/compare.html'})
-                          .when("/termeni-si-conditii", {templateUrl : 'partials/terms.html'})
-                          .when("/browser-incompatibil", {templateUrl : 'partials/warning.html'})
-       })
-       .run(function($rootScope, $location){
+       }).run(function($rootScope, $location){
             var BrowserDetect = {
                 init: function () {
                     this.browser = this.searchString(this.dataBrowser) || "An unknown browser";
