@@ -17,29 +17,14 @@
 				</div>
 				<form ng-hide="auth" class="contact_form" action="" method="post" name="contact_form">
 					<ul>
-						<li>
-							<label for="name">Nume:</label>
-						</li>
-						<li>
-							<input class="input" type="text" id="name"/>
-						</li>
-						<li>
-							<label for="email">Parola:</label>
-						</li>
-						<li>
-							<input class="input" type="password" id="email"/>
-						</li>
-						<li>
-							<label for="password">Email:</label>
-						</li>
-						<li>
-							<input class="input" type="email" id="password"/>
-						</li>
-
+						<li><label for="name">Nume:</label></li>
+						<li><input class="input" type="text" id="name"/></li>
+						<li><label for="email">Parola:</label></li>
+						<li><input class="input" type="password" id="email"/></li>
+						<li><label for="password">Email:</label></li>
+						<li><input class="input" type="email" id="password"/></li>
+						<li><input  type="submit" value="" class="submit_button" /></li>
 						<!--<span class="required_notification">Pastreaza-ma logat.<input type="checkbox" name="log" value="log" class="checkbox"><br></span>-->
-						<li>
-							<input  type="submit" value="" class="submit_button" />
-						</li>
 					</ul>
 				</form>
                 <form ng-show="auth" class="popup-form" action="" method="post" name="contact_form">

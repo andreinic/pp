@@ -1569,9 +1569,8 @@ nav ul{
 
 
 /* Footer */
-#footer h1{
+#footer > h1{
 	/*display: none;*/
-    font-size : 0.001em;/* TODO Fix this */
 }
 .footerContainer{
 	width: 1000px;

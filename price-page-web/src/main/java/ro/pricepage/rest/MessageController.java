@@ -23,7 +23,7 @@ public class MessageController
     @Resource(mappedName = "java:jboss/mail/PricePage")
     private Session mailSession;
 
-    @PUT
+    @POST
     @Path("/contact")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
@@ -35,7 +35,7 @@ public class MessageController
             MimeMessage m = new MimeMessage(mailSession);
 
             Address from = new InternetAddress(message.getEmail());
-            Address to = new InternetAddress("pagina-preturilor@gmail.com");
+            Address to = new InternetAddress("pagina.preturilor@gmail.com");
 
             m.setFrom(from);
             m.setRecipient(Message.RecipientType.TO, to);
@@ -51,8 +51,7 @@ public class MessageController
         }
     }
 
-    //TODO Implement
-    @PUT
+    @POST
     @Path("/proposal")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_XML})
@@ -64,7 +63,7 @@ public class MessageController
             MimeMessage m = new MimeMessage(mailSession);
 
             Address from = new InternetAddress("proposal@pricepage.ro");
-            Address to = new InternetAddress("pagina-preturilor@gmail.com");
+            Address to = new InternetAddress("pagina.preturilor@gmail.com");
 
             m.setFrom(from);
             m.setRecipient(Message.RecipientType.TO, to);
