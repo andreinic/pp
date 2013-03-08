@@ -33,6 +33,9 @@
                             <f:selectItem itemLabel="Select producer"/>
                             <f:selectItems value="#{producersView.producers}" var="producer" itemLabel="#{producer.name}" itemValue="#{producer}"/>
                         </p:selectOneMenu>
+                        
+                        <h:outputText value="Cantitate: "/>
+                        
                         <p:message for="productProducers"/>
 
                         <h:outputText value="Description"/>
@@ -41,6 +44,10 @@
                 </p:tab>
 
                 <p:tab title="Preturi">
+
+                </p:tab>
+                
+                 <p:tab title="Imagini">
 
                 </p:tab>
             </p:tabView>
