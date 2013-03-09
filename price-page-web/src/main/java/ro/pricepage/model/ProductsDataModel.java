@@ -44,7 +44,7 @@ public class ProductsDataModel extends LazyDataModel<Product> implements Selecta
     public List<Product> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
         products = productsService.list(first, first + pageSize);
         setRowCount(productsService.count().intValue());
-//        setPageSize(pageSize);
+        setPageSize(pageSize);
         return products;
     }
 }
