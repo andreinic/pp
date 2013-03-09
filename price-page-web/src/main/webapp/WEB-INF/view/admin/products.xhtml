@@ -1,79 +1,147 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:p="http://primefaces.org/ui"
-                xml:lang="en" lang="en"
-                template="/WEB-INF/view/admin/templates/adminPage.xhtml">
-    <ui:define name="title">Price Page Admin - Produse</ui:define>
-    <ui:define name="content">
-        <h:form id="mainForm" class="admin-item-details">
-            <p:tabView id="tabView">
-                <p:tab title="Detalii">
-                    <h:panelGrid id="productForm" columns="3" columnClasses="admin-grid-col1,admin-grid-col2,admin-grid-col3,admin-grid-col14" styleClass="grid">
-                        <h:outputText value="Name: *"/>
-                        <p:inputText id="productName" label="Name" value="#{productsView.selectedProduct.name}"
-                                     required="true" requiredMessage="Product name is requried">
-                            <f:validator validatorId="requiredValidator"/>
-                        </p:inputText>
-                        <p:message for="productName"/>
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xml:lang="en" lang="en"
+	template="/WEB-INF/view/admin/templates/adminPage.xhtml">
+	<ui:define name="title">Price Page Admin - Produse</ui:define>
+	<ui:define name="content">
+		<h:form id="mainForm" class="admin-item-details">
+			<p:accordionPanel id="accordion">
+				<p:tab id="newProductPanel" title="Produs nou">
+					<h:panelGrid id="newProductForm" columns="3"
+						columnClasses="admin-grid-col1,admin-grid-col2,admin-grid-col3,admin-grid-col14"
+						styleClass="grid">
+						<h:outputText value="Name: *" />
+						<p:inputText id="newProductName" label="Name"
+							value="#{productsView.newProductName}" required="true"
+							requiredMessage="Product name is requried">
+							<f:validator validatorId="requiredValidator" />
+						</p:inputText>
+						<p:message for="newProductName" />
 
-                        <h:outputText value="Category: *"/>
-                        <p:selectOneMenu id="productCateg" label="Category"
-                                         value="#{productsView.selectedProduct.category}" converter="productCategoryConverter">
-                            <f:selectItem itemLabel="Select category"/>
-                            <f:selectItems value="#{productsView.categories}" var="parent" itemLabel="#{parent.name}" itemValue="#{parent}"/>
-                        </p:selectOneMenu>
-                        <p:message for="productCateg"/>
+						<h:outputText value="Category: *" />
+						<p:selectOneMenu id="newProductCateg" label="Category"
+							value="#{productsView.newProductCategory}"
+							converter="productCategoryConverter">
+							<f:selectItem itemLabel="Select category" />
+							<f:selectItems value="#{productsView.categories}" var="cat"
+								itemLabel="#{cat.name}" itemValue="#{cat}" />
+						</p:selectOneMenu>
+						<p:message for="newProductCateg" />
 
-                        <h:outputText value="Producator: *"/>
-                        <p:selectOneMenu id="productProducers" label="Producers"
-                                         value="#{productsView.selectedProduct.producer}" converter="producerConverter">
-                            <f:selectItem itemLabel="Select producer"/>
-                            <f:selectItems value="#{producersView.producers}" var="producer" itemLabel="#{producer.name}" itemValue="#{producer}"/>
-                        </p:selectOneMenu>
-                        
-                        <h:outputText value="Cantitate: "/>
-                        
-                        <p:message for="productProducers"/>
+						<h:outputText value="Producator: *" />
+						<p:selectOneMenu id="newProductProducers" label="Producers"
+							value="#{productsView.newProductProducer}"
+							converter="producerConverter">
+							<f:selectItem itemLabel="Select producer" />
+							<f:selectItems value="#{producersView.producers}" var="producer"
+								itemLabel="#{producer.name}" itemValue="#{producer}" />
+						</p:selectOneMenu>
+						<p:message for="newProductProducers" />
 
-                        <h:outputText value="Description"/>
-                        <p:editor width="600" value="#{productsView.selectedProduct.description}"/>
-                    </h:panelGrid>
-                </p:tab>
+						<h:outputText value="Cantitate: " />
+						<p:inputText id="newQuantity" value="#{productsView.newProductQuantity}">
+							<f:validateDoubleRange />
+						</p:inputText>
+						<p:message for="newQuantity" />
 
-                <p:tab title="Preturi">
+						<h:outputText value="UM: " />
+						<p:inputText id="newUm" value="#{productsView.newProductMeasureUnit}" />
+						<p:message for="newUm" />
 
-                </p:tab>
-                
-                 <p:tab title="Imagini">
+						<h:outputText value="Description" />
+						<p:inputTextarea id="newEditor"
+							value="#{productsView.newProductDescription}" />
+						<h:outputText />
 
-                </p:tab>
-            </p:tabView>
+						<p:commandButton value="Save" icon="ui-icon-disk"
+							actionListener="#{productsView.onSave}"
+							process="@this newProductPanel" update=":mainForm:productsTable" />
+					</h:panelGrid>
+				</p:tab>
+				<p:tab id="editedProductPanel" title="Editare produs selectat">
+					<p:tabView id="tabView">
+						<p:tab title="Detalii">
+							<h:panelGrid id="editedProductForm" columns="3"
+								columnClasses="admin-grid-col1,admin-grid-col2,admin-grid-col3,admin-grid-col14"
+								styleClass="grid">
+								<h:outputText value="Name: *" />
+								<p:inputText id="editedProductName" label="Name"
+									value="#{productsView.editedProductName}" required="true"
+									requiredMessage="Product name is requried">
+									<f:validator validatorId="requiredValidator" />
+								</p:inputText>
+								<p:message for="editedProductName" />
 
+								<h:outputText value="Category: *" />
+								<p:selectOneMenu id="editedProductCateg" label="Category"
+									value="#{productsView.editedProductCategory}"
+									converter="productCategoryConverter">
+									<f:selectItem itemLabel="Select category" />
+									<f:selectItems value="#{productsView.categories}" var="cat"
+										itemLabel="#{cat.name}" itemValue="#{cat}" />
+								</p:selectOneMenu>
+								<p:message for="editedProductCateg" />
 
-            <h:panelGrid>
-                <p:commandButton value="Save" icon="ui-icon-disk" actionListener="#{productsView.onSave()}"
-                                 process="@this,mainForm:tabView:productForm" update="mainForm:tabView:productForm,mainForm:productsTable"/>
-            </h:panelGrid>
+								<h:outputText value="Producator: *" />
+								<p:selectOneMenu id="editedProductProducers" label="Producers"
+									value="#{productsView.editedProductProducer}"
+									converter="producerConverter">
+									<f:selectItem itemLabel="Select producer" />
+									<f:selectItems value="#{producersView.producers}"
+										var="producer" itemLabel="#{producer.name}"
+										itemValue="#{producer}" />
+								</p:selectOneMenu>
+								<p:message for="editedProductProducers" />
 
-            <br/><br />
-            <p:dataTable id="productsTable"
-                         value="#{productsView.productsModel}" lazy="true" var="product"
-                         paginator="true" rows="20"
-                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                         selectionMode="single" selection="#{productsView.selectedProduct}">
-                <p:column headerText="Nume">
-                    <h:outputText value="#{product.name}"/>
-                </p:column>
-                <p:column headerText="Producator">
-                    <h:outputText value="#{product.producer.name}"/>
-                </p:column>
-                <p:column headerText="Categorie">
-                    <h:outputText value="#{product.category.name}"/>
-                </p:column>
-            </p:dataTable>
-        </h:form>
-    </ui:define>
+								<h:outputText value="Cantitate: " />
+								<p:inputText id="editedQuantity" value="#{productsView.editedProductQuantity}">
+									<f:validateDoubleRange />
+								</p:inputText>
+								<p:message for="editedQuantity" />
+
+								<h:outputText value="UM: " />
+								<p:inputText id="editedUm" value="#{productsView.editedProductMeasureUnit}" />
+								<p:message for="editedUm" />
+
+								<h:outputText value="Description" />
+								<p:inputTextarea id="editedEditor" width="600"
+									value="#{productsView.editedProductDescription}" />
+								<h:outputText />
+
+								<p:commandButton value="Save" icon="ui-icon-disk"
+									actionListener="#{productsView.onUpdate}" process="@this @parent" update="@parent" />
+							</h:panelGrid>
+						</p:tab>
+
+						<p:tab title="Preturi">
+
+						</p:tab>
+
+						<p:tab title="Imagini">
+
+						</p:tab>
+					</p:tabView>
+				</p:tab>
+			</p:accordionPanel>
+			<br />
+			<br />
+			<p:dataTable id="productsTable" value="#{productsView.productsModel}"
+				lazy="true" var="product" paginator="true" rows="20"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				selectionMode="single" selection="#{productsView.selectedProduct}">
+				<p:column headerText="Nume">
+					<h:outputText value="#{product.name}" />
+				</p:column>
+				<p:column headerText="Producator">
+					<h:outputText value="#{product.producer.name}" />
+				</p:column>
+				<p:column headerText="Categorie">
+					<h:outputText value="#{product.category.name}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
 </ui:composition>
