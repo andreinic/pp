@@ -66,6 +66,10 @@ a{
 	text-decoration: none;
 }
 
+h1, h2, h3, h4, h5, h6{
+    margin : 0px;
+}
+
 .leftFloat{
 	float: left;
 }
@@ -282,8 +286,7 @@ nav ul{
 }
 .categoryContainer ul{
 	list-style: none;
-	margin-top: -4px;
-	/*padding-left: .6em;*/
+	margin: 0px;
 }
 .categoryContainer ul li{
 	background-image: url("../images/client/menu-arrow.png");
@@ -307,6 +310,7 @@ nav ul{
 	font-size:14px;
 	padding-left:10px;
 	padding-top:7px;
+	line-height:20px;
 }
 
 .submenu{
@@ -316,9 +320,9 @@ nav ul{
 	color:#5a5757;
 	font-family: 'DroidSansRegular', Arial, sans-serif;
 	font-size:14px;
-	padding-top:4px;
 	padding-bottom:4px;
 	padding-left:5px;
+	line-height:20px;
 }
 
 .newsletterContent{
@@ -397,18 +401,19 @@ nav ul{
 
 #produse{
 	height:310px;
+	width:770px;
 	display:table;
 	border-left:1px solid #d5cbd9;
 }
 
 .prod{
-	height:310px;
 	float:left;
 	background-image:url("../images/client/bkg-prod.jpg");
 	background-repeat:no-repeat;
 	background-position:top;
 	width:190px;
 	border-right:1px solid #d5cbd9;
+	border-top:1px solid #d5cbd9;
 	display:table-row;
 }
 .prod_all{
@@ -1007,11 +1012,11 @@ nav ul{
 /*///////////////////////*/
 /*auth_pag*/
 .wrap_cr{
-	/*width:571px;*/
-	height:563px;
+	height:645px;
+	max-height:645px;
 	background-color:#edefed;
 	margin:0 auto;
-	
+	padding:0px;
 }
 #cont_reg{
 	font-family: Arial, sans-serif;
@@ -1136,7 +1141,7 @@ nav ul{
 /**** Autenth*************/
 .wrap_auth{
 	width:535px;
-	height:488px;
+	max-height:539px;
 	background-color:#edefed;
 	margin:0 auto;
 	overflow-y: hidden !important; /* counter-balance bootstrap's css property */
@@ -1630,7 +1635,7 @@ nav ul{
 
 
 
-.modal-backdrop {
+/*.modal-backdrop {
     background-color: #000000;
     bottom: 0;
     left: 0;
@@ -1726,4 +1731,4 @@ nav ul{
 }
 .fade.in {
     opacity: 1;
-}
+}    */

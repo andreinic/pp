@@ -1,50 +1,56 @@
-	<div class="modal-body {{!auth && 'wrap_auth' || 'wrap_cr'}}" ng-controller="UserCtrl"><!--wrap_cr-->
-		<header>
-			<h1>Navigation Header</h1>
-			<div class="head_auth">
-				<a ng-click="choose(false)"><img src="{{!auth && 'resources/images/client/bkg-auth-on.png' || 'resources/images/client/bkg-auth.png'}}" alt="auth_head_off"/></a>
-			</div>
-			<div class="head_cr">
-				<a ng-click="choose(true)"><img src="{{!auth && 'resources/images/client/bkg-cr-off.png' || 'resources/images/client/bkg-cr.png'}}" alt="auth_head_off"/></a>
-			</div>
-		</header>
-		<div id="cont_reg"><!--cont_inreg starts here-->
-			<header><h1>Pagina inregistrare</h1></header>
-			<div id="reg"><!--inreg starts here-->
-				<p>{{auth && 'Inregistreaza-te cu:' || 'Autentificare cu:'}}</p>
-				<div id="social">
-					<a href="#"><img src="resources/images/client/auth-face.jpg" alt="facebook auth"/></a>
-				</div>
-				<form ng-hide="auth" class="contact_form" action="" method="post" name="contact_form">
-					<ul>
-						<li><label for="name">Nume:</label></li>
-						<li><input class="input" type="text" id="name"/></li>
-						<li><label for="email">Parola:</label></li>
-						<li><input class="input" type="password" id="email"/></li>
-						<li><label for="password">Email:</label></li>
-						<li><input class="input" type="email" id="password"/></li>
-						<li><input  type="submit" value="" class="submit_button" /></li>
-						<!--<span class="required_notification">Pastreaza-ma logat.<input type="checkbox" name="log" value="log" class="checkbox"><br></span>-->
-					</ul>
-				</form>
-                <form ng-show="auth" class="popup-form" action="" method="post" name="contact_form">
-                    <ul>
-                        <li><label for="lName">Nume:<span class="red">*</span></label></li>
-                        <li><input type="text" id="lName"/></li>
-                        <li><label for="lEmail">Email:<span class="red">*</span></label></li>
-                        <li><input type="text" id="lEmail"/></li>
-                        <li><label for="lPassword">Parola:<span class="red">*</span></label></li>
-                        <li><input type="password" id="lPassword"/></li>
-                        <li><label for="lPasswordCheck">Confirmare parola:<span class="red">*</span></label></li>
-                        <li><input type="password" id="lPasswordCheck"/></li>
-                        <li><label>Esti om?</label></li>
-                        <!--<li><simple-captcha valid="captchaValid"></simple-captcha></li>-->
-                        <span class="required_notification">Campurile marcate cu <span class="red">*</span> sunt obligatorii </span>
-                        <li><input type="submit" value="" class="submit_button" /></li>
-                    </ul>
-                </form>
-			</div><!-- inreg ends here-->	
-		</div><!-- cont_inreg ends here-->
-        <div class="clearFix"></div>
-		<input src="resources/images/client/close2.png" type="image" value="" class="rightFloat" ng-click="close()"/>
-	</div><!--wrap_cr-->
+<div class="modal-body {{!auth && 'wrap_auth' || 'wrap_cr'}}" ng-controller="UserCtrl"><!--wrap_cr-->
+    <header>
+        <h1>Navigation Header</h1>
+        <div class="head_auth">
+            <a ng-click="choose(false)">
+                <img ng-show="auth" src="resources/images/client/bkg-auth.png" alt="auth_head_off"/>
+                <img ng-hide="auth" src="resources/images/client/bkg-auth-on.png" alt="auth_head_off"/>
+            </a>
+        </div>
+        <div class="head_cr">
+            <a ng-click="choose(true)">
+                <img ng-show="!auth" src="resources/images/client/bkg-cr-off.png" alt="auth_head_off"/>
+                <img ng-hide="!auth" src="resources/images/client/bkg-cr.png" alt="auth_head_off"/>
+            </a>
+        </div>
+    </header>
+    <div id="cont_reg"><!--cont_inreg starts here-->
+        <header><h1>Pagina inregistrare</h1></header>
+        <div id="reg"><!--inreg starts here-->
+            <p>{{auth && 'Inregistreaza-te cu:' || 'Autentificare cu:'}}</p>
+            <div id="social">
+                <a href="#"><img src="resources/images/client/auth-face.jpg" alt="facebook auth"/></a>
+            </div>
+            <form ng-hide="auth" class="contact_form" action="" method="post" name="contact_form">
+                <ul>
+                    <li><label for="name">Nume:</label></li>
+                    <li><input class="input" type="text" id="name"/></li>
+                    <li><label for="email">Parola:</label></li>
+                    <li><input class="input" type="password" id="email"/></li>
+                    <li><label for="password">Email:</label></li>
+                    <li><input class="input" type="email" id="password"/></li>
+                    <li><input  type="submit" value="" class="submit_button" /></li>
+                    <!--<span class="required_notification">Pastreaza-ma logat.<input type="checkbox" name="log" value="log" class="checkbox"><br></span>-->
+                </ul>
+            </form>
+            <form ng-show="auth" class="popup-form" action="" method="post" name="contact_form">
+                <ul>
+                    <li><label for="lName">Nume:<span class="red">*</span></label></li>
+                    <li><input type="text" id="lName"/></li>
+                    <li><label for="lEmail">Email:<span class="red">*</span></label></li>
+                    <li><input type="text" id="lEmail"/></li>
+                    <li><label for="lPassword">Parola:<span class="red">*</span></label></li>
+                    <li><input type="password" id="lPassword"/></li>
+                    <li><label for="lPasswordCheck">Confirmare parola:<span class="red">*</span></label></li>
+                    <li><input type="password" id="lPasswordCheck"/></li>
+                    <li><label>Esti om?</label></li>
+                    <!--<li><simple-captcha valid="captchaValid"></simple-captcha></li>-->
+                    <span class="required_notification">Campurile marcate cu <span class="red">*</span> sunt obligatorii </span>
+                    <li><input type="submit" value="" class="submit_button" /></li>
+                </ul>
+            </form>
+        </div><!-- inreg ends here-->
+    </div><!-- cont_inreg ends here-->
+    <div class="clearFix"></div>
+    <input src="resources/images/client/close2.png" type="image" value="" class="rightFloat" ng-click="close()"/>
+</div><!--wrap_cr-->

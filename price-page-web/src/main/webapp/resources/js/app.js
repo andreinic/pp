@@ -20,6 +20,9 @@ angular.module("price-page", ['ngResource'])
 	            	function openDialog() {
 	              		var element = angular.element('#authModal');
 	              		var ctrl = element.controller();
+	              		element.addClass('in');
+	              		element.attr('aria-hidden', false);
+	              		element.attr('style', 'display : block')
 	              		element.modal('show');
 	            	}
 	            	element.bind('click', openDialog);
