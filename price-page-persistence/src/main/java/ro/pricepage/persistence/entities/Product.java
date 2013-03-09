@@ -55,7 +55,25 @@ public class Product extends BaseEntity
     private Producer producer;
     private String name;
     private String description;
+    private Double quantity;
+    private String measureUnit;
     private Set<ProductStore> storeInstances;
+    
+    public Product(){
+    	
+    }
+    
+    public Product(String name, ProductCategory category, Producer producer, String quantity, String measureUnit, String description){
+    	assert name != null && !name.isEmpty() : "Product should not be null, nor empty";
+    	assert category != null : "Category should not be null";
+    	assert producer != null : "Producer should not be null";
+    	this.name = name;
+    	this.category = category;
+    	this.producer = producer;
+    	this.quantity = Double.valueOf(quantity);
+    	this.measureUnit = measureUnit;
+    	this.description = description;
+    }
 
     @Id
     @Column(name = "id", nullable = false, unique = true)
@@ -113,6 +131,24 @@ public class Product extends BaseEntity
 	}
 	public void setStoreInstances(Set<ProductStore> storeInstances) {
 		this.storeInstances = storeInstances;
+	}
+
+	@Column(name = "quantity")
+	public Double getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Double quantity) {
+		this.quantity = quantity;
+	}
+
+	@Column(name = "unit")
+	public String getMeasureUnit() {
+		return measureUnit;
+	}
+
+	public void setMeasureUnit(String measureUnit) {
+		this.measureUnit = measureUnit;
 	}
 	
 	@Override

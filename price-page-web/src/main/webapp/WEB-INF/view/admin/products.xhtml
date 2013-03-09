@@ -69,7 +69,7 @@
 								styleClass="grid">
 								<h:outputText value="Name: *" />
 								<p:inputText id="editedProductName" label="Name"
-									value="#{productsView.editedProductName}" required="true"
+									value="#{productsView.selectedProduct.name}" required="true"
 									requiredMessage="Product name is requried">
 									<f:validator validatorId="requiredValidator" />
 								</p:inputText>
@@ -132,6 +132,7 @@
 				lazy="true" var="product" paginator="true" rows="20"
 				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 				selectionMode="single" selection="#{productsView.selectedProduct}">
+				<p:ajax event="rowSelect" listener="#{productsView.onSelect}" update=":mainForm:accordion:tabView" process="@this"/>
 				<p:column headerText="Nume">
 					<h:outputText value="#{product.name}" />
 				</p:column>

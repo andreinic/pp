@@ -4,17 +4,19 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.jboss.seam.faces.context.RenderScoped;
+import org.primefaces.event.SelectEvent;
 
 import ro.pricepage.model.ProductsDataModel;
 import ro.pricepage.persistence.entities.Producer;
 import ro.pricepage.persistence.entities.Product;
 import ro.pricepage.persistence.entities.ProductCategory;
 import ro.pricepage.service.ProductCategoriesService;
+import ro.pricepage.service.ProductsService;
 
 import com.ocpsoft.pretty.faces.annotation.URLMapping;
 
@@ -22,7 +24,7 @@ import com.ocpsoft.pretty.faces.annotation.URLMapping;
  * User: radutoev Date: 27.10.2012 Time: 16:22
  */
 @Named(value = "productsView")
-@RenderScoped
+@ViewScoped
 @URLMapping(id = "productsView", pattern = "/admin/produse", viewId = "/WEB-INF/view/admin/products.jsf")
 public class ProductsView implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -35,6 +37,9 @@ public class ProductsView implements Serializable {
 
 	@Inject
 	private ProductCategoriesService categoriesService;
+	
+	@Inject
+	private ProductsService productsService;
 	
 	private String newProductName;
 	private ProductCategory newProductCategory;
@@ -58,7 +63,21 @@ public class ProductsView implements Serializable {
 	// Actions
 	// ---------------------------------------------------------------------------------------------
 	public void onSave(ActionEvent e) {
+		Product product = new Product(newProductName, newProductCategory, newProductProducer, newProductQuantity, newProductMeasureUnit, newProductDescription);
+		productsService.add(product);
+	}
+	
+	public void onUpdate(ActionEvent e){
 		
+	}
+	
+	public void onSelect(SelectEvent e){
+		editedProductName = selectedProduct.getName();
+		editedProductCategory = selectedProduct.getCategory();
+		editedProductProducer = selectedProduct.getProducer();
+		editedProductQuantity = selectedProduct.getQuantity().toString();
+		editedProductMeasureUnit = selectedProduct.getMeasureUnit();
+		editedProductDescription = selectedProduct.getDescription();
 	}
 
 	// Getters and setters
