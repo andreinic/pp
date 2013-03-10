@@ -12,8 +12,7 @@
                     <a href="#">Vezi toate>></a>
                 </div><!-- title ends here-->
                 <div id="produse"><!-- produse starts here-->
-                    <div class="prod" ng-repeat="product in products" ng-include="'partials/product.html'">
-                    </div>
+                    <div class="{{product.idx % 4 == 0 && 'prod' || 'prod prod_grid'}} {{product.idx > 4 && '' || 'prod_grid_top'}}" ng-repeat="product in products" ng-include="'partials/product.html'"></div>
                 </div><!--produse ends here-->
             </section>
             <section>

@@ -103,4 +103,9 @@ public class StoresService extends BaseService {
 				.setParameter("city", city);
 		return q.getResultList();
 	}
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public StoreChain findParentStoreChain(Integer storeId){
+        return em.createNamedQuery(Store.Q_FIND_BY_ID, Store.class).setParameter("id", storeId).getSingleResult().getChain();
+    }
 }

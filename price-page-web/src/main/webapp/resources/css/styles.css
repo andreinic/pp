@@ -369,7 +369,7 @@ nav ul{
 /*produse */
 #prod_container{
 	width:765px;
-	margin:0 auto;
+	margin:0 auto 10px;
 	font-family: 'DroidSans', Arial, sans-serif;
 	height:auto;
 	border-bottom:1px solid #d5cbd9;
@@ -400,10 +400,9 @@ nav ul{
 
 
 #produse{
-	height:310px;
-	width:770px;
+	width:765px;
 	display:table;
-	border-left:1px solid #d5cbd9;
+	border:1px solid #d5cbd9;
 }
 
 .prod{
@@ -412,10 +411,16 @@ nav ul{
 	background-repeat:no-repeat;
 	background-position:top;
 	width:190px;
-	border-right:1px solid #d5cbd9;
-	border-top:1px solid #d5cbd9;
 	display:table-row;
 }
+.prod_grid{
+    border-right:1px solid #d5cbd9;
+}
+.prod_grid_top{
+    border-top:1px solid #d5cbd9;
+}
+
+
 .prod_all{
 	height:310px;
 	float:left;
@@ -929,10 +934,8 @@ nav ul{
 }
 #magazin_container{
 	width:763px;
-	margin:0 auto;
-	border-left:1px solid #d5cbd9;
-	border-right:1px solid #d5cbd9;
-	border-top:1px solid #d5cbd9;
+	margin:0 auto 10px;
+	border:1px solid #d5cbd9;
 	position:relative;
 }
 #magazin_titlu{
@@ -1039,7 +1042,7 @@ nav ul{
 #reg p{
 	float:left;
 	padding-top:8px;
-}
+}                                              x
 
 #social{
 	float:left;
@@ -1588,19 +1591,19 @@ nav ul{
 	float: left;
 }
 .footerCategContainer{
-	padding-left: 25px;
+	padding-left: 10px;
 }
 .footerStoresContainer{
-	padding-left: 59px;
+	padding-left: 40px;
 }
 .footerAboutContainer{
-	padding-left: 102px;
+	padding-left: 80px;
 }
 .footerPartnersContainer{
-	padding-left: 131px;
+	padding-left: 103px;
 }
 .footerLoginContainer{
-	padding-left: 99px;
+	padding-left: 110px;
 }
 .footerTitle{
 	font-family: 'RalewayThin';

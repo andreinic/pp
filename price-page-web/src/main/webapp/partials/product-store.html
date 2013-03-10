@@ -1,7 +1,7 @@
 <div class="divRow">
     <div class="divCell_1">{{store.price}}</div>
     <div class="divCell_2"><p>{{store.name}}</p><img src="resources/images/client/carrefour.png" alt="carrefour" class="logo_mag"></div>
-    <div class="divCell_3"><p>{{store.address}}, Brasov {{store.zip}}</br>0268 320 043 <a href="#/magazin">Vezi detalii...</a></p><img src="{{store.marker.icon}}" class="mag_point"alt="mag_point"/></div>
+    <div class="divCell_3"><p>{{store.address}}, Brasov {{store.zip}}</br>0268 320 043 <a ng-click="toStoreChain(store.id)">Vezi detalii...</a></p><img src="{{store.marker.icon}}" class="mag_point"alt="mag_point"/></div>
 </div>
 <div ng-show="store.best" class="best"></div>
 <div ng-hide="store.best" class="border_bkg"></div>

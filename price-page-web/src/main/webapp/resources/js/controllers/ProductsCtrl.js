@@ -24,6 +24,7 @@ function PromotionsCtrl($scope, $location, $http){
             for(var i = 0 ; i < data.length ; ++i){
                var product = {};
                var p = data[i];
+               product.idx = i+1;
                product.id = p["id"];
                product.name = p["name"];
                var priceArr = p["price"].toString().split(".");
@@ -40,7 +41,10 @@ function PromotionsCtrl($scope, $location, $http){
     $scope.fetchPromotions();
 }
 
-function ProductDetailsCtrl($rootScope, $scope, $routeParams, $http){
+function ProductDetailsCtrl($rootScope, $scope, $routeParams, $http, $location){
+    $scope.toStoreChain = function(storeId){
+        $location.path("/magazin/"+storeId.toString());
+    }
     $http({
        url : 'rest/products/' + $routeParams.productId,
        method : 'GET'

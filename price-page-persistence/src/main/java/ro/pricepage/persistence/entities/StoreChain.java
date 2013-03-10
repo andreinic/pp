@@ -33,7 +33,7 @@ public class StoreChain extends BaseEntity {
 	public static final String Q_FIND_ALL_NAMES = "StoreChain.findAllNames";
 	public static final String Q_FIND_BY_NAME = "StoreChain.findByName";
 	public static final String Q_FIND_ALL_NAMES_IN_CITY = "StoreChain.findAllNamesInCity";
-	
+
 	private Integer id;
 	private String name;
 	private Collection<Store> stores;

@@ -50,6 +50,14 @@ public class ProductsService extends BaseService
                  .getResultList();
     }
 
+    public List<Object[]> getAggregatedProductsByStoreChain(int storeChainId, int start, int end){
+        return em.createQuery("SELECT p.id, p.name, MIN(ps.price) FROM ProductStore ps JOIN ps.product p WHERE ps.store.id IN (SELECT s.id FROM Store s WHERE s.chain.id = :storeChainId)")
+                 .setParameter("storeChainId", storeChainId)
+                 .setMaxResults(end - start)
+                 .setFirstResult(start)
+                 .getResultList();
+    }
+
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public List<Product> list(int categoryId, int start, int end){
         List<Product> products = em.createNamedQuery(Product.GET_PRODUCTS_FOR_PARENT_CATEGORY, Product.class)

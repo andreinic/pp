@@ -24,12 +24,16 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 @Entity
 @Table(name="stores")
 @NamedQueries(value={
-		@NamedQuery(name=Store.Q_FIND_ALL_BY_CHAIN_AND_CITY, query="FROM Store WHERE chain.name = :chain AND locality.city = :city")
+		@NamedQuery(name=Store.Q_FIND_ALL_BY_CHAIN_AND_CITY, query="FROM Store WHERE chain.name = :chain AND locality.city = :city"),
+        @NamedQuery(name = Store.Q_FIND_BY_ID, query="FROM Store WHERE id = :id")
 })
 @Analyzer(definition = "ngram")
 public class Store extends BaseEntity {
 	public static final String Q_FIND_ALL_BY_CHAIN_AND_CITY = "Store.findAllByChainAndCity";
+    public static final String Q_FIND_BY_ID = "Store.findAllById";
+
 	private static final long serialVersionUID = -316251772567024056L;
+
 	private Integer id;
 	private String zip;
 	private String details;
