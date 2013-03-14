@@ -42,8 +42,44 @@ function PromotionsCtrl($scope, $location, $http){
 }
 
 function ProductDetailsCtrl($rootScope, $scope, $routeParams, $http, $location){
+    $scope.$on('geoActivated', function(){
+       if($scope.product) $scope.drawMarkers();
+    });
     $scope.toStoreChain = function(storeId){
         $location.path("/magazin/"+storeId.toString());
+    }
+    $scope.drawMarkers = function(){
+        var stores = $scope.product.stores;
+        if(stores.length > 0){
+            var map = new google.maps.Map(document.getElementById("ppMap"), $rootScope.mapOptions);
+            var locationMarker = new google.maps.Marker({
+                position : $rootScope.mapOptions.center,
+                icon : 'resources/images/client/b_poi_man.png',
+                map : map
+            })
+            var arr = [], prices = [];
+            var min, bestIdx = 0, closestIdx = 0;
+            for(var i = 0 ; i < stores.length ; ++i){
+                var s = stores[i];
+                prices.push(s.price);
+                s.marker =  new google.maps.Marker({
+                    position : new google.maps.LatLng(s["latitude"], s["longitude"]),
+                    icon : 'resources/images/client/b_poi_blue.png',
+                    map : map
+                });
+                arr.push(s);
+                if(i > 0){
+                    if(s.price < arr[i-1].price) bestIdx = i;
+                    if(google.maps.geometry.spherical.computeDistanceBetween($rootScope.userCoordinates, s.coordinates) < google.maps.geometry.spherical.computeDistanceBetween($rootScope.userCoordinates, arr[i-1].coordinates)){
+                        closestIdx = i;
+                    }
+                }
+            }
+            arr[bestIdx].best = true;
+            arr[bestIdx].marker.icon = 'resources/images/client/b_poi_red.png';
+            arr[closestIdx].marker.icon = 'resources/images/client/b_poi_green.png';
+            $scope.product.stores = arr;
+        }
     }
     $http({
        url : 'rest/products/' + $routeParams.productId,
@@ -59,7 +95,6 @@ function ProductDetailsCtrl($rootScope, $scope, $routeParams, $http, $location){
             p.stores = {};
 
             var map = new google.maps.Map(document.getElementById("ppMap"), $rootScope.mapOptions);
-//            if($rootScope.locationMarker !== undefined && $rootScope.locationMarker.map === undefined) $rootScope.locationMarker.map = map;
             if($rootScope.hasGeo){
                 var locationMarker = new google.maps.Marker({
                     position : $rootScope.mapOptions.center,
@@ -88,7 +123,7 @@ function ProductDetailsCtrl($rootScope, $scope, $routeParams, $http, $location){
                 if(i > 0){
                     if(store.price < arr[i-1].price) bestIdx = i;
                     if($rootScope.hasGeo){
-                        if(google.maps.geometry.spherical.computeDistanceBetween(userCoordinates, store.coordinates) < google.maps.geometry.spherical.computeDistanceBetween(userCoordinates, arr[i-1].coordinates)){
+                        if(google.maps.geometry.spherical.computeDistanceBetween($rootScope.userCoordinates, store.coordinates) < google.maps.geometry.spherical.computeDistanceBetween($rootScope.userCoordinates, arr[i-1].coordinates)){
                             closestIdx = i;
                         }
                     }

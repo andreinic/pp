@@ -272,8 +272,9 @@ angular.module("price-page", ['ngResource'])
                         streetViewControl : false
                     }
                     $rootScope.mapOptions = mapOptions;
-//                    $rootScope.locationMarker = locationMarker;
                     $rootScope.hasGeo = true;
+                    $rootScope.userCoordinates = userCoordinates;
+                    $rootScope.$broadcast("geoActivated");
                 }, function () {});
             }
 
