@@ -97,6 +97,7 @@ angular.module("price-page", ['ngResource'])
 //                    product.smallPrice = priceArr.length != 0 ? priceArr[1] : 0;
                     product.bigPrice = "20";
                     product.smallPrice = "14";
+                    product.imgPaths = p["imagesPaths"] ? p["imagesPaths"] : null;
                     arr.push(product);
                 }
                 return arr;
