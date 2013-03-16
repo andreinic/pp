@@ -102,18 +102,17 @@ function ProductDetailsCtrl($rootScope, $scope, $routeParams, $http, $location){
         var stores = $scope.product.stores;
         if(stores.length > 0){
             var map = new google.maps.Map(document.getElementById("ppMap"), $rootScope.mapOptions);
-            var locationMarker = new google.maps.Marker({
+            new google.maps.Marker({
                 position : $rootScope.mapOptions.center,
                 icon : 'resources/images/client/b_poi_man.png',
                 map : map
-            })
-            var arr = [], prices = [];
-            var min, bestIdx = 0, closestIdx = 0;
+            });
+            var arr = [];
+            var bestIdx = 0, closestIdx = 0;
             for(var i = 0 ; i < stores.length ; ++i){
                 var s = stores[i];
-                prices.push(s.price);
                 s.marker =  new google.maps.Marker({
-                    position : new google.maps.LatLng(s["latitude"], s["longitude"]),
+                    position : s.coordinates,
                     icon : 'resources/images/client/b_poi_blue.png',
                     map : map
                 });
@@ -125,9 +124,9 @@ function ProductDetailsCtrl($rootScope, $scope, $routeParams, $http, $location){
                     }
                 }
             }
+            arr[closestIdx].marker.icon = 'resources/images/client/b_poi_green.png';
             arr[bestIdx].best = true;
             arr[bestIdx].marker.icon = 'resources/images/client/b_poi_red.png';
-            arr[closestIdx].marker.icon = 'resources/images/client/b_poi_green.png';
             $scope.product.stores = arr;
         }
     }
