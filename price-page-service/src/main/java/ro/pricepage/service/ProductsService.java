@@ -39,6 +39,10 @@ public class ProductsService extends BaseService
         return em.createQuery("SELECT p.id, p.name, MIN(ps.price) FROM ProductStore ps JOIN ps.product p WHERE p.category.id IN(SELECT c.id FROM ProductCategory c WHERE c.parent.id =:categId) GROUP BY ps.price", Object[].class).setParameter("categId", categoryId).setMaxResults(end - start).setFirstResult(start).getResultList();
     }
 
+    public Integer countForCateg(int categoryId){
+        return em.createNamedQuery(Product.COUNT_PRODUCTS_FOR_CATEGORY).setParameter("catId", categoryId).getFirstResult();
+    }
+
     public List<Object[]> getAggregatedProductsByStoreType(int storeTypeId, int start, int end){
         return em.createQuery("SELECT p.id, p.name, MIN(ps.price) " +
                               "FROM ProductStore ps " +

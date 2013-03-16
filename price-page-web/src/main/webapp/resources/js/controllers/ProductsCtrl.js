@@ -1,12 +1,62 @@
 'use strict';
 
-function ProductsCtrl($scope, $location, productsService){
+function ProductsCtrl($scope, $location, $routeParams, productsService){
     $scope.toDetail = function(productId){
         $location.path("/produs/"+productId.toString());
     }
-    $scope.$on('productsChanged', function(){
+    $scope.start = 0;
+    $scope.max = 62;
+    $scope.currentPage = 0;
+    $scope.ps = 16;
+    $scope.$on("productsFetched", function(){
         $scope.products = arguments[1];
     });
+    $scope.numberOfPages = function(){
+        return Math.ceil($scope.max / $scope.ps);
+    }
+    if($routeParams.catId){
+        //TODO Add listener for countForCateg once correctly implemented on server side.
+//        max = productsService.countForCateg($routeParams.catId);
+        if($scope.max > 0){
+            productsService.fetchForCateg($routeParams.catId, $scope.start, $scope.ps);
+            $scope.start += $scope.ps;
+        }
+    } else if($routeParams.shopId){
+        if($scope.max > 0){
+            productsService.fetchForStoreType($routeParams.shopId, $scope.start, $scope.ps);
+            $scope.start += $scope.ps;
+        }
+    }
+
+    $scope.next = function(){
+        if($scope.start < $scope.max){
+            var count;
+            $scope.start += $scope.ps;
+            if($scope.start > $scope.max) $scope.start = $scope.max;
+            if($scope.start != $scope.max){
+                count = $scope.ps;
+            } else {
+                count = 0;
+            }
+            if($routeParams.catId){
+                productsService.fetchForCateg($routeParams.catId, $scope.start, count);
+            } else if($routeParams.shopId){
+                productsService.fetchForStoreType($routeParams.shopId, $scope.start, count);
+            }
+            ++$scope.currentPage;
+        }
+    }
+    $scope.previous = function(){
+        if($scope.start > 0){
+            $scope.start = $scope.start - $scope.ps > 0 ? $scope.start - $scope.ps : 0;
+            if($routeParams.catId){
+                productsService.fetchForCateg($routeParams.catId, $scope.start, $scope.ps);
+            } else if($routeParams.shopId){
+                productsService.fetchForStoreType($routeParams.shopId, $scope.start, $scope.ps);
+            }
+            --$scope.currentPage;
+        }
+    }
 }
 
 function PromotionsCtrl($scope, $location, $http){

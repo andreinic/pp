@@ -14,16 +14,22 @@
             <div id="magazin_titlu_all">
                 <h1>Hypermarket Real</h1>
             </div>
-            <div id="prod_container"><!--prod_container here-->
-                <section>
-                    <h1>Promotii</h1>
-                    <div id="title"><!-- title starts here-->
-                        <p>Branzeturi</p>
-                    </div><!-- title ends here-->
+            <div id="prod_container" ng:controller="ProductsCtrl"><!--prod_container here-->
+                <section ng:show="products">
+                    <!--<h1>Promotii</h1>-->
+                    <!--<div id="title">&lt;!&ndash; title starts here&ndash;&gt;-->
+                        <!--<p>Branzeturi</p>-->
+                    <!--</div>&lt;!&ndash; title ends here&ndash;&gt;-->
+
                     <div id="produse"><!-- produse starts here-->
-                        <div class="prod" ng-repeat="product in products" ng-include="'partials/product.html'">
-                        </div>
+                        <div class="prod" ng-repeat="product in products" ng-include="'partials/product.html'"></div>
                     </div><!--produse ends here-->
+                    <button ng:click="previous()" ng:disabled="start == ps">Inapoi</button>
+                    {{currentPage+1}}/{{numberOfPages()}}
+                    <button ng:click="next()" ng:disabled="start == max">Inainte</button>
+                </section>
+                <section ng:hide="products">
+                    Nu am gasit nici un produs.
                 </section>
             </div><!--prod_container ends here-->
         </div><!--col1 ends here-->

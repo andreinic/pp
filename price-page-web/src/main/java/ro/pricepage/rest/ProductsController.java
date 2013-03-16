@@ -56,6 +56,17 @@ public class ProductsController
 		}
 	}
 
+    @Path("/count")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response countForCateg(@QueryParam("categoryId") int categoryId){
+        try{
+           return Response.status(Status.OK).entity(new GenericEntity<>(productsService.countForCateg(categoryId), Integer.class)).build();
+        } catch (Exception e){
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+        }
+    }
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get(@QueryParam("categoryId") int categoryId,
