@@ -8,8 +8,10 @@ angular.module("price-page", ['ngResource'])
                           .when("/contact", {templateUrl : 'partials/contact.html'})
                           .when("/produs/:productId", {templateUrl : 'partials/product-details.html', controller : 'ProductDetailsCtrl'})
                           .when("/cauta", {templateUrl : 'partials/search.html', controller : 'SearchCtrl'})
-                          .when("/produse", {templateUrl : 'partials/products.html', controller : 'ProductsCtrl'})
-                          .when("/magazin", {templateUrl : 'partials/store.html'})
+                          .when("/produse", {templateUrl : 'partials/products.html'})
+                          .when("/produse/categorie/:catId", {templateUrl : 'partials/products.html'})
+                          .when("/produse/tip-magazin/:shopId", {templateUrl : 'partials/products.html'})
+                          .when("/magazin/:storeId", {templateUrl : 'partials/store.html'})
                           .when("/cum-compar", {templateUrl : 'partials/compare.html'})
                           .when("/termeni-si-conditii", {templateUrl : 'partials/terms.html'})
                           .when("/browser-incompatibil", {templateUrl : 'partials/warning.html'})
@@ -29,16 +31,6 @@ angular.module("price-page", ['ngResource'])
 	       		}
 	        }
        		return openDialog;
-       }).directive('onScroll', function(){
-            /* http://jsfiddle.net/vojtajina/U7Bz9/ */
-            return function(scope, elem, attr){
-                var raw = elem[0];
-                elm.bind('scroll', function(){
-                   if(raw.scrollTop + raw.offsetHeight >= raw.scrollHeight){
-                        scope.$apply(attr.onScroll);
-                   }
-                });
-            }
        }).directive('simple-captcha', function() {
            /* not working yet */
            return {
@@ -94,39 +86,54 @@ angular.module("price-page", ['ngResource'])
        }).factory('productsService', function($rootScope, $http){
             var build = function(data){
                 var arr = [];
-                for(var i = 0 ; i < data.length ; ++i){
+//                for(var i = 0 ; i < data.length ; ++i){
+                for(var i = 0 ; i < 16 ; ++i){
                     var product = {};
                     var p = data[i];
-                    product.id = p["id"];
-                    product.name = p["name"];
-                    var priceArr = p["price"].toString().split(".");
-                    product.bigPrice = priceArr[0];
-                    product.smallPrice = priceArr.length != 0 ? priceArr[1] : 0;
+                    product.id = 1;
+                    product.name = "TEST";
+//                    var priceArr = p["price"].toString().split(".");
+//                    product.bigPrice = priceArr[0];
+//                    product.smallPrice = priceArr.length != 0 ? priceArr[1] : 0;
+                    product.bigPrice = "20";
+                    product.smallPrice = "14";
+                    product.imgPaths = p["imagesPaths"] ? p["imagesPaths"] : null;
                     arr.push(product);
                 }
                 return arr;
             }
             var productsService = {};
-            productsService.fetchForCateg = function(catId){
+            productsService.countForCateg = function(catId){
+                $http({
+                    url : 'rest/products/count',
+                    method : 'GET',
+                    params : {categoryId: catId}
+                }).success(function(data, status, headers, configs){
+                   return data;
+                }).error(function(data, status, headers, configs){
+                   alert('error retrieving products');
+                });
+            }
+            productsService.fetchForCateg = function(catId, s, c){
                  $http({
                      url : 'rest/products',
                      method : 'GET',
-                     params : {categoryId: catId, start : 0, count : 5}
+                     params : {categoryId: catId, start : s, count : c}
                  }).success(function(data, status, headers, configs){
-                     $rootScope.$broadcast("productsChanged", build(data));
+                     $rootScope.$broadcast("productsFetched", build(data));
                  }).error(function(data, status, headers, configs){
-                    alert('error retrieving products');
+                    $rootScope.$broadcast("productsFetched", build(data));
                  });
             }
-            productsService.fetchForStoreType = function(stId){
+            productsService.fetchForStoreType = function(stId, s, c){
                  $http({
                      url : 'rest/products',
                      method : 'GET',
-                     params : {storeTypeId: stId, start : 0, count : 5}
+                     params : {storeTypeId: stId, start : s, count : c}
                  }).success(function(data, status, headers, configs){
-                     $rootScope.$broadcast("productsChanged", build(data));
+                     $rootScope.$broadcast("productsFetched", build(data));
                  }).error(function(data, status, headers, configs){
-                    alert('error retrieving products');
+                    $rootScope.$broadcast("productsFetched", build(data));
                  });
             }
             return productsService;
@@ -272,8 +279,9 @@ angular.module("price-page", ['ngResource'])
                         streetViewControl : false
                     }
                     $rootScope.mapOptions = mapOptions;
-//                    $rootScope.locationMarker = locationMarker;
                     $rootScope.hasGeo = true;
+                    $rootScope.userCoordinates = userCoordinates;
+                    $rootScope.$broadcast("geoActivated");
                 }, function () {});
             }
 

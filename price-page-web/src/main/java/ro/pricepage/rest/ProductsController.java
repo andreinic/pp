@@ -45,7 +45,11 @@ public class ProductsController
 				dto.setId((Integer)p[0]);
 				dto.setName(p[1].toString());
 				dto.setPrice((Double)p[2]);
-//				dto.setImagesPaths(fileService.getImagePathsForProduct(((Integer)p[0]).intValue()));
+                try{
+                    dto.setImagesPaths(fileService.getImagePathsForProduct(((Integer)p[0]).intValue()));
+                } catch (Exception e){
+                    dto.setImagesPaths(null);
+                }
 				ret.add(dto);
 			}
 			GenericEntity<List<Product>> entity = new GenericEntity(ret, List.class);
@@ -55,6 +59,17 @@ public class ProductsController
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
 	}
+
+    @Path("/count")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response countForCateg(@QueryParam("categoryId") int categoryId){
+        try{
+           return Response.status(Status.OK).entity(new GenericEntity<>(productsService.countForCateg(categoryId), Integer.class)).build();
+        } catch (Exception e){
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+        }
+    }
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -92,7 +107,11 @@ public class ProductsController
             dto.setId((Integer)p[0]);
             dto.setName(p[1].toString());
             dto.setPrice((Double)p[2]);
-//				dto.setImagesPaths(fileService.getImagePathsForProduct(p.getId().intValue()));
+            try{
+                dto.setImagesPaths(fileService.getImagePathsForProduct(dto.getId().intValue()));
+            } catch (Exception e){
+                dto.setImagesPaths(null);
+            }
             ret.add(dto);
         }
         return ret;

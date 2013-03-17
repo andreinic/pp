@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
-@XmlRootElement(name = "store_type")
+@XmlRootElement(name = "storeType")
 public class StoreTypeDTO implements Serializable
 {
     private static final long serialVersionUID = 1L;

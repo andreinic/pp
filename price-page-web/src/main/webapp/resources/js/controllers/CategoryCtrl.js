@@ -37,12 +37,10 @@ function CategoryCtrl($scope, $http, $location, productsService){
 
 
     $scope.fetchForCateg = function(catId){
-       productsService.fetchForCateg(catId);
-       $location.path("/produse");
+       $location.path("/produse/categorie/"+catId.toString());
     }
 
     $scope.fetchForStoreType = function(storeTypeId){
-        productsService.fetchForStoreType(storeTypeId);
-        $location.path("/produse");
+        $location.path("/produse/tip-magazin/"+storeTypeId.toString());
     }
 }

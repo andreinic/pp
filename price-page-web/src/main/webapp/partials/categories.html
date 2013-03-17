@@ -3,11 +3,11 @@
         <h1>Categories</h1>
         <h1 class="menu">Catalog Produse</h1>
         <ul>
-            <li ng-repeat="category in categories" ng-include="'partials/category.html'"></li>
+            <li class="submenu" ng-repeat="category in categories" ng-include="'partials/category.html'"></li>
         </ul>
         <h1 class="menu">Magazine</h1>
         <ul>
-            <li ng-repeat="storeType in storeTypes" ng-include="'partials/store-type.html'"></li>
+            <li class="submenu" ng-repeat="storeType in storeTypes" ng-include="'partials/store-type.html'"></li>
         </ul>
     </hgroup>
 </section>

@@ -1,12 +1,62 @@
 'use strict';
 
-function ProductsCtrl($scope, $location, productsService){
+function ProductsCtrl($scope, $location, $routeParams, productsService){
     $scope.toDetail = function(productId){
         $location.path("/produs/"+productId.toString());
     }
-    $scope.$on('productsChanged', function(){
+    $scope.start = 0;
+    $scope.max = 62;
+    $scope.currentPage = 0;
+    $scope.ps = 16;
+    $scope.$on("productsFetched", function(){
         $scope.products = arguments[1];
     });
+    $scope.numberOfPages = function(){
+        return Math.ceil($scope.max / $scope.ps);
+    }
+    if($routeParams.catId){
+        //TODO Add listener for countForCateg once correctly implemented on server side.
+//        max = productsService.countForCateg($routeParams.catId);
+        if($scope.max > 0){
+            productsService.fetchForCateg($routeParams.catId, $scope.start, $scope.ps);
+            $scope.start += $scope.ps;
+        }
+    } else if($routeParams.shopId){
+        if($scope.max > 0){
+            productsService.fetchForStoreType($routeParams.shopId, $scope.start, $scope.ps);
+            $scope.start += $scope.ps;
+        }
+    }
+
+    $scope.next = function(){
+        if($scope.start < $scope.max){
+            var count;
+            $scope.start += $scope.ps;
+            if($scope.start > $scope.max) $scope.start = $scope.max;
+            if($scope.start != $scope.max){
+                count = $scope.ps;
+            } else {
+                count = 0;
+            }
+            if($routeParams.catId){
+                productsService.fetchForCateg($routeParams.catId, $scope.start, count);
+            } else if($routeParams.shopId){
+                productsService.fetchForStoreType($routeParams.shopId, $scope.start, count);
+            }
+            ++$scope.currentPage;
+        }
+    }
+    $scope.previous = function(){
+        if($scope.start > 0){
+            $scope.start = $scope.start - $scope.ps > 0 ? $scope.start - $scope.ps : 0;
+            if($routeParams.catId){
+                productsService.fetchForCateg($routeParams.catId, $scope.start, $scope.ps);
+            } else if($routeParams.shopId){
+                productsService.fetchForStoreType($routeParams.shopId, $scope.start, $scope.ps);
+            }
+            --$scope.currentPage;
+        }
+    }
 }
 
 function PromotionsCtrl($scope, $location, $http){
@@ -24,6 +74,7 @@ function PromotionsCtrl($scope, $location, $http){
             for(var i = 0 ; i < data.length ; ++i){
                var product = {};
                var p = data[i];
+               product.idx = i+1;
                product.id = p["id"];
                product.name = p["name"];
                var priceArr = p["price"].toString().split(".");
@@ -40,7 +91,45 @@ function PromotionsCtrl($scope, $location, $http){
     $scope.fetchPromotions();
 }
 
-function ProductDetailsCtrl($rootScope, $scope, $routeParams, $http){
+function ProductDetailsCtrl($rootScope, $scope, $routeParams, $http, $location){
+    $scope.$on('geoActivated', function(){
+       if($scope.product) $scope.drawMarkers();
+    });
+    $scope.toStoreChain = function(storeId){
+        $location.path("/magazin/"+storeId.toString());
+    }
+    $scope.drawMarkers = function(){
+        var stores = $scope.product.stores;
+        if(stores.length > 0){
+            var map = new google.maps.Map(document.getElementById("ppMap"), $rootScope.mapOptions);
+            new google.maps.Marker({
+                position : $rootScope.mapOptions.center,
+                icon : 'resources/images/client/b_poi_man.png',
+                map : map
+            });
+            var arr = [];
+            var bestIdx = 0, closestIdx = 0;
+            for(var i = 0 ; i < stores.length ; ++i){
+                var s = stores[i];
+                s.marker =  new google.maps.Marker({
+                    position : s.coordinates,
+                    icon : 'resources/images/client/b_poi_blue.png',
+                    map : map
+                });
+                arr.push(s);
+                if(i > 0){
+                    if(s.price < arr[i-1].price) bestIdx = i;
+                    if(google.maps.geometry.spherical.computeDistanceBetween($rootScope.userCoordinates, s.coordinates) < google.maps.geometry.spherical.computeDistanceBetween($rootScope.userCoordinates, arr[i-1].coordinates)){
+                        closestIdx = i;
+                    }
+                }
+            }
+            arr[closestIdx].marker.icon = 'resources/images/client/b_poi_green.png';
+            arr[bestIdx].best = true;
+            arr[bestIdx].marker.icon = 'resources/images/client/b_poi_red.png';
+            $scope.product.stores = arr;
+        }
+    }
     $http({
        url : 'rest/products/' + $routeParams.productId,
        method : 'GET'
@@ -55,7 +144,6 @@ function ProductDetailsCtrl($rootScope, $scope, $routeParams, $http){
             p.stores = {};
 
             var map = new google.maps.Map(document.getElementById("ppMap"), $rootScope.mapOptions);
-//            if($rootScope.locationMarker !== undefined && $rootScope.locationMarker.map === undefined) $rootScope.locationMarker.map = map;
             if($rootScope.hasGeo){
                 var locationMarker = new google.maps.Marker({
                     position : $rootScope.mapOptions.center,
@@ -84,7 +172,7 @@ function ProductDetailsCtrl($rootScope, $scope, $routeParams, $http){
                 if(i > 0){
                     if(store.price < arr[i-1].price) bestIdx = i;
                     if($rootScope.hasGeo){
-                        if(google.maps.geometry.spherical.computeDistanceBetween(userCoordinates, store.coordinates) < google.maps.geometry.spherical.computeDistanceBetween(userCoordinates, arr[i-1].coordinates)){
+                        if(google.maps.geometry.spherical.computeDistanceBetween($rootScope.userCoordinates, store.coordinates) < google.maps.geometry.spherical.computeDistanceBetween($rootScope.userCoordinates, arr[i-1].coordinates)){
                             closestIdx = i;
                         }
                     }
