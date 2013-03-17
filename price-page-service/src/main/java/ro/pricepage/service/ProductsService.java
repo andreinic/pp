@@ -105,6 +105,11 @@ public class ProductsService extends BaseService
 		return (Long) em.createNamedQuery(Product.COUNT_PRODUCTS).getSingleResult();
 	}
 
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public Integer countForCateg(int categoryId){
+        	return em.createNamedQuery(Product.COUNT_PRODUCTS_FOR_CATEGORY).setParameter("catId", categoryId).getFirstResult();
+    	}
+
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public Product add(Product product){
 		assert product != null : "cannot pass null ref for product";
@@ -140,4 +145,13 @@ public class ProductsService extends BaseService
 	public void deleteProduct(Product p){
 		em.remove(em.merge(p));
 	}
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	public List<Object[]> getAggregatedProductsByStoreChain(int storeChainId, int start, int end){
+        return em.createQuery("SELECT p.id, p.name, MIN(ps.price) FROM ProductStore ps JOIN ps.product p WHERE ps.store.id IN (SELECT s.id FROM Store s WHERE s.chain.id = :storeChainId)")
+                 .setParameter("storeChainId", storeChainId)
+                 .setMaxResults(end - start)
+                 .setFirstResult(start)
+                 .getResultList();
+    }
 }
