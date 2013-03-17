@@ -39,6 +39,8 @@ public class ProductCategory extends BaseEntity {
     private Collection<ProductCategory> children = new ArrayList<>();
 	private String name;
 	private String description;
+    private Integer lft;
+    private Integer rgt;
 
 	@Id
 	@Column(name="id", nullable=false, unique=true)
@@ -83,8 +85,24 @@ public class ProductCategory extends BaseEntity {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	@Override
+
+    @Column(name="lft", nullable=false)
+    public Integer getLft() {
+        return lft;
+    }
+    public void setLft(Integer lft) {
+        this.lft = lft;
+    }
+
+    @Column(name="rgt", nullable=false)
+    public Integer getRgt() {
+        return rgt;
+    }
+    public void setRgt(Integer rgt) {
+        this.rgt = rgt;
+    }
+
+    @Override
     public boolean equals(Object obj){
         if(obj == null) return false;
         if(this == obj) return true;

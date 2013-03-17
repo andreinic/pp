@@ -8,6 +8,7 @@ import ro.pricepage.service.FileService;
 import ro.pricepage.service.ProductsService;
 
 import javax.ejb.Stateless;
+import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
@@ -15,6 +16,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -47,8 +50,12 @@ public class ProductsController
 				dto.setPrice((Double)p[2]);
                 try{
                     dto.setImagesPaths(fileService.getImagePathsForProduct(((Integer)p[0]).intValue()));
+                    if(!dto.getImagesPaths().isEmpty()){
+                       dto.setImageData((byte[]) getProductImage(dto.getId(), dto.getImagesPaths().get(0)).getEntity());
+                    }
                 } catch (Exception e){
                     dto.setImagesPaths(null);
+                    dto.setImageData(null);
                 }
 				ret.add(dto);
 			}
@@ -59,6 +66,22 @@ public class ProductsController
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
 	}
+
+    @Path("/{productId}/images/{imagePath}")
+    @GET
+    @Produces("image/png")
+    public Response getProductImage(@PathParam("productId") Integer productId,
+                                    @PathParam("imagePath") String imagePath){
+        try{
+            BufferedImage image = ImageIO.read(fileService.getFileContent(imagePath));
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ImageIO.write(image, "png", bos);
+            byte[] data = bos.toByteArray();
+            return Response.ok(data).build();
+        } catch (Exception e){
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+        }
+    }
 
     @Path("/count")
     @GET
@@ -73,9 +96,9 @@ public class ProductsController
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response get(@QueryParam("categoryId") int categoryId,
-                        @QueryParam("start") int start,
-                        @QueryParam("count") int count){
+	public Response get(@QueryParam("categoryId") Integer categoryId,
+                        @QueryParam("start") Integer start,
+                        @QueryParam("count") Integer count){
 		try{
 			List<Object[]> products = productsService.getAggregatedProductsByCateg(categoryId, start, start + count);
             if(products.isEmpty()) return Response.status(Status.NO_CONTENT).build();
