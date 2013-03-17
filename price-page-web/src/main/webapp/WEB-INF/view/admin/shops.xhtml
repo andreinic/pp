@@ -77,10 +77,10 @@
 						actionListener="#{shopsView.onSave}" update="@form"
 						rendered="#{empty shopsView.selectedStore}" />
 					<p:commandButton value="Actualizeaza"
-						actionListener="#{shopsView.onUpdate}" update="@form"
+						actionListener="#{shopsView.onUpdate}" update="@form buttonsPanel"
 						rendered="#{not empty shopsView.selectedStore}" />
 					<p:commandButton value="Inapoi la magazin nou"
-						actionListener="#{shopsView.onCancelEdit}" update="formPanel"
+						actionListener="#{shopsView.onCancelEdit}" update="formPanel buttonsPanel"
 						rendered="#{not empty shopsView.selectedStore}" />
 				</h:panelGrid>
 			</p:panel>

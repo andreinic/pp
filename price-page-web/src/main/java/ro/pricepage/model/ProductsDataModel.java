@@ -21,10 +21,6 @@ public class ProductsDataModel extends LazyDataModel<Product> implements Selecta
 
     private List<Product> products;
 
-    public void addProduct(Product product){
-        productsService.add(product);
-    }
-
     @Override
     public Object getRowKey(Product product) {
         return product.getName();

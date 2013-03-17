@@ -37,7 +37,7 @@ import ro.pricepage.persistence.indexing.CategoryBridge;
     @NamedQuery(name = Product.GET_PRODUCTS, query = "FROM Product"),
     @NamedQuery(name = Product.COUNT_PRODUCTS, query = "SELECT COUNT(p.id) FROM Product AS p"),
     @NamedQuery(name = Product.COUNT_PRODUCTS_FOR_CATEGORY, query = "SELECT COUNT(p.id) FROM Product AS p WHERE p.category.id = :catId"),
-    @NamedQuery(name = Product.GET_PRODUCTS_FOR_PARENT_CATEGORY, query = "FROM Product AS p WHERE p.category.id IN (SELECT pc.id FROM ProductCategory AS pc WHERE pc.parent.id = :parentId)")
+    @NamedQuery(name = Product.GET_PRODUCTS_FOR_PARENT_CATEGORY, query = "FROM Product AS p WHERE p.category.id IN (SELECT pc.id FROM ProductCategory AS pc WHERE pc.parent.id = :parentId)"),
 })
 @Analyzer(definition = "ngram")
 public class Product extends BaseEntity

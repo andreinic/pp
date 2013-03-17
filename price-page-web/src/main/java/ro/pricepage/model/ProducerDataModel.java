@@ -23,7 +23,8 @@ public class ProducerDataModel extends ListDataModel<Producer> implements Select
 
     @Override
     public Producer getRowData(String rowKey){
-        List<Producer> producers = (List<Producer>) getWrappedData();
+        @SuppressWarnings("unchecked")
+		List<Producer> producers = (List<Producer>) getWrappedData();
         if(rowKey != null && !rowKey.equals("null")){
             for(Producer producer : producers){
                 if(producer.getId().compareTo(Integer.valueOf(rowKey)) == 0){
