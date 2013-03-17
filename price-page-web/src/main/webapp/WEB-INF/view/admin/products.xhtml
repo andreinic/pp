@@ -7,8 +7,8 @@
 	template="/WEB-INF/view/admin/templates/adminPage.xhtml">
 	<ui:define name="title">Price Page Admin - Produse</ui:define>
 	<ui:define name="content">
-		<h:form id="mainForm" class="admin-item-details">
-			<p:accordionPanel id="accordion">
+		<h:form id="mainForm" class="admin-item-details" enctype="application/x-www-form-urlencoded" >
+			<p:accordionPanel id="accordionPnl">
 				<p:tab id="newProductPanel" title="Produs nou">
 					<h:panelGrid id="newProductForm" columns="3"
 						columnClasses="admin-grid-col1,admin-grid-col2,admin-grid-col3,admin-grid-col14"
@@ -42,13 +42,15 @@
 						<p:message for="newProductProducers" />
 
 						<h:outputText value="Cantitate: " />
-						<p:inputText id="newQuantity" value="#{productsView.newProductQuantity}">
+						<p:inputText id="newQuantity"
+							value="#{productsView.newProductQuantity}">
 							<f:validateDoubleRange />
 						</p:inputText>
 						<p:message for="newQuantity" />
 
 						<h:outputText value="UM: " />
-						<p:inputText id="newUm" value="#{productsView.newProductMeasureUnit}" />
+						<p:inputText id="newUm"
+							value="#{productsView.newProductMeasureUnit}" />
 						<p:message for="newUm" />
 
 						<h:outputText value="Description" />
@@ -97,13 +99,15 @@
 								<p:message for="editedProductProducers" />
 
 								<h:outputText value="Cantitate: " />
-								<p:inputText id="editedQuantity" value="#{productsView.editedProductQuantity}">
+								<p:inputText id="editedQuantity"
+									value="#{productsView.editedProductQuantity}">
 									<f:validateDoubleRange />
 								</p:inputText>
 								<p:message for="editedQuantity" />
 
 								<h:outputText value="UM: " />
-								<p:inputText id="editedUm" value="#{productsView.editedProductMeasureUnit}" />
+								<p:inputText id="editedUm"
+									value="#{productsView.editedProductMeasureUnit}" />
 								<p:message for="editedUm" />
 
 								<h:outputText value="Description" />
@@ -112,16 +116,90 @@
 								<h:outputText />
 
 								<p:commandButton value="Save" icon="ui-icon-disk"
-									actionListener="#{productsView.onUpdate}" process="@this @parent" update="@parent" />
+									actionListener="#{productsView.onUpdate}"
+									process="@this @parent" update="@parent" />
 							</h:panelGrid>
 						</p:tab>
 
 						<p:tab title="Preturi">
-
+							<p:dataTable id="pricesTable" value="#{productsView.pricesModel}"
+								lazy="true" var="price" paginator="true" rows="50"
+								paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+								editable="true">
+								<p:ajax event="rowEdit" listener="#{productsView.onPriceEdit}"
+									update="@this" />
+								<p:column headerText="Magazin">
+									<h:outputText value="#{price.store.name}" />
+								</p:column>
+								<p:column headerText="Pret">
+									<p:cellEditor>
+										<f:facet name="output">
+											<h:outputText value="#{price.price}" />
+										</f:facet>
+										<f:facet name="input">
+											<p:inputText value="#{price.price}" required="true" />
+										</f:facet>
+									</p:cellEditor>
+								</p:column>
+								<p:column headerText="Options">
+									<p:rowEditor />
+									<p:commandLink value="Delete" process="@this"
+										update="pricesTable" action="#{productsView.deletePrice}">
+										<f:setPropertyActionListener value="#{price}"
+											target="#{productsView.selectedPrice}" />
+									</p:commandLink>
+								</p:column>
+								<f:facet name="footer">
+									<p:selectOneMenu id="newPriceStore" label="Magazin"
+										value="#{productsView.newPriceStore}"
+										converter="allowedStoreConverter">
+										<f:selectItem itemLabel="Selecteaza magazin" />
+										<f:selectItems value="#{productsView.allowedStores}"
+											var="store" itemLabel="#{store.name}" itemValue="#{store}" />
+									</p:selectOneMenu>
+									<p:message for="newPriceStore" />
+									<p:inputText id="newPrice"
+										value="#{productsView.newPriceValue}">
+										<f:validateDoubleRange />
+									</p:inputText>
+									<p:message for="newPrice" />
+									<p:commandButton value="Adauga" update="pricesTable"
+										process="@this newPriceStore newPrice"
+										actionListener="#{productsView.addPrice}" />
+								</f:facet>
+							</p:dataTable>
 						</p:tab>
 
 						<p:tab title="Imagini">
-
+							<p:fileUpload fileUploadListener="#{productsView.handleFileUpload}" 
+								multiple="true" update="productGalleria"
+								mode="advanced" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+							<p:galleria id="productGalleria"
+								value="#{productsView.editedProductImages}" var="dto"
+								panelWidth="400" panelHeight="380">
+								<p:graphicImage value="/rest/file/get?path=#{dto.path}" />
+								<p:galleriaContent>
+									<h:panelGrid id="pg" cellpadding="5">
+										<f:facet name="header">
+											<p:graphicImage value="/rest/file/get?path=#{dto.path}"
+												width="348" height="255" />
+										</f:facet>
+										<h:outputText rendered="#{dto.head}" value="Imagine default" />
+										<p:commandButton rendered="#{not dto.head}"
+											value="Seteaza ca imagine default" process="@this"
+											update="productGalleria"
+											action="#{productsView.setDefaultImage}">
+											<f:setPropertyActionListener value="#{dto.path}"
+												target="#{productsView.selectedImagePath}" />
+										</p:commandButton>
+										<p:commandButton value="Sterge" process="@this"
+											update="productGalleria" action="#{productsView.deleteImage}">
+											<f:setPropertyActionListener value="#{dto.path}"
+												target="#{productsView.selectedImagePath}" />
+										</p:commandButton>
+									</h:panelGrid>
+								</p:galleriaContent>
+							</p:galleria>
 						</p:tab>
 					</p:tabView>
 				</p:tab>
@@ -130,9 +208,12 @@
 			<br />
 			<p:dataTable id="productsTable" value="#{productsView.productsModel}"
 				lazy="true" var="product" paginator="true" rows="20"
+				paginatorPosition="bottom"
 				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 				selectionMode="single" selection="#{productsView.selectedProduct}">
-				<p:ajax event="rowSelect" listener="#{productsView.onSelect}" update=":mainForm:accordion:tabView" process="@this"/>
+				<p:ajax event="rowSelect" process="@this"
+					update=":mainForm:accordionPnl:tabView:editedProductForm :mainForm:accordionPnl:tabView:pricesTable :mainForm:accordionPnl:tabView:productGalleria"
+					listener="#{productsView.onSelect}" />
 				<p:column headerText="Nume">
 					<h:outputText value="#{product.name}" />
 				</p:column>
@@ -141,6 +222,14 @@
 				</p:column>
 				<p:column headerText="Categorie">
 					<h:outputText value="#{product.category.name}" />
+				</p:column>
+				<p:column headerText="Optiuni">
+					<p:commandLink value="Delete" process="@this"
+						update="productsTable :mainForm:accordionPnl:tabView:editedProductForm :mainForm:accordionPnl:tabView:pricesTable :mainForm:accordionPnl:tabView:productGalleria"
+						action="#{productsView.onDelete}">
+						<f:setPropertyActionListener value="#{product}"
+							target="#{productsView.selectedProduct}" />
+					</p:commandLink>
 				</p:column>
 			</p:dataTable>
 		</h:form>

@@ -24,6 +24,11 @@ public class StoresService extends BaseService {
     @Inject
     @MySQLDatabase
 	private EntityManager em;
+    
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
+    public Store get(int id){
+    	return em.find(Store.class, Integer.valueOf(id));
+    }
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public Store saveStore(Store store){
@@ -101,6 +106,13 @@ public class StoresService extends BaseService {
 		TypedQuery<Store> q = em.createNamedQuery(Store.Q_FIND_ALL_BY_CHAIN_AND_CITY, Store.class)
 				.setParameter("chain", chain)
 				.setParameter("city", city);
+		return q.getResultList();
+	}
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<Store> findAllMissingStoresForProductId(int productId){
+		TypedQuery<Store> q = em.createNamedQuery(Store.Q_FIND_ALL_MISSING_STORES_FOR_PRODUCT_ID, Store.class);
+		q.setParameter("productId", Integer.valueOf(productId));
 		return q.getResultList();
 	}
 }

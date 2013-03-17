@@ -78,7 +78,7 @@
 				<version>2.3.5.Final</version>
 				<scope>provided</scope>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>org.jboss.resteasy</groupId>
 				<artifactId>resteasy-multipart-provider</artifactId>
@@ -208,6 +208,12 @@
 				<groupId>ro.pricepage</groupId>
 				<artifactId>price-page-service</artifactId>
 				<version>1.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-fileupload</groupId>
+				<artifactId>commons-fileupload</artifactId>
+				<version>1.2.2</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
