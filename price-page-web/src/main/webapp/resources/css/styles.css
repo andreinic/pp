@@ -804,6 +804,31 @@ nav ul{
 	font-style:italic;
 }
 
+.priceBig{
+	font-family:Droid, Arial, sans-serif;
+	font-size:36px;
+	margin-top:27px;
+	margin-left:15px;
+	float:left;
+	font-weight:bold;
+}
+.priceSmall{
+	float:left;
+	font-family:Droid, Arial, sans-serif;
+	font-weight:bold;
+	font-size:18px;
+	color:#000;
+	margin-top:32px;
+}
+.Plei{
+	float:right;
+	font-family:Droid, Arial, sans-serif;
+	font-weight:bold;
+	font-size:16px;
+	margin-right:24px;
+	margin-top:-7px;
+}
+
 .logo_mag{
 	float:right;
 	margin-top:29px;

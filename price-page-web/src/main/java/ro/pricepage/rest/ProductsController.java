@@ -50,12 +50,8 @@ public class ProductsController
 				dto.setPrice((Double)p[2]);
                 try{
                     dto.setImagesPaths(fileService.getImagePathsForProduct(((Integer)p[0]).intValue()));
-                    if(!dto.getImagesPaths().isEmpty()){
-                       dto.setImageData((byte[]) getProductImage(dto.getId(), dto.getImagesPaths().get(0)).getEntity());
-                    }
                 } catch (Exception e){
                     dto.setImagesPaths(null);
-                    dto.setImageData(null);
                 }
 				ret.add(dto);
 			}

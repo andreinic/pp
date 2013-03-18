@@ -20,8 +20,7 @@ public class ProductDTO implements Serializable
     private String name;
     private Double price;
     private List<String> imagesPaths;
-    private byte[] imageData;
-    
+
     public ProductDTO(){}
     
     public ProductDTO(Integer id, String name, List<ProductStore> allInstances, List<String> imagesPath){
@@ -73,14 +72,4 @@ public class ProductDTO implements Serializable
 	public void setImagesPaths(List<String> imagesPaths) {
 		this.imagesPaths = imagesPaths;
 	}
-
-    @XmlElementWrapper(name = "imageData")
-    @JsonSerialize(include = Inclusion.NON_NULL)
-    public byte[] getImageData() {
-        return imageData;
-    }
-
-    public void setImageData(byte[] imageData) {
-        this.imageData = imageData;
-    }
 }

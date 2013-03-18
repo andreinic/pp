@@ -1,5 +1,6 @@
 package ro.pricepage.rest;
 
+import org.omg.CORBA.PRIVATE_MEMBER;
 import ro.pricepage.json.dto.ProductDTO;
 import ro.pricepage.json.dto.StoreChainDTO;
 import ro.pricepage.json.dto.StoreDTO;
@@ -7,15 +8,19 @@ import ro.pricepage.json.dto.StoreTypeDTO;
 import ro.pricepage.persistence.entities.Store;
 import ro.pricepage.persistence.entities.StoreChain;
 import ro.pricepage.persistence.entities.StoreType;
+import ro.pricepage.service.FileService;
 import ro.pricepage.service.ProductsService;
 import ro.pricepage.service.StoresService;
 
 import javax.ejb.Stateless;
+import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,6 +34,9 @@ public class ShopsController
 
     @Inject
     private ProductsService productsService;
+
+    @Inject
+    private FileService fileService;
 
     @Path("/stores/{shopId}")
     @GET
@@ -64,7 +72,11 @@ public class ShopsController
                     pdto.setId((Integer)p[0]);
                     pdto.setName(p[1].toString());
                     pdto.setPrice((Double)p[2]);
-//				dto.setImagesPaths(fileService.getImagePathsForProduct(((Integer)p[0]).intValue()));
+                    try{
+                        pdto.setImagesPaths(fileService.getImagePathsForProduct(((Integer)p[0]).intValue()));
+                    } catch (Exception e){
+                        pdto.setImagesPaths(null);
+                    }
                     pdtos.add(pdto);
                 }
             }
