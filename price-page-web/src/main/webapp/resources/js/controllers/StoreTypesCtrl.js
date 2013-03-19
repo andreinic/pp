@@ -1,5 +1,8 @@
 'use strict'
 
-angular.module('pp').controller('StoreTypesCtrl', function StoreTypesCtrl($scope)){
-	
-}
+angular.module('price-page').controller('StoreTypesCtrl', function StoreTypesCtrl($scope, storeTypesService){
+    $scope.fetch = function(){
+        $scope.storeTypes = storeTypesService.getStoreTypes();
+    }
+    $scope.fetch();
+});

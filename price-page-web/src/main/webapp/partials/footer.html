@@ -3,20 +3,18 @@
     <nav class="footerCategContainer">
         <h1>Categories Sitemap</h1>
         <p class="footerTitle">Catalog Produse</p>
-        <ul>
-            <li><a href="#">Produse Alimentare</a></li>
-            <li><a href="#">Produse Non-alimentare</a></li>
+        <ul ng:controller="CategoryCtrl">
+            <li ng:repeat="category in categories"><a href="#">{{category.name}}</a></li>
+            <!--<li><a href="#">Produse Alimentare</a></li>-->
+            <!--<li><a href="#">Produse Non-alimentare</a></li>-->
         </ul>
         <p class="footerTitle">Producatori</p>
     </nav>
     <nav class="footerStoresContainer">
         <h1>Stores Sitemap</h1>
         <p class="footerTitle">Magazine</p>
-        <ul>
-            <li><a href="#">Hypermarketuri</a></li>
-            <li><a href="#">Cash and Carry</a></li>
-            <li><a href="#">Supermarket</a></li>
-            <li><a href="#">Mini market</a></li>
+        <ul ng:controller="StoreTypesCtrl">
+            <li ng:repeat="storeType in storeTypes"><a href="#">{{storeType.name}}</a></li>
         </ul>
     </nav>
     <nav class="footerAboutContainer">
@@ -32,7 +30,7 @@
         <p class="footerTitle">Colaboratori</p>
         <ul>
             <li><a href="#">Beneficii</a></li>
-            <li><a href="#">Inregistrare</a></li>
+            <!--<li><a href="#">Inregistrare</a></li>-->
         </ul>
     </nav>
     <nav class="footerLoginContainer">

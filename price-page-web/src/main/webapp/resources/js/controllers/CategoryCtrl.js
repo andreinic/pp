@@ -1,8 +1,8 @@
 'use strict';
 
-function CategoryCtrl($scope, $location, categoriesService){
+angular.module('price-page').controller('CategoryCtrl', function CategoryCtrl($scope, $location, categoriesService){
     $scope.fetch = function(){
-        $scope.categories = categoriesService.get();
+        $scope.categories = categoriesService.getCategories();
     }
     $scope.fetch();
 
@@ -48,4 +48,4 @@ function CategoryCtrl($scope, $location, categoriesService){
     // $scope.fetchForStoreType = function(storeTypeId){
     //     $location.path("/produse/tip-magazin/"+storeTypeId.toString());
     // }
-}
+});
