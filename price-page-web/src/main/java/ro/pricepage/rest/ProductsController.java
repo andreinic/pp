@@ -112,7 +112,7 @@ public class ProductsController
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getByStoreType(@QueryParam("storeTypeId") int storeTypeId,
+        public Response getByStoreType(@QueryParam("storeTypeId") int storeTypeId,
 			@QueryParam("start") int start,
 			@QueryParam("count") int count){
 		try{

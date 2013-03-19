@@ -84,62 +84,62 @@ angular.module("price-page", ['ngResource'])
                }
            };
        })
-       .factory('productsService', function($rootScope, $http){
-            var build = function(data){
-                var arr = [];
-//                for(var i = 0 ; i < data.length ; ++i){
-                for(var i = 0 ; i < 16 ; ++i){
-                    var product = {};
-                    var p = data[i];
-                    product.id = 1;
-                    product.name = "TEST";
-//                    var priceArr = p["price"].toString().split(".");
-//                    product.bigPrice = priceArr[0];
-//                    product.smallPrice = priceArr.length != 0 ? priceArr[1] : 0;
-                    product.bigPrice = "20";
-                    product.smallPrice = "14";
-                    product.imgPaths = p["imagesPaths"] ? p["imagesPaths"] : null;
-                    product.imgPath = p["imagesPaths"] ? p["imagesPaths"][0] : 'resources/images/client/no_image.jpg';
-                    arr.push(product);
-                }
-                return arr;
-            }
-            var productsService = {};
-            productsService.countForCateg = function(catId){
-                $http({
-                    url : 'rest/products/count',
-                    method : 'GET',
-                    params : {categoryId: catId}
-                }).success(function(data, status, headers, configs){
-                   return data;
-                }).error(function(data, status, headers, configs){
-                   alert('error retrieving products');
-                });
-            }
-            productsService.fetchForCateg = function(catId, s, c){
-                 $http({
-                     url : 'rest/products',
-                     method : 'GET',
-                     params : {categoryId: catId, start : s, count : c}
-                 }).success(function(data, status, headers, configs){
-                     $rootScope.$broadcast("productsFetched", build(data));
-                 }).error(function(data, status, headers, configs){
-                    $rootScope.$broadcast("productsFetched", build(data));
-                 });
-            }
-            productsService.fetchForStoreType = function(stId, s, c){
-                 $http({
-                     url : 'rest/products',
-                     method : 'GET',
-                     params : {storeTypeId: stId, start : s, count : c}
-                 }).success(function(data, status, headers, configs){
-                     $rootScope.$broadcast("productsFetched", build(data));
-                 }).error(function(data, status, headers, configs){
-                    $rootScope.$broadcast("productsFetched", build(data));
-                 });
-            }
-            return productsService;
-       })
+//       .factory('productsService', function($rootScope, $http){
+//            var build = function(data){
+//                var arr = [];
+////                for(var i = 0 ; i < data.length ; ++i){
+//                for(var i = 0 ; i < 16 ; ++i){
+//                    var product = {};
+//                    var p = data[i];
+//                    product.id = 1;
+//                    product.name = "TEST";
+////                    var priceArr = p["price"].toString().split(".");
+////                    product.bigPrice = priceArr[0];
+////                    product.smallPrice = priceArr.length != 0 ? priceArr[1] : 0;
+//                    product.bigPrice = "20";
+//                    product.smallPrice = "14";
+//                    product.imgPaths = p["imagesPaths"] ? p["imagesPaths"] : null;
+//                    product.imgPath = p["imagesPaths"] ? p["imagesPaths"][0] : 'resources/images/client/no_image.jpg';
+//                    arr.push(product);
+//                }
+//                return arr;
+//            }
+//            var productsService = {};
+//            productsService.countForCateg = function(catId){
+//                $http({
+//                    url : 'rest/products/count',
+//                    method : 'GET',
+//                    params : {categoryId: catId}
+//                }).success(function(data, status, headers, configs){
+//                   return data;
+//                }).error(function(data, status, headers, configs){
+//                   alert('error retrieving products');
+//                });
+//            }
+//            productsService.fetchForCateg = function(catId, s, c){
+//                 $http({
+//                     url : 'rest/products',
+//                     method : 'GET',
+//                     params : {categoryId: catId, start : s, count : c}
+//                 }).success(function(data, status, headers, configs){
+//                     $rootScope.$broadcast("productsFetched", build(data));
+//                 }).error(function(data, status, headers, configs){
+//                    $rootScope.$broadcast("productsFetched", build(data));
+//                 });
+//            }
+//            productsService.fetchForStoreType = function(stId, s, c){
+//                 $http({
+//                     url : 'rest/products',
+//                     method : 'GET',
+//                     params : {storeTypeId: stId, start : s, count : c}
+//                 }).success(function(data, status, headers, configs){
+//                     $rootScope.$broadcast("productsFetched", build(data));
+//                 }).error(function(data, status, headers, configs){
+//                    $rootScope.$broadcast("productsFetched", build(data));
+//                 });
+//            }
+//            return productsService;
+//       })
     .run(function($rootScope, $location){
             var BrowserDetect = {
                 init: function () {

@@ -4,7 +4,7 @@
         <h1>Categories Sitemap</h1>
         <p class="footerTitle">Catalog Produse</p>
         <ul ng:controller="CategoryCtrl">
-            <li ng:repeat="category in categories"><a href="#">{{category.name}}</a></li>
+            <li ng:repeat="category in categories"><a ng:click='toProducts(category.id)'>{{category.name}}</a></li>
             <!--<li><a href="#">Produse Alimentare</a></li>-->
             <!--<li><a href="#">Produse Non-alimentare</a></li>-->
         </ul>
@@ -14,7 +14,7 @@
         <h1>Stores Sitemap</h1>
         <p class="footerTitle">Magazine</p>
         <ul ng:controller="StoreTypesCtrl">
-            <li ng:repeat="storeType in storeTypes"><a href="#">{{storeType.name}}</a></li>
+            <li ng:repeat="storeType in storeTypes"><a ng:click='toProducts(storeType.id)'>{{storeType.name}}</a></li>
         </ul>
     </nav>
     <nav class="footerAboutContainer">

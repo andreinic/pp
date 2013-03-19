@@ -1,5 +1,12 @@
 'use strict';
 
 angular.module('price-page').service('productsService', function($resource){
-	this.products = $resource('rest/products');
+    return {
+        getProductsByCateg : function(cid, s, c){
+            return $resource('rest/products/category/get', {categoryId : cid, start : s, count : c});
+        },
+        getProductsByStoreType : function(sid, s, c){
+            return $resource('rest/products/category/get', {storeTypeId : sid, start : s, count : c});
+        }
+    }
 });

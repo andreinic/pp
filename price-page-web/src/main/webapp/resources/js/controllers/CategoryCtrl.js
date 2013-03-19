@@ -4,6 +4,9 @@ angular.module('price-page').controller('CategoryCtrl', function CategoryCtrl($s
     $scope.fetch = function(){
         $scope.categories = categoriesService.getCategories();
     }
+    $scope.toProducts = function(catId){
+       $location.path("/produse/categorie/"+catId.toString());
+    }
     $scope.fetch();
 
     // $scope.fetch = function(){
