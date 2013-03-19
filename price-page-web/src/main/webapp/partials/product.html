@@ -1,8 +1,7 @@
 <div class="prodImg" ng-click="toDetail(product.id)">
-    <img ng:show='product.headImagePath' src="product.headImagePath" alt="prod_alt" class="prod_ex">
-    <img ng:hide='product.headImagePath' src='resources/images/client/no_image.jpg' alt="prod_alt" class="prod_ex">
+    <img src="product.imgPath" alt="prod_alt" class="prod_ex">
     <p class="prodtTitle">{{product.name}}</p>
     <p class="prodStart">Preturi incepand de la</p>
-    <p class="prodPrice" ng-show="product.smallPrice">{{product.bigPrice}},<sup class="produtPriceUpper">{{product.smallPrice}}</sup><sub class="produtPriceLower">lei</sub></p>
+    <p class="prodPrice" ng-show="product.smallPrice">{{product.bigPrice}},<sup class="productPriceUpper">{{product.smallPrice}}</sup><sub class="productPriceLower">lei</sub></p>
     <p class="prodPrice" ng-hide="product.smallPrice">{{product.bigPrice}} lei</p>
 </div>

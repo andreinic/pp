@@ -4,13 +4,29 @@ function ProductsCtrl($scope, $location, $routeParams, $http, productsService){
     $scope.toDetail = function(productId){
         $location.path("/produs/"+productId.toString());
     }
+    var makeProducts = function(data){
+        var products = [];
+        for(var i = 0 ; i < data.length ; ++i){
+            var product = {};
+            var p = data[i];
+            product.id = p["id"];
+            product.name = p["name"];
+            var priceArr = p["price"].toString().split(".");
+            product.bigPrice = priceArr[0];
+            product.smallPrice = priceArr.length != 0 ? priceArr[1] : 0;
+            product.imgPaths = p["imagesPaths"] ? p["imagesPaths"] : null;
+            product.imgPath = p["headImagePath"] ? p["headImagePath"] : 'resources/images/client/no_image.jpg';
+            products.push(product);
+        }
+        return products;
+    }
     if($routeParams.catId){
         productsService.getProductsByCateg($routeParams.catId, 0, 16).query(function(result, responseHeaders){
-            $scope.products = result;
+            $scope.products = makeProducts(result);
         });
     } else if($routeParams.shopId){
-       productsService.getProductsByCateg($routeParams.shopId, 0, 16).query(function(result, responseHeaders){
-           $scope.products = result;
+       productsService.getProductsByStoreType($routeParams.shopId, 0, 16).query(function(result, responseHeaders){
+           $scope.products = makeProducts(result);
        });
     }
 //    $scope.start = 0;
