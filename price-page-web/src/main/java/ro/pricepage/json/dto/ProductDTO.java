@@ -19,11 +19,12 @@ public class ProductDTO implements Serializable
     private Integer id;
     private String name;
     private Double price;
+    private String headImagePath;
     private List<String> imagesPaths;
 
     public ProductDTO(){}
     
-    public ProductDTO(Integer id, String name, List<ProductStore> allInstances, List<String> imagesPath){
+    public ProductDTO(Integer id, String name, List<ProductStore> allInstances, String headImagePath, List<String> imagesPath){
     	this.id = id;
     	this.name = name;
     	this.price = null;
@@ -33,6 +34,7 @@ public class ProductDTO implements Serializable
     			this.price = Double.valueOf(instPrice.doubleValue());
     		}
     	}
+    	this.headImagePath = headImagePath;
     	this.imagesPaths = imagesPath;
     }
 
@@ -71,5 +73,15 @@ public class ProductDTO implements Serializable
 
 	public void setImagesPaths(List<String> imagesPaths) {
 		this.imagesPaths = imagesPaths;
+	}
+
+	@XmlElement(name = "headImagePath")
+    @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+	public String getHeadImagePath() {
+		return headImagePath;
+	}
+
+	public void setHeadImagePath(String headImagePath) {
+		this.headImagePath = headImagePath;
 	}
 }
