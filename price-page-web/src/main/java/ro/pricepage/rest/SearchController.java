@@ -52,7 +52,7 @@ public class SearchController {
             	String stringId = doc.get(ProductIndexField.ID.getPath());
             	int id = Integer.parseInt(stringId);
             	List<ProductStore> instances = productsService.getAllInstancesForProduct(id);
-            	ProductDTO dto = new ProductDTO(Integer.valueOf(id), doc.get(ProductIndexField.NAME.getPath()), instances, fileService.getImagePathsForProduct(id));
+            	ProductDTO dto = new ProductDTO(Integer.valueOf(id), doc.get(ProductIndexField.NAME.getPath()), instances, fileService.getImagePathForProductHead(id), fileService.getImagePathsForProduct(id));
             	dtos.add(dto);
             }
             GenericEntity<List<ProductDTO>> entity = new GenericEntity<List<ProductDTO>>(dtos, List.class);

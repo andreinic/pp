@@ -46,15 +46,37 @@ public class ProductsService extends BaseService
 		return (Long) q.getSingleResult();
 	}
 
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<Object[]> getAggregatedProducts(int start, int end){
 		return em.createQuery("SELECT p.id, p.name, MIN(ps.price) FROM ProductStore ps JOIN ps.product p GROUP BY ps.price", Object[].class).setMaxResults(end - start).setFirstResult(start).getResultList();
 	}
 
-	//TODO Need to handle n-level depth. currently only 2 levels of categories are being queried.
+	@SuppressWarnings("unchecked")
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<Object[]> getAggregatedProductsByCateg(int categoryId, int start, int end){
-		return em.createQuery("SELECT p.id, p.name, MIN(ps.price) FROM ProductStore ps JOIN ps.product p WHERE p.category.id IN(SELECT c.id FROM ProductCategory c WHERE c.parent.id =:categId) GROUP BY ps.price", Object[].class).setParameter("categId", categoryId).setMaxResults(end - start).setFirstResult(start).getResultList();
+		StringBuilder sb = new StringBuilder("SELECT p.id, MIN(p.name), MIN(ps.price) ");
+		sb.append("FROM products_stores ps ");
+		sb.append("INNER JOIN products p ");
+		sb.append("ON ps.fk_product = p.id ");
+		sb.append("WHERE p.id IN ");
+		sb.append("(SELECT id ");
+		sb.append("FROM products ");
+		sb.append("WHERE fk_category = ");
+		sb.append(categoryId);
+		sb.append(" OR fk_category IN ");
+		sb.append("(SELECT fk_child ");
+		sb.append("FROM product_categories_hierarchy ");
+		sb.append("WHERE fk_ancestor = ");
+		sb.append(categoryId);
+		sb.append(") ");
+		sb.append(") GROUP BY p.id");
+		Query q = em.createNativeQuery(sb.toString());
+		q.setFirstResult(start);
+		q.setMaxResults(end - start);
+		return q.getResultList();
 	}
 
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<Object[]> getAggregatedProductsByStoreType(int storeTypeId, int start, int end){
 		return em.createQuery("SELECT p.id, p.name, MIN(ps.price) " +
 				"FROM ProductStore ps " +
@@ -67,7 +89,8 @@ public class ProductsService extends BaseService
 	}
 
 
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    @SuppressWarnings("unchecked")
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public List<Object[]> getAggregatedProductsByStoreChain(int storeChainId, int start, int end){
         return em.createQuery("SELECT p.id, p.name, MIN(ps.price) FROM ProductStore ps JOIN ps.product p WHERE ps.store.id IN (SELECT s.id FROM Store s WHERE s.chain.id = :storeChainId)")
                 .setParameter("storeChainId", storeChainId)

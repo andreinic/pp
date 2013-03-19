@@ -1,0 +1,271 @@
+-- MySQL dump 10.13  Distrib 5.5.28, for Win32 (x86)
+--
+-- Host: localhost    Database: pp
+-- ------------------------------------------------------
+-- Server version	5.5.28
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `locations`
+--
+
+DROP TABLE IF EXISTS `locations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `locations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `city` varchar(50) NOT NULL,
+  `county` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3136 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `producers`
+--
+
+DROP TABLE IF EXISTS `producers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `producers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `country` varchar(50) DEFAULT NULL,
+  `city` varchar(50) DEFAULT NULL,
+  `street` varchar(50) DEFAULT NULL,
+  `building` varchar(20) DEFAULT NULL,
+  `zip` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `product_categories`
+--
+
+DROP TABLE IF EXISTS `product_categories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `product_categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_parent` int(11) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `description` text,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `FK_product_categories_fk_product_categories_parent_idx` (`fk_parent`),
+  CONSTRAINT `FK_product_categories_fk_product_categories_parent` FOREIGN KEY (`fk_parent`) REFERENCES `product_categories` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `pp`.`after_category_insert`
+AFTER INSERT ON `pp`.`product_categories`
+FOR EACH ROW
+BEGIN
+	CALL `pp`.`build_hierarchy_for_category`(NEW.id);
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `product_categories_hierarchy`
+--
+
+DROP TABLE IF EXISTS `product_categories_hierarchy`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `product_categories_hierarchy` (
+  `fk_child` int(11) NOT NULL,
+  `fk_ancestor` int(11) NOT NULL,
+  KEY `fk_category_child_idx` (`fk_child`),
+  KEY `fk_category_ancestor_idx` (`fk_ancestor`),
+  CONSTRAINT `fk_category_child` FOREIGN KEY (`fk_child`) REFERENCES `product_categories` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `fk_category_ancestor` FOREIGN KEY (`fk_ancestor`) REFERENCES `product_categories` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `products`
+--
+
+DROP TABLE IF EXISTS `products`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `products` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_category` int(11) DEFAULT NULL,
+  `fk_producer` int(11) DEFAULT NULL,
+  `quantity` decimal(14,2) DEFAULT NULL,
+  `unit` varchar(15) DEFAULT NULL,
+  `description` text,
+  `name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `FK_products_fk_category_idx` (`fk_category`),
+  KEY `FK_products_fk_producer_idx` (`fk_producer`),
+  CONSTRAINT `FK_products_fk_category` FOREIGN KEY (`fk_category`) REFERENCES `product_categories` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_products_fk_producer` FOREIGN KEY (`fk_producer`) REFERENCES `producers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `products_stores`
+--
+
+DROP TABLE IF EXISTS `products_stores`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `products_stores` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_product` int(11) NOT NULL,
+  `fk_store` int(11) NOT NULL,
+  `price` decimal(14,2) NOT NULL,
+  `discount` decimal(14,2) DEFAULT NULL,
+  `url` text,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `FK_product_stores_fk_product_idx` (`fk_product`),
+  KEY `FK_product_stores_fk_store_idx` (`fk_store`),
+  CONSTRAINT `FK_product_stores_fk_product` FOREIGN KEY (`fk_product`) REFERENCES `products` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_product_stores_fk_store` FOREIGN KEY (`fk_store`) REFERENCES `stores` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `promos`
+--
+
+DROP TABLE IF EXISTS `promos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `promos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `description` text,
+  `startDate` timestamp NULL DEFAULT NULL,
+  `endDate` timestamp NULL DEFAULT NULL,
+  `fk_price` int(11) NOT NULL,
+  `price` decimal(14,2) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `FK_promos_fk_store_idx` (`fk_price`),
+  CONSTRAINT `FK_promos_fk_product_store` FOREIGN KEY (`fk_price`) REFERENCES `products_stores` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `store_chains`
+--
+
+DROP TABLE IF EXISTS `store_chains`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `store_chains` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `store_types`
+--
+
+DROP TABLE IF EXISTS `store_types`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `store_types` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `stores`
+--
+
+DROP TABLE IF EXISTS `stores`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stores` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `zip` varchar(20) DEFAULT NULL,
+  `details` text,
+  `longitude` decimal(14,10) DEFAULT NULL,
+  `latitude` decimal(14,10) DEFAULT NULL,
+  `fk_storeType` int(11) DEFAULT NULL,
+  `contact` text,
+  `fk_chain` int(11) DEFAULT NULL,
+  `address` text,
+  `fk_location` int(11) DEFAULT NULL,
+  `url` text,
+  `name` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `name_UNIQUE` (`name`),
+  KEY `FK_store_fk_type_idx` (`fk_storeType`),
+  KEY `FK_store_fk_locality_idx` (`fk_location`),
+  KEY `FK_store_fk_chain` (`fk_chain`),
+  CONSTRAINT `FK_store_fk_chain` FOREIGN KEY (`fk_chain`) REFERENCES `store_chains` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_store_fk_locality` FOREIGN KEY (`fk_location`) REFERENCES `locations` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_store_fk_type` FOREIGN KEY (`fk_storeType`) REFERENCES `store_types` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `password` varchar(64) NOT NULL,
+  `role` varchar(10) NOT NULL,
+  `oauth_provider` varchar(100) DEFAULT NULL,
+  `oauth_uid` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `username_UNIQUE` (`username`),
+  UNIQUE KEY `oauth_provider_UNIQUE` (`oauth_provider`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2013-03-19  1:58:04
