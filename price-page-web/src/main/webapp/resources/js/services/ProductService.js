@@ -7,6 +7,9 @@ angular.module('price-page').service('productsService', function($resource){
         },
         getProductsByStoreType : function(sid, s, c){
             return $resource('rest/products/category/get', {storeTypeId : sid, start : s, count : c});
+        },
+        search : function(q, s, c){
+            return $resource('rest/search/text', {q : q, start : s, count : c})
         }
     }
 });

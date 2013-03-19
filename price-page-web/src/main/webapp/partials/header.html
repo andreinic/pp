@@ -9,17 +9,17 @@
     <!--<div class="h_menu_right"><a opendialog role="button">Contul Meu</a></div>-->
     <!--<div class="h_menu_right"><a data-toggle="modal" href="#authModal">Contul Meu</a></div>-->
 </nav>
-<section id="header" ng-controller="SearchCtrl">
+<section id="header" ng:controller="SearchCtrl">
     <h1>Page Header</h1>
     <a class="logo" href="#/"><img src="resources/images/client/logo.png"/></a>
     <img src="resources/images/client/cauta_head.png" class="cauta_img" />
     <div id="search_field">
-        <form ng-submit="search()">
-            <input type="text" id="search" name="search" class="search_field" ng-model="queryString"/>
+        <form ng:submit="search()">
+            <input type="text" id="search" name="search" class="search_field" ng:model="queryString"/>
             <button type="submit" class="search_btn"><img src="resources/images/client/search.jpg" title="Search" /></button>
         </form>
     </div>
 </section>
 
-<div id="authModal" class="modal hide fade" style="display:none;" ng-controller="UserCtrl" ng-include="'partials/auth.html'">
+<div id="authModal" class="modal hide fade" style="display:none;" ng:controller="UserCtrl" ng-include="'partials/auth.html'">
 </div>

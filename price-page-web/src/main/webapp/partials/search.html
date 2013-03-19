@@ -2,10 +2,10 @@
 	<header> <h1>Page Content</h1> </header>
 	<div class="col1"><!--col1 starts here-->	
 		<div id="prod_container"><!--prod_container here-->
-			<section>
+			<section ng:controller="SearchResultsCtrl">
 				<h1>Promotii</h1>
 				<div id="title"><!-- title starts here-->
-					<p>Rezultate cautare</p>
+					<p>Rezultate cautare: {{queryString}}</p>
 				</div><!-- title ends here-->
 				<div id="produse"><!-- produse starts here-->
                     <div class="prod" ng-repeat="product in products" ng-include="'partials/product.html'">

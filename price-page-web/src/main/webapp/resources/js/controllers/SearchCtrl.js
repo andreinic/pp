@@ -1,20 +1,20 @@
 'use strict'
 
-function SearchCtrl($scope, $location, $http){
+angular.module('price-page').controller('SearchCtrl', function SearchCtrl($scope, $location){
     $scope.search = function(){
         if($scope.queryString){
-            $http({
-                url : 'rest/search/text',
-                method : "GET",
-                params : {q : $scope.queryString, start : 0, count : 5}
-            }).success(function(data, status, headers, configs){
-                $scope.products = data;
-            }).error(function(data, status, headers, configs){
-                //todo - handle error.
-                window.alert('error during search');
-            });
-            $location.path("/cauta");
+            var q = $scope.queryString;
             $scope.queryString = "";
+            $location.path("/cauta?q="+q);
         }
     }
-}
+})
+
+angular.module('price-page').controller('SearchResultsCtrl', function SearchResultsCtrl($scope, $routeParams, productsService){
+    $scope.queryString = $routeParams.q
+    if($scope.queryString){
+        productsService.search($routeParams.q, 0, 16).query(function(result, responseHeaders){
+            $scope.products = result;
+        });
+    }
+});
