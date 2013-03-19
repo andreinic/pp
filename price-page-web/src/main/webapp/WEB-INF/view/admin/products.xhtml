@@ -181,8 +181,7 @@
 								<p:galleriaContent>
 									<h:panelGrid id="pg" cellpadding="5">
 										<f:facet name="header">
-											<p:graphicImage value="/rest/file/get?path=#{dto.path}"
-												width="348" height="255" />
+											<p:graphicImage value="/rest/file/get?path=#{dto.path}" />
 										</f:facet>
 										<h:outputText rendered="#{dto.head}" value="Imagine default" />
 										<p:commandButton rendered="#{not dto.head}"

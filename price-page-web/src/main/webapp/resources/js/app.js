@@ -83,7 +83,8 @@ angular.module("price-page", ['ngResource'])
                    });
                }
            };
-       }).factory('productsService', function($rootScope, $http){
+       })
+       .factory('productsService', function($rootScope, $http){
             var build = function(data){
                 var arr = [];
 //                for(var i = 0 ; i < data.length ; ++i){
@@ -138,7 +139,8 @@ angular.module("price-page", ['ngResource'])
                  });
             }
             return productsService;
-       }).run(function($rootScope, $location){
+       })
+    .run(function($rootScope, $location){
             var BrowserDetect = {
                 init: function () {
                     this.browser = this.searchString(this.dataBrowser) || "An unknown browser";
