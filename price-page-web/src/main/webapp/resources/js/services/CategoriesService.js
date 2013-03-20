@@ -1,12 +1,16 @@
 'use strict';
 
 angular.module('price-page').service('categoriesService', function($resource){
-    var resource = $resource('rest/categories');
+//    var resource = $resource('rest/categories');
     var data;
+    var c;
     var categories = function(){
-        data = resource.query();
+        data = $resource('rest/categories').query();
         return data;
     };
+    var category = function(){
+        return $resource('rest/categories/:categId', {categId : '@id'});
+    }
     return {
         getCategories : function(){
             if(data){
@@ -14,6 +18,9 @@ angular.module('price-page').service('categoriesService', function($resource){
             } else {
                 return categories();
             }
+        },
+        getCategory : function(){
+            return category();
         }
     }
 });

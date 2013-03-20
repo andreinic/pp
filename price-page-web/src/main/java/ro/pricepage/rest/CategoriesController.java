@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
@@ -45,6 +46,21 @@ public class CategoriesController
                 return Response.status(Response.Status.NO_CONTENT).build();
             }
             return Response.status(Response.Status.OK).entity(new GenericEntity<>(ret, List.class)).build();
+        } catch (Exception e){
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+        }
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{categoryId}")
+    public Response getCategory(@PathParam("categoryId") Integer categoryId){
+        try{
+            ProductCategory pc = categoriesService.getById(categoryId);
+            CategoryDTO dto = new CategoryDTO();
+            dto.setId(pc.getId());
+            dto.setName(pc.getName());
+            return Response.status(Response.Status.OK).entity(new GenericEntity<>(dto, CategoryDTO.class)).build();
         } catch (Exception e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }

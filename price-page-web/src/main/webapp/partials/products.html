@@ -2,8 +2,9 @@
     <div class="colleft"><!--colleft starts here-->
         <header> <h1>Page Content</h1> </header>
         <div class="col1"><!--col1 starts here-->
+            <ng:include src="'partials/breadcrumb.html'"></ng:include>
             <!--<div id="breadcrumb">&lt;!&ndash; bredcrumb starts here&ndash;&gt;-->
-                <!--<ul class="breadcrumb">-->
+                <!--<ul class="bread-crumb">-->
                     <!--<li><a href="#">Acasa</a></li>-->
                     <!--<li><a href="#">Magazine</a></li>-->
                     <!--<li><a href="#">Hypermaketuri</a></li>-->
@@ -11,9 +12,9 @@
                     <!--<li><a href="#">Vezi toate produsele</a></li>-->
                 <!--</ul>-->
             <!--</div>&lt;!&ndash; breadcrumb ends here&ndash;&gt;-->
-            <div id="magazin_titlu_all">
-                <h1>Hypermarket Real</h1>
-            </div>
+            <!--<div id="magazin_titlu_all">-->
+                <!--<h1>Hypermarket Real</h1>-->
+            <!--</div>-->
             <div id="prod_container" ng:controller="ProductsCtrl"><!--prod_container here-->
                 <section ng:show="products">
                     <!--<h1>Promotii</h1>-->

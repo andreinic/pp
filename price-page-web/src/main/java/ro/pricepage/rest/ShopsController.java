@@ -108,4 +108,15 @@ public class ShopsController
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
     }
+
+    @Path("/store/types/{typeId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getShopType(@PathParam("typeId") Integer typeId){
+        try{
+            return null;
+        } catch (Exception e){
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+        }
+    }
 }

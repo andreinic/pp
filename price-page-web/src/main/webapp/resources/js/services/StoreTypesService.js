@@ -7,6 +7,9 @@ angular.module('price-page').service('storeTypesService', function($resource){
         data = resource.query();
         return data;
     };
+    var storeType : function(){
+        return $resource('rest/store-chain/stores/types/:storeTypeId', {storeTypeId : '@id'});
+    }
     return {
         getStoreTypes : function(){
             if(data){

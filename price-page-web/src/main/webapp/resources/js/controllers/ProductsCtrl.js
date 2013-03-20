@@ -1,6 +1,6 @@
 'use strict';
 
-function ProductsCtrl($scope, $location, $routeParams, $http, productsService){
+function ProductsCtrl($rootScope, $scope, $location, $routeParams, productsService, categoriesService, storeTypesService){
     $scope.toDetail = function(productId){
         $location.path("/produs/"+productId.toString());
     }
@@ -21,10 +21,17 @@ function ProductsCtrl($scope, $location, $routeParams, $http, productsService){
         return products;
     }
     if($routeParams.catId){
+        categoriesService.getCategory().get({categId : $routeParams.catId}, function(result, responseHeaders){
+            var categ = result;
+            $rootScope.$broadcast('breadcrumb-set', [{url : "/", name : "Acasa"}, {url : "/produse/categorie/"+categ.id.toString(), name : categ.name}])
+        });
         productsService.getProductsByCateg($routeParams.catId, 0, 16).query(function(result, responseHeaders){
             $scope.products = makeProducts(result);
         });
     } else if($routeParams.shopId){
+//       storeTypesService.getStoreType().get({storeTypeId : $routeParams.shopId}, function(result, responseHeaders){
+//            $rootScope.$broadcast('breadcrumb-set', [{url : "/", name : "Acasa"}, {url : "/produse/tip-magazin/"+result.id.toString(), name : result.name}])
+//       });
        productsService.getProductsByStoreType($routeParams.shopId, 0, 16).query(function(result, responseHeaders){
            $scope.products = makeProducts(result);
        });

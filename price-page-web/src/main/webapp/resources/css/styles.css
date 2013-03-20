@@ -1029,13 +1029,14 @@ nav ul{
 	border-right:1px solid #d5cbd9;
 	border-bottom:1px solid #d5cbd9;
 }
-.breadcrumb{
+.bread-crumb{
 	list-style: none;
 	overflow: hidden;
 	font-size:14px;
 	font-family:'DroidSans', Arial, sans-serif;
+	margin : 0;
 }
-.breadcrumb li {
+.bread-crumb li {
 	float: left;
     padding-right:20px;
     background-image:url("../images/client/log_arrow.png");
@@ -1043,12 +1044,12 @@ nav ul{
     background-position:center right;
     background-size:7px 13px;
 }
-.breadcrumb li:last-child{
+.bread-crumb li:last-child{
 	float: left;
 	padding-right:20px;
 	background:#fff;
 }
-.breadcrumb li a {
+.bread-crumb li a {
 	text-decoration: none;
 	padding-left:15px;
 	padding-top:7px;
