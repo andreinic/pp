@@ -263,6 +263,7 @@ angular.module("price-page", ['ngResource'])
                 $location.path("/browser-incompatibil")
             }
 
+            /* google maps part */
             var mapOptions = {
                 zoom : 12,
                 center : new google.maps.LatLng(45.661327, 25.610161),

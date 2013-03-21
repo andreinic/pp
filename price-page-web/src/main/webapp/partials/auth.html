@@ -1,4 +1,4 @@
-<div class="modal-body {{!auth && 'wrap_auth' || 'wrap_cr'}}" ng-controller="UserCtrl"><!--wrap_cr-->
+<div class="modal-body {{!auth && 'wrap_auth' || 'wrap_cr'}}"><!--wrap_cr-->
     <header>
         <h1>Navigation Header</h1>
         <div class="head_auth">
@@ -19,7 +19,7 @@
         <div id="reg"><!--inreg starts here-->
             <p>{{auth && 'Inregistreaza-te cu:' || 'Autentificare cu:'}}</p>
             <div id="social">
-                <a href="#"><img src="resources/images/client/auth-face.jpg" alt="facebook auth"/></a>
+                <a ng:click="fbLogin()"><img src="resources/images/client/auth-face.jpg" alt="facebook auth"/></a>
             </div>
             <form ng-hide="auth" class="contact_form" action="" method="post" name="contact_form">
                 <ul>

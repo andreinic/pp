@@ -24,6 +24,25 @@
                 <footer id="footer" ng-include="'partials/footer.html'"></footer>
             </div><!--wrapper ends here-->
         </div><!--wrap ends here-->
+        <script type="text/javascript">
+            window.fbAsyncInit = function() {
+                FB.init({
+                appId      : '610339092325066', // App ID
+                channelUrl : '//localhost/channel.html', // Channel File
+                status     : true, // check login status
+                cookie     : true, // enable cookies to allow the server to access the session
+                xfbml      : true  // parse XFBML
+                });
+            };
+
+            (function(d){
+                var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+                if (d.getElementById(id)) {return;}
+                js = d.createElement('script'); js.id = id; js.async = true;
+                js.src = "//connect.facebook.net/en_US/all.js";
+                ref.parentNode.insertBefore(js, ref);
+            }(document));
+        </script>
         <script src="http://maps.googleapis.com/maps/api/js?sensor=false&language=en" type="text/javascript"></script>
         
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -47,5 +66,6 @@
         <script src="resources/js/services/CategoriesService.js" type="text/javascript"></script>
         <script src="resources/js/services/StoreTypesService.js" type="text/javascript"></script>
         <script src="resources/js/services/ProductService.js" type="text/javascript"></script>
+        <script src="resources/js/services/userService.js" type="text/javascript"></script>
     </body>
 </html>

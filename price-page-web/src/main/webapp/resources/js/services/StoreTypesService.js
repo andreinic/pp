@@ -6,8 +6,8 @@ angular.module('price-page').service('storeTypesService', function($resource){
     var storeTypes = function(){
         data = resource.query();
         return data;
-    };
-    var storeType : function(){
+    }
+    var storeType = function(){
         return $resource('rest/store-chain/stores/types/:storeTypeId', {storeTypeId : '@id'});
     }
     return {
