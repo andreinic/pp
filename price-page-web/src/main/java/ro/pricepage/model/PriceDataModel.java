@@ -16,7 +16,7 @@ import ro.pricepage.view.ProductsView;
 
 @Named("priceDataModel")
 @ViewScoped
-public class PriceDataModel extends LazyDataModel<ProductStore> {
+public class PriceDataModel extends LazyDataModel<ProductStore>{
 
 	@Inject
 	private ProductsView productsView;
@@ -25,14 +25,31 @@ public class PriceDataModel extends LazyDataModel<ProductStore> {
 	private ProductsService productsService;
 	
 	private static final long serialVersionUID = -4014046030504461916L;
+	
+	private List<ProductStore> prices;
 
+    @Override
+    public Object getRowKey(ProductStore price) {
+        return price.getId();
+    }
+
+    @Override
+    public ProductStore getRowData(String rowKey) {
+        for(ProductStore price : prices){
+            if(price.getId().toString().equals(rowKey)){
+                return price;
+            }
+        }
+        return null;
+    }
+    
 	@Override
 	public List<ProductStore> load(int first, int pageSize, String sortField,
 			SortOrder sortOrder, Map<String, String> filters) {
 		if(productsView.getSelectedProduct() == null){
 			return null;
 		}
-		List<ProductStore> prices = productsService.getInstancesForProduct(productsView.getSelectedProduct().getId().intValue(), first, first + pageSize);
+		prices = productsService.getInstancesForProduct(productsView.getSelectedProduct().getId().intValue(), first, first + pageSize);
 		setPageSize(pageSize);
 		setRowCount(productsService.countInstancesForProduct(productsView.getSelectedProduct().getId().intValue()).intValue());
 		return prices;

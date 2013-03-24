@@ -1,7 +1,6 @@
 package ro.pricepage.converters;
 
-import ro.pricepage.persistence.entities.Producer;
-import ro.pricepage.service.ProducersService;
+import java.io.Serializable;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
@@ -10,7 +9,9 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.naming.Context;
 import javax.naming.InitialContext;
-import java.io.Serializable;
+
+import ro.pricepage.persistence.entities.Producer;
+import ro.pricepage.service.ProducersService;
 
 @FacesConverter(forClass = Producer.class, value = "producerConverter")
 @RequestScoped

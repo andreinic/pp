@@ -124,7 +124,7 @@ public class Product extends BaseEntity
         this.description = description;
     }
 
-    @OneToMany(mappedBy = "product", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     @ContainedIn
     public Set<ProductStore> getStoreInstances() {
 		return storeInstances;

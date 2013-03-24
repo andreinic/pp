@@ -10,7 +10,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.jcr.LoginException;
 import javax.jcr.PathNotFoundException;
 import javax.jcr.RepositoryException;
 
@@ -56,10 +55,10 @@ public class ProductsView implements Serializable {
 	private ProductsService productsService;
 
 	@Inject
-	private StoresService storesService;
-
-	@Inject
 	private FileService fileService;
+	
+	@Inject
+	private StoresService storesService;
 
 	@Inject
 	private PriceDataModel pricesModel;
@@ -81,14 +80,16 @@ public class ProductsView implements Serializable {
 
 	private Store newPriceStore;
 	private String newPriceValue;
-	private List<Store> allowedStores;
 
 	private String selectedImagePath;
 	private ProductStore selectedPrice;
+	
+	private List<Store> allStores;
 
 	@PostConstruct
 	public void init() {
 		categories = categoriesService.list();
+		allStores = storesService.findAll();
 	}
 
 	// Actions
@@ -118,7 +119,6 @@ public class ProductsView implements Serializable {
 		editedProductMeasureUnit = selectedProduct.getMeasureUnit();
 		editedProductDescription = selectedProduct.getDescription();
 
-		refreshAllowedStores();
 		refreshEditedProductImages();
 	}
 
@@ -136,38 +136,28 @@ public class ProductsView implements Serializable {
 		productsService.deleteProduct(selectedProduct);
 		selectedProduct = null;
 		clearEditedData();
-		refreshAllowedStores();
 		refreshEditedProductImages();
 		return "";
 	}
 
-	public void onPriceEdit() {
-		ProductStore ps = pricesModel.getRowData();
-		productsService.update(ps);
-	}
-
-	public void addPrice(ActionEvent e) {
-		ProductStore ps = new ProductStore();
+	public void savePrice(ActionEvent e) {
+		ProductStore ps = productsService.getPriceForStoreAndProduct(newPriceStore.getId(), selectedProduct.getId());
+		if(ps == null){
+			ps = new ProductStore();
+			ps.setProduct(selectedProduct);
+			ps.setStore(newPriceStore);
+			ps.setPrice(Double.valueOf(newPriceValue));
+			productsService.add(ps);
+			return;
+		}
 		ps.setPrice(Double.valueOf(newPriceValue));
-		ps.setProduct(selectedProduct);
-		ps.setStore(newPriceStore);
-		productsService.add(ps);
-		refreshAllowedStores();
+		productsService.update(ps);
+		return;
 	}
 
 	public String deletePrice(){
 		productsService.deleteProductStore(selectedPrice);
-		refreshAllowedStores();
 		return "";
-	}
-
-	public Store getAllowedStoreById(int id) {
-		for (Store store : allowedStores) {
-			if (store.getId().equals(Integer.valueOf(id))) {
-				return store;
-			}
-		}
-		return null;
 	}
 
 	public String setDefaultImage() {
@@ -206,17 +196,6 @@ public class ProductsView implements Serializable {
 			e.printStackTrace();
 		}
 		refreshEditedProductImages();
-	}
-
-	private void refreshAllowedStores() {
-		if (selectedProduct != null) {
-			allowedStores = storesService
-					.findAllMissingStoresForProductId(selectedProduct.getId()
-							.intValue());
-		}
-		else{
-			allowedStores = new ArrayList<>();
-		}
 	}
 
 	private void refreshEditedProductImages() {
@@ -393,14 +372,6 @@ public class ProductsView implements Serializable {
 		this.newPriceStore = newPriceStore;
 	}
 
-	public List<Store> getAllowedStores() {
-		return allowedStores;
-	}
-
-	public void setAllowedStores(List<Store> allowedStores) {
-		this.allowedStores = allowedStores;
-	}
-
 	public String getNewPriceValue() {
 		return newPriceValue;
 	}
@@ -431,5 +402,13 @@ public class ProductsView implements Serializable {
 
 	public void setSelectedPrice(ProductStore selectedPrice) {
 		this.selectedPrice = selectedPrice;
+	}
+
+	public List<Store> getAllStores() {
+		return allStores;
+	}
+
+	public void setAllStores(List<Store> allStores) {
+		this.allStores = allStores;
 	}
 }

@@ -20,7 +20,7 @@ import java.util.Date;
 @Path("/mail")
 public class MessageController
 {
-    @Resource(mappedName = "java:jboss/mail/PricePage")
+   /* @Resource(mappedName = "java:jboss/mail/PricePage")
     private Session mailSession;
 
     @POST
@@ -85,5 +85,5 @@ public class MessageController
         } catch (Exception e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
-    }
+    }*/
 }

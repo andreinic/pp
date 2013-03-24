@@ -1,6 +1,5 @@
 package ro.pricepage.persistence.entities;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -41,7 +40,8 @@ import org.hibernate.search.annotations.TokenizerDef;
 @NamedQueries(value = {
 		@NamedQuery(name = ProductStore.FIND_ALL_FOR_PRODUCT_ID, query = "FROM ProductStore WHERE product.id = :id"),
 		@NamedQuery(name = ProductStore.COUNT_FOR_PRODUCT_ID, query = "SELECT COUNT(id) FROM ProductStore WHERE product.id = :id"),
-		@NamedQuery(name = ProductStore.GET_BY_ID, query = "FROM ProductStore WHERE id = :id")})
+		@NamedQuery(name = ProductStore.GET_BY_ID, query = "FROM ProductStore WHERE id = :id"),
+		@NamedQuery(name = ProductStore.GET_BY_PRODUCT_ID_AND_STORE_ID, query = "FROM ProductStore WHERE product.id = :productId AND store.id = :storeId")})
 public class ProductStore extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -49,6 +49,7 @@ public class ProductStore extends BaseEntity {
 	public static final String FIND_ALL_FOR_PRODUCT_ID = "ProductStore.findAllForProductId";
 	public static final String COUNT_FOR_PRODUCT_ID = "ProductStore.countForProductId";
 	public static final String GET_BY_ID = "ProductStore.getById";
+	public static final String GET_BY_PRODUCT_ID_AND_STORE_ID = "ProductStore.getByProductIdAndStoreId";
 
 	private Integer id;
 	private Double price;
@@ -98,7 +99,7 @@ public class ProductStore extends BaseEntity {
 		this.url = url;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "fk_product", nullable = false)
 	@IndexedEmbedded
 	public Product getProduct() {

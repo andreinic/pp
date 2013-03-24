@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @Named(value = "productsDataModel")
-public class ProductsDataModel extends LazyDataModel<Product> implements SelectableDataModel<Product>
+public class ProductsDataModel extends LazyDataModel<Product>
 {
 	private static final long serialVersionUID = -8530048834277234726L;
 
