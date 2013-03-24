@@ -20,6 +20,7 @@ import org.primefaces.model.UploadedFile;
 
 import ro.pricepage.model.PriceDataModel;
 import ro.pricepage.model.ProductsDataModel;
+import ro.pricepage.model.PromoDataModel;
 import ro.pricepage.persistence.entities.Producer;
 import ro.pricepage.persistence.entities.Product;
 import ro.pricepage.persistence.entities.ProductCategory;
@@ -28,6 +29,7 @@ import ro.pricepage.persistence.entities.Store;
 import ro.pricepage.service.FileService;
 import ro.pricepage.service.ProductCategoriesService;
 import ro.pricepage.service.ProductsService;
+import ro.pricepage.service.PromosService;
 import ro.pricepage.service.StoresService;
 import ro.pricepage.view.dto.ImageDTO;
 
@@ -62,6 +64,9 @@ public class ProductsView implements Serializable {
 
 	@Inject
 	private PriceDataModel pricesModel;
+	
+	@Inject
+	private PromoDataModel promosModel;
 
 	private String newProductName;
 	private ProductCategory newProductCategory;
@@ -410,5 +415,13 @@ public class ProductsView implements Serializable {
 
 	public void setAllStores(List<Store> allStores) {
 		this.allStores = allStores;
+	}
+
+	public PromoDataModel getPromosModel() {
+		return promosModel;
+	}
+
+	public void setPromosModel(PromoDataModel promosModel) {
+		this.promosModel = promosModel;
 	}
 }

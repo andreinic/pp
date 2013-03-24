@@ -134,8 +134,14 @@
 									<h:outputText value="#{price.price}" />
 								</p:column>
 								<p:column headerText="Options">
-									<p:commandLink value="Delete" process="@this"
+									<p:commandLink value="Delete " process="@this"
 										update="pricesTable" action="#{productsView.deletePrice}">
+										<f:setPropertyActionListener value="#{price}"
+											target="#{productsView.selectedPrice}" />
+									</p:commandLink>
+									<p:commandLink value=" Promotii "
+										process="@this" update=":mainForm:promosTable" 
+										oncomplete="promoDialog.show()">
 										<f:setPropertyActionListener value="#{price}"
 											target="#{productsView.selectedPrice}" />
 									</p:commandLink>
@@ -145,8 +151,8 @@
 										value="#{productsView.newPriceStore}"
 										converter="storeConverter">
 										<f:selectItem itemLabel="Selecteaza magazin" />
-										<f:selectItems value="#{productsView.allStores}"
-											var="store" itemLabel="#{store.name}" itemValue="#{store}" />
+										<f:selectItems value="#{productsView.allStores}" var="store"
+											itemLabel="#{store.name}" itemValue="#{store}" />
 									</p:selectOneMenu>
 									<p:message for="newPriceStore" />
 									<p:inputText id="newPrice"
@@ -223,6 +229,21 @@
 					</p:commandLink>
 				</p:column>
 			</p:dataTable>
+			<p:dialog header="Promotii" widgetVar="promoDialog" height="400"
+				width="750" id="promoDialogId" modal="true">
+				<p:dataTable id="promosTable" value="#{productsView.promosModel}"
+					lazy="true" var="promo" paginator="true" rows="5"
+					paginatorPosition="bottom"
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+					selectionMode="single">
+					<p:column headerText="Prima zi">
+						<h:outputText value="#{promo.startDate}" />
+					</p:column>
+					<p:column headerText="Ultima zi">
+						<h:outputText value="#{promo.endDate}" />
+					</p:column>
+				</p:dataTable>
+			</p:dialog>
 		</h:form>
 	</ui:define>
 </ui:composition>

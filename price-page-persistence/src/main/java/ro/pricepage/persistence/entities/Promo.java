@@ -9,18 +9,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "promos")
+@NamedQueries(value = {
+		@NamedQuery(name = Promo.Q_FIND_FOR_PRODUCT_STORE_ID, query = "FROM Promo WHERE productStore.id = :productStoreId"),
+		@NamedQuery(name = Promo.COUNT_FOR_PRODUCT_STORE_ID, query = "SELECT COUNT(id) FROM Promo WHERE productStore.id = :productStoreId")
+})
 public class Promo extends BaseEntity {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4618468479889025438L;
+	
+	public static final String Q_FIND_FOR_PRODUCT_STORE_ID = "Promo.findForProductStore";
+	public static final String COUNT_FOR_PRODUCT_STORE_ID = "Promo.countForProductStore";
 
 	private Integer id;
 	private Double price;
