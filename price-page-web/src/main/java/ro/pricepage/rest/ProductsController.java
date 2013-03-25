@@ -190,7 +190,7 @@ public class ProductsController
 				}
 				ret.setStores(stores);
 			}
-			return Response.status(Response.Status.OK).entity(new GenericEntity(ret, ProductDetailDTO.class)).build();
+			return Response.status(Response.Status.OK).entity(new GenericEntity<ProductDetailDTO>(ret, ProductDetailDTO.class)).build();
 		} catch (Exception e){
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}

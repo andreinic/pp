@@ -139,8 +139,8 @@
 										<f:setPropertyActionListener value="#{price}"
 											target="#{productsView.selectedPrice}" />
 									</p:commandLink>
-									<p:commandLink value=" Promotii "
-										process="@this" update=":mainForm:promosTable" 
+									<p:commandLink value=" Promotii " process="@this"
+										update=":mainForm:promosTable :mainForm:productStoreDetailsGrid"
 										oncomplete="promoDialog.show()">
 										<f:setPropertyActionListener value="#{price}"
 											target="#{productsView.selectedPrice}" />
@@ -155,7 +155,7 @@
 											itemLabel="#{store.name}" itemValue="#{store}" />
 									</p:selectOneMenu>
 									<p:message for="newPriceStore" />
-									<p:inputText id="newPrice"
+									<p:inputText id="newPrice" label="Pret"
 										value="#{productsView.newPriceValue}">
 										<f:validateDoubleRange />
 									</p:inputText>
@@ -230,18 +230,56 @@
 				</p:column>
 			</p:dataTable>
 			<p:dialog header="Promotii" widgetVar="promoDialog" height="400"
-				width="750" id="promoDialogId" modal="true">
+				width="850" id="promoDialogId" modal="true">
+				<h:panelGrid id="productStoreDetailsGrid" columns="4"
+					cellpadding="2">
+					<h:outputText value="Produs:" />
+					<h:outputText value="#{productsView.selectedPrice.product.name}" />
+					<h:outputText value="   Magazin:" />
+					<h:outputText value="#{productsView.selectedPrice.store.name}" />
+				</h:panelGrid>
 				<p:dataTable id="promosTable" value="#{productsView.promosModel}"
-					lazy="true" var="promo" paginator="true" rows="5"
-					paginatorPosition="bottom"
+					lazy="true" var="promo" rowKey="#{promo.id}" paginator="true"
+					rows="5" paginatorPosition="bottom"
 					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 					selectionMode="single">
 					<p:column headerText="Prima zi">
-						<h:outputText value="#{promo.startDate}" />
+						<h:outputText value="#{promo.startDate}">
+							<f:convertDateTime locale="ro_RO" type="date" />
+						</h:outputText>
 					</p:column>
 					<p:column headerText="Ultima zi">
-						<h:outputText value="#{promo.endDate}" />
+						<h:outputText value="#{promo.endDate}">
+							<f:convertDateTime locale="ro_RO" type="date" />
+						</h:outputText>
 					</p:column>
+					<p:column headerText="Pret">
+						<h:outputText value="#{promo.price}" />
+					</p:column>
+					<f:facet name="footer">
+						<h:panelGrid columns="7" cellpadding="4">
+							<h:outputText value="Incepe la:" />
+							<p:calendar id="newPromoStartId"
+								value="#{productsView.newPromoStart}" locale="ro_RO"
+								navigator="true" maxdate="#{productsView.maxNewPromoStart}">
+								<p:ajax event="dateSelect" listener="#{productsView.onPromoStartDateSelect}" update="newPromoEndId" />
+							</p:calendar>
+							<h:outputText value="Se incheie la:" />
+							<p:calendar id="newPromoEndId"
+								value="#{productsView.newPromoEnd}" locale="ro_RO"
+								navigator="true" mindate="#{productsView.minNewPromoEnd}">
+								<p:ajax event="dateSelect" listener="#{productsView.onPromoEndDateSelect}" update="newPromoStartId" />
+							</p:calendar>
+							<h:outputText value="Pret:" />
+							<p:inputText id="newPromoPriceId" label="Pret"
+								value="#{productsView.newPromoPrice}" required="true">
+								<f:validateDoubleRange />
+							</p:inputText>
+							<p:commandButton value="Adauga" update="promosTable"
+								process="@this newPromoStartId newPromoEndId newPromoPriceId"
+								actionListener="#{productsView.addPromo}" />
+						</h:panelGrid>
+					</f:facet>
 				</p:dataTable>
 			</p:dialog>
 		</h:form>

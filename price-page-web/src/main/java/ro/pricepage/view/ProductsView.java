@@ -3,6 +3,8 @@ package ro.pricepage.view;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -14,6 +16,7 @@ import javax.jcr.PathNotFoundException;
 import javax.jcr.RepositoryException;
 
 import org.apache.jackrabbit.core.fs.FileSystemException;
+import org.primefaces.event.DateSelectEvent;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.UploadedFile;
@@ -25,6 +28,7 @@ import ro.pricepage.persistence.entities.Producer;
 import ro.pricepage.persistence.entities.Product;
 import ro.pricepage.persistence.entities.ProductCategory;
 import ro.pricepage.persistence.entities.ProductStore;
+import ro.pricepage.persistence.entities.Promo;
 import ro.pricepage.persistence.entities.Store;
 import ro.pricepage.service.FileService;
 import ro.pricepage.service.ProductCategoriesService;
@@ -58,13 +62,16 @@ public class ProductsView implements Serializable {
 
 	@Inject
 	private FileService fileService;
-	
+
 	@Inject
 	private StoresService storesService;
+	
+	@Inject
+	private PromosService promosService;
 
 	@Inject
 	private PriceDataModel pricesModel;
-	
+
 	@Inject
 	private PromoDataModel promosModel;
 
@@ -88,8 +95,14 @@ public class ProductsView implements Serializable {
 
 	private String selectedImagePath;
 	private ProductStore selectedPrice;
-	
+
 	private List<Store> allStores;
+
+	private Date newPromoStart;
+	private Date newPromoEnd;
+	private Double newPromoPrice;
+	private Date maxNewPromoStart;
+	private Date minNewPromoEnd;
 
 	@PostConstruct
 	public void init() {
@@ -127,13 +140,13 @@ public class ProductsView implements Serializable {
 		refreshEditedProductImages();
 	}
 
-	public String onDelete(){
+	public String onDelete() {
 		int id = selectedProduct.getId().intValue();
 		try {
 			fileService.deleteProductNode(id);
 		} catch (RepositoryException | FileSystemException e) {
 			e.printStackTrace();
-			if(!(e.getCause() instanceof PathNotFoundException)){
+			if (!(e.getCause() instanceof PathNotFoundException)) {
 				return "";
 			}
 		}
@@ -146,8 +159,9 @@ public class ProductsView implements Serializable {
 	}
 
 	public void savePrice(ActionEvent e) {
-		ProductStore ps = productsService.getPriceForStoreAndProduct(newPriceStore.getId(), selectedProduct.getId());
-		if(ps == null){
+		ProductStore ps = productsService.getPriceForStoreAndProduct(
+				newPriceStore.getId(), selectedProduct.getId());
+		if (ps == null) {
 			ps = new ProductStore();
 			ps.setProduct(selectedProduct);
 			ps.setStore(newPriceStore);
@@ -160,7 +174,7 @@ public class ProductsView implements Serializable {
 		return;
 	}
 
-	public String deletePrice(){
+	public String deletePrice() {
 		productsService.deleteProductStore(selectedPrice);
 		return "";
 	}
@@ -179,8 +193,8 @@ public class ProductsView implements Serializable {
 		return "";
 	}
 
-	public String deleteImage(){
-		try{
+	public String deleteImage() {
+		try {
 			fileService.deleteNode(selectedImagePath);
 			refreshEditedProductImages();
 		} catch (Exception e) {
@@ -190,17 +204,42 @@ public class ProductsView implements Serializable {
 		}
 		return "";
 	}
-	
-	public void handleFileUpload(FileUploadEvent evt){
+
+	public void handleFileUpload(FileUploadEvent evt) {
 		UploadedFile file = evt.getFile();
 		try {
-			fileService.uploadImageForProduct(selectedProduct.getId().intValue(), file.getInputstream(), false, true);
-		} catch (RepositoryException | FileSystemException
-				| IOException e) {
+			fileService.uploadImageForProduct(selectedProduct.getId()
+					.intValue(), file.getInputstream(), false, true);
+		} catch (RepositoryException | FileSystemException | IOException e) {
 			// TODO: faces message
 			e.printStackTrace();
 		}
 		refreshEditedProductImages();
+	}
+
+	public void addPromo(ActionEvent e) {
+		Promo p = new Promo();
+		p.setStartDate(newPromoStart);
+		if(newPromoEnd != null){
+			Calendar endTime = Calendar.getInstance();
+			endTime.setTime(newPromoEnd);
+			endTime.set(Calendar.HOUR, 23);
+			endTime.set(Calendar.MINUTE, 59);
+			endTime.set(Calendar.SECOND, 59);
+			endTime.set(Calendar.MILLISECOND, 999);
+			p.setEndDate(endTime.getTime());
+		}
+		p.setPrice(newPromoPrice);
+		p.setProductStore(selectedPrice);
+		promosService.addPromo(p);
+	}
+
+	public void onPromoStartDateSelect(DateSelectEvent e) {
+		minNewPromoEnd = e.getDate();
+	}
+
+	public void onPromoEndDateSelect(DateSelectEvent e) {
+		maxNewPromoStart = e.getDate();
 	}
 
 	private void refreshEditedProductImages() {
@@ -235,8 +274,8 @@ public class ProductsView implements Serializable {
 			}
 		}
 	}
-	
-	private void clearEditedData(){
+
+	private void clearEditedData() {
 		editedProductCategory = null;
 		editedProductDescription = null;
 		editedProductImages = null;
@@ -423,5 +462,45 @@ public class ProductsView implements Serializable {
 
 	public void setPromosModel(PromoDataModel promosModel) {
 		this.promosModel = promosModel;
+	}
+
+	public Date getNewPromoStart() {
+		return newPromoStart;
+	}
+
+	public void setNewPromoStart(Date newPromoStart) {
+		this.newPromoStart = newPromoStart;
+	}
+
+	public Date getNewPromoEnd() {
+		return newPromoEnd;
+	}
+
+	public void setNewPromoEnd(Date newPromoEnd) {
+		this.newPromoEnd = newPromoEnd;
+	}
+
+	public Double getNewPromoPrice() {
+		return newPromoPrice;
+	}
+
+	public void setNewPromoPrice(Double newPromoPrice) {
+		this.newPromoPrice = newPromoPrice;
+	}
+
+	public Date getMaxNewPromoStart() {
+		return maxNewPromoStart;
+	}
+
+	public void setMaxNewPromoStart(Date maxNewPromoStart) {
+		this.maxNewPromoStart = maxNewPromoStart;
+	}
+
+	public Date getMinNewPromoEnd() {
+		return minNewPromoEnd;
+	}
+
+	public void setMinNewPromoEnd(Date minNewPromoEnd) {
+		this.minNewPromoEnd = minNewPromoEnd;
 	}
 }

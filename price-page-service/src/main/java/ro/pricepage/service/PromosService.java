@@ -22,6 +22,13 @@ public class PromosService extends BaseService {
 	@Inject
 	@MySQLDatabase
 	private EntityManager em;
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	public Promo addPromo(Promo p){
+		assert p != null : "cannot pass null ref for promo";
+		em.persist(p);
+		return p;
+	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<Promo> getPromosForProductStore(Integer productStoreId,
@@ -37,8 +44,15 @@ public class PromosService extends BaseService {
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public Long countInstancesForProductStore(Integer productStoreId) {
-		Query q = em.createNamedQuery(Promo.COUNT_FOR_PRODUCT_STORE_ID);
+		Query q = em.createNamedQuery(Promo.Q_COUNT_FOR_PRODUCT_STORE_ID);
 		q.setParameter("productStoreId", productStoreId);
 		return (Long) q.getSingleResult();
+	}
+	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<Promo> getCurrentPromosForStore(Integer storeId){
+		TypedQuery<Promo> q = em.createNamedQuery(Promo.Q_FIND_ACTIVE_FOR_PRODUCT_STORE_ID, Promo.class);
+		q.setParameter("storeId", storeId);
+		return q.getResultList();
 	}
 }

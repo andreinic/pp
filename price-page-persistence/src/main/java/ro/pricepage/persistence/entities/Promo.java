@@ -18,14 +18,16 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "promos")
 @NamedQueries(value = {
-		@NamedQuery(name = Promo.Q_FIND_FOR_PRODUCT_STORE_ID, query = "FROM Promo WHERE productStore.id = :productStoreId"),
-		@NamedQuery(name = Promo.COUNT_FOR_PRODUCT_STORE_ID, query = "SELECT COUNT(id) FROM Promo WHERE productStore.id = :productStoreId")
+		@NamedQuery(name = Promo.Q_FIND_FOR_PRODUCT_STORE_ID, query = "FROM Promo WHERE productStore.id = :productStoreId ORDER BY id DESC"),
+		@NamedQuery(name = Promo.Q_COUNT_FOR_PRODUCT_STORE_ID, query = "SELECT COUNT(id) FROM Promo WHERE productStore.id = :productStoreId"),
+		@NamedQuery(name = Promo.Q_FIND_ACTIVE_FOR_PRODUCT_STORE_ID, query = "FROM Promo WHERE productStore.store.id = :storeId AND (startDate IS NULL OR startDate < CURRENT_TIMESTAMP) AND (endDate IS NULL OR endDate > CURRENT_TIMESTAMP)")
 })
 public class Promo extends BaseEntity {
 	private static final long serialVersionUID = 4618468479889025438L;
 	
 	public static final String Q_FIND_FOR_PRODUCT_STORE_ID = "Promo.findForProductStore";
-	public static final String COUNT_FOR_PRODUCT_STORE_ID = "Promo.countForProductStore";
+	public static final String Q_COUNT_FOR_PRODUCT_STORE_ID = "Promo.countForProductStore";
+	public static final String Q_FIND_ACTIVE_FOR_PRODUCT_STORE_ID = "Promo.findActiveForProductStore";
 
 	private Integer id;
 	private Double price;
