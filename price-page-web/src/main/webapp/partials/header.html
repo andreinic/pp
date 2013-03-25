@@ -6,7 +6,8 @@
     <div class="h_menu_left"><a href="#/cum-compar">Cum compar?</a></div>
     <div class="h_menu_left"><a href="#/termeni-si-conditii">Termeni si conditii</a></div>
     <div class="h_menu_left"><a href="#/contact">Contact</a></div>
-    <div class="h_menu_right"><a opendialog role="button">Contul Meu</a></div>
+    <!--<div class="h_menu_right"><a opendialog role="button">Contul Meu</a></div>-->
+    <div class="h_menu_right" ng:controller="UserCtrl"><a ng:click="fbLogin()">Contul Meu</a></div>
     <!--<div class="h_menu_right"><a data-toggle="modal" href="#authModal">Contul Meu</a></div>-->
 </nav>
 <section id="header" ng:controller="SearchCtrl">
@@ -21,5 +22,5 @@
     </div>
 </section>
 
-<div id="authModal" class="modal hide fade" style="display:none;" ng:controller="UserCtrl" ng-include="'partials/auth.html'">
-</div>
+<!--<div id="authModal" class="modal hide fade" style="display:none;" ng:controller="UserCtrl" ng-include="'partials/auth.html'">-->
+<!--</div>-->

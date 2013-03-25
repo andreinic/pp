@@ -14,6 +14,7 @@ function StoreCtrl($scope, $routeParams, $http){
            url : 'rest/store-chain/stores/'+$routeParams.storeId,
            method : 'GET'
         }).success(function(data, status, headers, configs){
+           $scope.fbUrl = 'http://localhost/price-page/#/magazin/3' + data['id'];
            $scope.name = data['name'];
            $scope.description = 'no description';
            if(data['stores'] !== undefined){

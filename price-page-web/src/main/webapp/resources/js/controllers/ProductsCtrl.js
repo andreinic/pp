@@ -130,6 +130,9 @@ function ProductDetailsCtrl($rootScope, $scope, $routeParams, $http, $location){
     $scope.toStoreChain = function(storeId){
         $location.path("/magazin/"+storeId.toString());
     }
+    $scope.selectStore = function(shopId){
+        alert(shopId);
+    }
     $scope.drawMarkers = function(){
         var stores = $scope.product.stores;
         if(stores.length > 0){
@@ -168,6 +171,7 @@ function ProductDetailsCtrl($rootScope, $scope, $routeParams, $http, $location){
     }).success(function(data, status, headers, configs){
         var p = {};
         p.id = data["id"];
+        p.fbUrl = 'http://localhost/price-page/#/produs/'+p.id;
         p.name = data["name"];
         p.description = data["description"];
 

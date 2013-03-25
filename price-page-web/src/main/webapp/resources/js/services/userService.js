@@ -6,21 +6,24 @@ angular.module('price-page').service('UserService', function UserService(){
          if (response.status === 'connected') {
            // connected
          } else if (response.status === 'not_authorized') {
-           // not_authorized
+           login();
          } else {
-           // not_logged_in
+           login();
          }
        });
    };
+
+   var login = function(){
+       FB.login(function(response){
+          if(response.authResponse){
+           //connected
+          } else {
+           //canceled
+          }
+       });
+   }
+
    return {
-    login : function(){
-        FB.login(function(response){
-           if(response.authResponse){
-            //connected
-           } else {
-            //canceled
-           }
-        });
-    }
+    login : login
    }
 });

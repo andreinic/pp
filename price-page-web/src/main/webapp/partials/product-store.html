@@ -1,5 +1,5 @@
-<div class="divRow">
-	<!-- <div class="divCell_1"><p class="priceBig">32,</p><p class="priceSmall">99<br/></p><p class="Plei"> lei</p></div> -->
+<div class="divRow"><!-- ng-click="selectStore(store.id)" style="cursor : pointer;" -->
+    <!-- <div class="divCell_1"><p class="priceBig">32,</p><p class="priceSmall">99<br/></p><p class="Plei"> lei</p></div> -->
     <div class="divCell_1"><p class="priceBig">{{store.price}}</p><p class="Plei"> lei</p></div>
     <div class="divCell_2"><p>{{store.name}}</p><img src="resources/images/client/carrefour.png" alt="carrefour" class="logo_mag"></div>
     <div class="divCell_3"><p>{{store.address}}, Brasov {{store.zip}}</br>0268 320 043 <a ng-click="toStoreChain(store.id)">Vezi detalii...</a></p><img src="{{store.marker.icon}}" class="mag_point"alt="mag_point"/></div>
